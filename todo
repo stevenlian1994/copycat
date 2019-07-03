@@ -1,21 +1,46 @@
 TODO:
--
-
+-SHOW ALL posts on home page
+-relationship between tags and posts
+    -create new tags 
 
 LOGIN AND REGISTRATION
 -add USERS table
 -login and registration page
+-validation doesn't need to be super complex
+    -link users to posts.
 
 POSTS
 -add CRUD for posts
+    -read all - DONE
+    -create - DONE
+    -delete
+    -update
+    -read one
+
 -flesh out POSTS table
 
 TAGS
 -add TAGS table
+-create many to many relationship between POSTS and TAGS
 
-
-
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 DONE:
 made mysql connection
 -connect angular to mysql
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DONE
+-set up our tech stack
+    -node, express, angular, mysql
+-connected angular with mysql, 
+-set up all the tables and relationships between tables
+    -i have tested the many to many relationships
+
+Your Roles:
+-work on dashboard and posts components
+    -search posts by TAGS
+    -CRUD for posts, user should be able to write new tags, if tag already exists, dont make a new tag
+        -posts should be connected to tags and vice-versa
+-add styling

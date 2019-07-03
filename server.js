@@ -31,10 +31,20 @@ connection.connect(function(err) {
 //     console.log(x)
 //     // res.json({"hello":"world"})
 // })
-app.get('/posts', function(req,res){
+app.get('/getPosts', function(req,res){
     connection.query("SELECT * FROM posts", function(err, results){
         res.json(results)
     })
+})
+app.post('/createPost', function(req,res){
+    console.log('inside create')
+    console.log('this is req.body', req.body)
+    connection.query("INSERT INTO posts (content) VALUES ('"  + req.body.content + " ');" )
+    res.json({'no object':'to send back yet'})
+})
+app.post('/createTag', function(req,res){
+    connection.query("INSERT INTO tags (title) VALUES ('"  + req.body.content + " ');" )
+    res.json({'no object':'to send back yet'})
 })
 
 // app.post('/createProduct', function(req,res){
