@@ -1,0 +1,21 @@
+TODO:
+-
+
+
+LOGIN AND REGISTRATION
+-add USERS table
+-login and registration page
+
+POSTS
+-add CRUD for posts
+-flesh out POSTS table
+
+TAGS
+-add TAGS table
+
+
+
+
+DONE:
+made mysql connection
+-connect angular to mysql
