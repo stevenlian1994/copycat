@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password:'root',
-    database: 'twitter1'
+    database: 'copycat'
 })
 
 connection.connect(function(err) {
@@ -39,6 +39,7 @@ app.get('/getPosts', function(req,res){
 app.post('/createPost', function(req,res){
     console.log('inside create')
     console.log('this is req.body', req.body)
+    // req.body.users_id = 1
     connection.query("INSERT INTO posts (content) VALUES ('"  + req.body.content + " ');" )
     res.json({'no object':'to send back yet'})
 })

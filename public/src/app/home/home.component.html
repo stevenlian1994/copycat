@@ -1,3 +1,17 @@
-<p>
-  home works!
-</p>
+
+    Register
+    <form (submit)="createUser()">
+        <label>Username: 
+            <input [(ngModel)]="newUser.username" type="text" name="newUser.username">
+        </label><br>
+        <label>Password: 
+                <input [(ngModel)]="newUser.password" type="text" name="newUser.password">
+        </label><br>
+        <label>First Name: 
+            <input [(ngModel)]="newUser.firstName" type="text" name="newUser.firstName">
+        </label><br>
+        <label>Last Name: 
+            <input [(ngModel)]="newUser.lastName" type="text" name="newUser.lastName">
+        </label><br>
+        <input type="submit" value="submit">
+    </form>

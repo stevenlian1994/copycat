@@ -8,6 +8,10 @@ LOGIN AND REGISTRATION
 -login and registration page
 -validation doesn't need to be super complex
     -link users to posts.
+-once user is logged in, how are we going to maintain their session,
+prevent them from accessing other pages
+
+
 
 POSTS
 -add CRUD for posts

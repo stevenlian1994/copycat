@@ -15,6 +15,6 @@ export class AppComponent {
 }
     readAllPosts(){
         let tempObservable = this._httpService.getPosts()
-        tempObservable.subscribe(data => console.log("Got our tasks!", data));
+        tempObservable.subscribe(data => console.log("Got our posts!", data));
     }
 }
