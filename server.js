@@ -40,12 +40,31 @@ app.post('/createPost', function(req,res){
     console.log('inside create')
     console.log('this is req.body', req.body)
     // req.body.users_id = 1
-    connection.query("INSERT INTO posts (content) VALUES ('"  + req.body.content + " ');" )
+    // connection.query("INSERT INTO posts (content) VALUES ('"  + req.body.content + " ');" )
+    connection.query(`INSERT INTO posts (content) VALUES ('${req.body.content}');` )
     res.json({'no object':'to send back yet'})
 })
 app.post('/createTag', function(req,res){
-    connection.query("INSERT INTO tags (title) VALUES ('"  + req.body.content + " ');" )
+    connection.query(`INSERT INTO tags (title) VALUES ('${req.body.content} ');` )
     res.json({'no object':'to send back yet'})
+})
+app.post('/createUser', function(req,res){
+    console.log('inside server' )
+    connection.query(`INSERT INTO users (username, password, firstName, lastName) VALUES ('${req.body.username}', 
+    '${req.body.password}' , '${req.body.firstName}', '${req.body.lastName}');`)
+    var x =connection.query(`SELECT * FROM users WHERE username = '${req.body.username}'`, function(err, rows, fields){
+        if (err) throw err;
+ 
+        for (var i in rows) {
+            console.log('Post Last Names: ', rows[i]);
+            res.json(rows[i])
+        }
+        
+    })
+    
+    // console.log(connection.query('SELECT * FROM users'))
+
+    // res.json(x)
 })
 
 // app.post('/createProduct', function(req,res){

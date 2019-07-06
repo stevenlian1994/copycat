@@ -18,10 +18,14 @@ export class PostsComponent implements OnInit {
       console.log('inside createPost method', this.newPost)
     // now add to mysql
     let tempObservable = this._httpService.createPost(this.newPost)
-    tempObservable.subscribe(data => console.log("Got our posts!", data));
+    tempObservable.subscribe(data => 
+        console.log("Got our posts!", data)
+        );
+    this.newPost = {content: ''}
   }
   createTag(){
     let tempObservable = this._httpService.createTag(this.newTag)
     tempObservable.subscribe(data => console.log("Got our posts!", data));
+    this.newTag = {title: ''}
   }
 }

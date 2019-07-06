@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpService } from './http.service';
+// import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ export class AppComponent {
   title = 'public';
   constructor(private _httpService: HttpService){
   }
+
+
   ngOnInit() {
     this.readAllPosts();
 }
@@ -17,4 +20,6 @@ export class AppComponent {
         let tempObservable = this._httpService.getPosts()
         tempObservable.subscribe(data => console.log("Got our posts!", data));
     }
+
+    
 }

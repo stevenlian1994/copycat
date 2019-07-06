@@ -9,6 +9,10 @@ import { HomeComponent } from './home/home.component';
 import { PostsComponent } from './posts/posts.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,9 +22,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
+    
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]
