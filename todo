@@ -1,4 +1,12 @@
+DONE: added post by registered user
+    - cleaning up source code from console.logs.. and comments
+
+TODO: add post by logged in user
+    : add login validation..
+
+
 TODO:
+-added localstorage, store user id after registering, add posts with user id
 -SHOW ALL posts on home page
 -relationship between tags and posts
     -create new tags 

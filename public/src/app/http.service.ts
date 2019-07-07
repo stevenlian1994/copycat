@@ -8,14 +8,10 @@ export class HttpService {
 
     constructor(private _http: HttpClient){}
 
-    // getTasks(){
-    //     return this._http.get('/');
-    // }
     getPosts(){
         return this._http.get('/getPosts')
     }
     createPost(newPost){
-        // console.log('inside service')
         return this._http.post('/createPost', newPost)
     }
     createTag(newTag){
@@ -25,10 +21,10 @@ export class HttpService {
         console.log('inside service', newUser)
         return this._http.post('/createUser', newUser)
     }
+    loginUser(userLogin){
+        console.log('inside service', userLogin)
+        return this._http.post('/loginUser/', userLogin )
+    }
 
-    // createProduct(product){
-    //     console.log('inside service')
-    //     return this._httpClient.post('/createProduct', product);
-    // }
 }
 

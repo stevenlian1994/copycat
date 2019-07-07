@@ -15,7 +15,7 @@ export class PostsComponent implements OnInit {
   ngOnInit() {
   }
   createPost(){
-      console.log('inside createPost method', this.newPost)
+      this.newPost['users_id'] = localStorage.getItem("user")
     // now add to mysql
     let tempObservable = this._httpService.createPost(this.newPost)
     tempObservable.subscribe(data => 

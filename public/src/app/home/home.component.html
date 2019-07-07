@@ -1,17 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    Register
-    <form (submit)="createUser()">
-        <label>Username: 
-            <input [(ngModel)]="newUser.username" type="text" name="newUser.username">
-        </label><br>
-        <label>Password: 
-                <input [(ngModel)]="newUser.password" type="text" name="newUser.password">
-        </label><br>
-        <label>First Name: 
-            <input [(ngModel)]="newUser.firstName" type="text" name="newUser.firstName">
-        </label><br>
-        <label>Last Name: 
-            <input [(ngModel)]="newUser.lastName" type="text" name="newUser.lastName">
-        </label><br>
-        <input type="submit" value="submit">
-    </form>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <title>Portfolio</title>
+</head>
+<body>
+        <div *ngIf="isLoggedIn; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+            <div class=" form-container">
+                Logout User
+                <form (submit)="logoutUser()">
+                    <input type="submit" value="Log Out">
+                </form>
+            </div>
+        </ng-template>
+        <ng-template #elseBlock>
+            <div class=" form-container">
+                    Register New User
+                    <form (submit)="createUser()">
+                        <label>Username: 
+                            <input [(ngModel)]="newUser.username" type="text" name="newUser.username">
+                        </label><br>
+                        <label>Password: 
+                                <input [(ngModel)]="newUser.password" type="text" name="newUser.password">
+                        </label><br>
+                        <label>First Name: 
+                            <input [(ngModel)]="newUser.firstName" type="text" name="newUser.firstName">
+                        </label><br>
+                        <label>Last Name: 
+                            <input [(ngModel)]="newUser.lastName" type="text" name="newUser.lastName">
+                        </label><br>
+                        <input type="submit" value="Register">
+                    </form>
+                </div>
+                
+                
+                <div class=" form-container">
+                    Login New Username
+                    <form (submit)="loginUser()">
+                        <label>Username: 
+                            <input [(ngModel)]="userLogin.username" type="text" name="userLogin.username">
+                        </label><br>
+                        <label>Password: 
+                                <input [(ngModel)]="userLogin.password" type="text" name="userLogin.password">
+                        </label><br>
+                        <input type="submit" value="Log In">
+                    </form>
+                </div>
+        </ng-template>
+
+<!-- <ng-container *ngIf="isLoggedIn"> 
+    it's 2
+</ng-container> -->
+
+    
+
+
+</body>
+</html>

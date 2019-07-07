@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 
-// import {LOCAL_STORAGE, WebStorageService} from '../angular-webstorage-service';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -10,35 +8,50 @@ import { HttpService } from '../http.service';
 })
 export class HomeComponent implements OnInit {
     newUser = {username: '', password: '', firstName: '', lastName: ''};
+    userLogin = {username: '', password: ''}
+    isLoggedIn = false;
     public data:any=[];
     constructor(private _httpService: HttpService){
     }
 
   ngOnInit() {
+      this.checkLogin();
+  }
+  checkLogin(){
+    console.log(localStorage.getItem("user"))
+    if(localStorage.getItem("user") !== null){
+        this.isLoggedIn = true;
+    } else {
+        this.isLoggedIn = false; 
+    }
+    console.log(this.isLoggedIn)
   }
   createUser(){
-    // console.log('inside createPost method', this.newUser)
     let tempObservable = this._httpService.createUser(this.newUser)
-    tempObservable.subscribe(data => 
-        // localStorage.setItem("userId", data)
-        // console.log("Created user, here is id!", data['id'])
-        console.log("New user:", data)
-        
+    tempObservable.subscribe(data => {
+        localStorage.setItem("user", data["id"])
+        this.checkLogin()
+    }
+        // create new user in db and return that user with their id to be stored in session
         );
-    localStorage.setItem("user", this.newUser.username)
+    // blank out user form
     this.newUser = {username: '', password: '', firstName: '', lastName: ''};
   }
-
-//   saveInLocal(key, val): void {
-//     console.log('received= key:' + key + 'value:' + val);
-//     this.storage.set(key, val);
-//     this.data[key]= this.storage.get(key);
-//    }
-
-// getFromLocal(key): void {
-//     console.log('received= key:' + key);
-//     this.data[key]= this.storage.get(key);
-//     console.log(this.data);
-//    }
+  loginUser() {
+    // console.log(this.userLogin)
+    let tempObservable = this._httpService.loginUser(this.userLogin)
+    tempObservable.subscribe(data => {
+        // create new user in db and return that user with their id to be stored in session
+        // console.log("this is userlogin from db:", data['id'])
+        localStorage.setItem("user", data["id"])
+        this.checkLogin()
+        }
+    );
+    this.userLogin = {username: '', password: ''}
+  }
+  logoutUser(){
+      localStorage.clear()
+      this.checkLogin();
+  }
 
 }

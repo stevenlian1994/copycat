@@ -9,10 +9,6 @@ import { HomeComponent } from './home/home.component';
 import { PostsComponent } from './posts/posts.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

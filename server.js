@@ -14,34 +14,24 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err
-    console.log('You are now connected...')
+    console.log('You are now connected to database..')
 });
 
-// app.get('/', function(req, res){
-//     console.log('connected to index route');
-//     // connection.query("SELECT * FROM posts", function(err, results){
-//     //     // console.log(results[0].content)
-//     //     // res.send(results[0].content)
-//     //     // res.json({results})
-//     // })
-//     var dict = new {};
-//     dict[1] = "hello";
-//     console.log(dict)
-//     var x = JSON.parse(dict)
-//     console.log(x)
-//     // res.json({"hello":"world"})
-// })
+app.post('/loginUser', function(req,res){
+    console.log("inside server, username:", req.body)
+    connection.query(`SELECT * FROM users WHERE username = '${req.body.username}'`, function(err, results){
+        console.log(results[0])
+        res.json(results[0])
+    })
+})
+
 app.get('/getPosts', function(req,res){
     connection.query("SELECT * FROM posts", function(err, results){
         res.json(results)
     })
 })
 app.post('/createPost', function(req,res){
-    console.log('inside create')
-    console.log('this is req.body', req.body)
-    // req.body.users_id = 1
-    // connection.query("INSERT INTO posts (content) VALUES ('"  + req.body.content + " ');" )
-    connection.query(`INSERT INTO posts (content) VALUES ('${req.body.content}');` )
+    connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');` )
     res.json({'no object':'to send back yet'})
 })
 app.post('/createTag', function(req,res){
@@ -49,38 +39,15 @@ app.post('/createTag', function(req,res){
     res.json({'no object':'to send back yet'})
 })
 app.post('/createUser', function(req,res){
-    console.log('inside server' )
     connection.query(`INSERT INTO users (username, password, firstName, lastName) VALUES ('${req.body.username}', 
     '${req.body.password}' , '${req.body.firstName}', '${req.body.lastName}');`)
     var x =connection.query(`SELECT * FROM users WHERE username = '${req.body.username}'`, function(err, rows, fields){
         if (err) throw err;
- 
         for (var i in rows) {
-            console.log('Post Last Names: ', rows[i]);
             res.json(rows[i])
         }
-        
     })
-    
-    // console.log(connection.query('SELECT * FROM users'))
-
-    // res.json(x)
 })
-
-// app.post('/createProduct', function(req,res){
-//     console.log('inside server', req.body)
-//     var product = new Product(req.body)
-//     product.save(function(err){
-//         if(err){
-//             console.log('something went wrong', err.errors);
-//             res.json(err)
-//         } else {
-//             console.log('successfully added asdf', product)
-//             res.json(product)
-//         }
-//     })
-// })
-
 
 app.all("*", (req,res,next) => {
     res.sendFile(path.resolve("./public/dist/public/index.html"))
