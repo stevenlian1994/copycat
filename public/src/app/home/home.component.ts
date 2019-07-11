@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
     let tempObservable = this._httpService.createUser(this.newUser)
     tempObservable.subscribe(data => {
         localStorage.setItem("user", data["id"])
+        console.log("this is userrrr", localStorage.getItem("user"))
         this.checkLogin()
     }
         // create new user in db and return that user with their id to be stored in session
