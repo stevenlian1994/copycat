@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PostsComponent } from './posts/posts.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthGuardService } from "./guards/auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     FormsModule,
     HttpClientModule,
   ],
-  providers: [HttpService],
+  providers: [HttpService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

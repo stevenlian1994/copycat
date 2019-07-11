@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpService } from './http.service';
+import { AuthService } from './services/auth.service';
 // import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 
 @Component({
@@ -9,17 +10,12 @@ import { HttpService } from './http.service';
 })
 export class AppComponent {
   title = 'public';
-  constructor(private _httpService: HttpService){
+  isLoggedIn = false;
+  public data:any;
+  constructor(private _httpService: HttpService, private _authService: AuthService){
   }
 
-
   ngOnInit() {
-    this.readAllPosts();
+    this.isLoggedIn = this._authService.isAuthenticated();
 }
-    readAllPosts(){
-        let tempObservable = this._httpService.getPosts()
-        tempObservable.subscribe(data => console.log("Got our posts!", data));
-    }
-
-    
 }
