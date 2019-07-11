@@ -14,18 +14,5 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
   }
-  createPost(){
-      this.newPost['users_id'] = localStorage.getItem("user")
-    // now add to mysql
-    let tempObservable = this._httpService.createPost(this.newPost)
-    tempObservable.subscribe(data => 
-        console.log("Got our posts!", data)
-        );
-    this.newPost = {content: ''}
-  }
-  createTag(){
-    let tempObservable = this._httpService.createTag(this.newTag)
-    tempObservable.subscribe(data => console.log("Got our posts!", data));
-    this.newTag = {title: ''}
-  }
+
 }

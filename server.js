@@ -8,7 +8,7 @@ var mysql = require('mysql')
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password:'[root]',
+    password:'root',
     database: 'copycat'
 })
 
@@ -31,8 +31,10 @@ app.get('/getPosts', function(req,res){
     })
 })
 app.post('/createPost', function(req,res){
-    connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');` )
-    res.json({'no object':'to send back yet'})
+    connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, results){
+        res.json(req.body);
+    } )
+    // res.json({'no object':'to send back yet'})
 })
 app.post('/createTag', function(req,res){
     connection.query(`INSERT INTO tags (title) VALUES ('${req.body.content} ');` )

@@ -4,57 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
     <title>CopyCat</title>
 </head>
 <body>
+    <div class="main-container-1">
+        <div class="main-container-1-text">
+            <h2>Copycat App</h2>
+            <ul>
+                <li><h4>Follow your interests. </h4></li>
+                <li><h4>Hear what people are talking about.</h4></li>
+                <li><h4>Join the conversation.</h4></li>
+            </ul>
+        </div>
 
-        <div *ngIf="isLoggedIn; then thenBlock else elseBlock"></div>
-        <ng-template #thenBlock>
-    <div class=" form-container">
-        Logout User
-        <form (submit)="logoutUser()">
-            <input type="submit" value="Log Out">
-        </form>
     </div>
-        </ng-template>
-        <ng-template #elseBlock>
-
-    <div class=" form-container">
-        Register New User
-        <form (submit)="createUser()">
-            <label>Username: 
-                <input [(ngModel)]="newUser.username" type="text" name="newUser.username">
-            </label><br>
-            <label>Password: 
-                    <input [(ngModel)]="newUser.password" type="text" name="newUser.password">
-            </label><br>
-            <label>First Name: 
-                <input [(ngModel)]="newUser.firstName" type="text" name="newUser.firstName">
-            </label><br>
-            <label>Last Name: 
-                <input [(ngModel)]="newUser.lastName" type="text" name="newUser.lastName">
-            </label><br>
-            <input type="submit" value="Register">
-        </form>
-    </div>
-                
-                
-    <div class=" form-container">
-        Login
-        <form (submit)="loginUser()">
-            <label>Username: 
-                <input [(ngModel)]="userLogin.username" type="text" name="userLogin.username">
-            </label><br>
-            <label>Password: 
+    <div class="main-container-2">
+        
+        
+        <div class="login-form-container">
+            <form (submit)="loginUser()">
+                <label>Username: 
+                    <input [(ngModel)]="userLogin.username" type="text" name="userLogin.username">
+                </label>
+                <label>Password: 
                     <input [(ngModel)]="userLogin.password" type="text" name="userLogin.password">
-            </label><br>
-            <input type="submit" value="Log In">
-        </form>
-    </div>
-        </ng-template>
+                </label>
+                <input type="submit" value="Log In">
+            </form>
+        </div>
+        <div class="register-container">
+            <p>See what's happening in the world right now</p>
+            <p>Join Copycat today.</p>
+            <button class="toggleContainer">Sign Up</button>
+            <div class="register-form-container hide">
+                Register New User
+                <form (submit)="createUser()">
+                    <label>Username: 
+                        <input [(ngModel)]="newUser.username" type="text" name="newUser.username">
+                    </label><br>
+                    <label>Password: 
+                            <input [(ngModel)]="newUser.password" type="text" name="newUser.password">
+                    </label><br>
+                    <label>First Name: 
+                        <input [(ngModel)]="newUser.firstName" type="text" name="newUser.firstName">
+                    </label><br>
+                    <label>Last Name: 
+                        <input [(ngModel)]="newUser.lastName" type="text" name="newUser.lastName">
+                    </label><br>
+                    <input type="submit" value="Register">
+                </form>
+            </div>
+        </div>
 
+    </div>
+    
 </body>
 </html>

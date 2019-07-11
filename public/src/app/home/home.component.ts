@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../http.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,11 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
+    $(document).ready(function(){
+        $(".toggleContainer").click(function(){
+            $(".register-form-container").toggleClass("hide");
+        });
+    });
     console.log(
         "token",
         this._authService.isAuthenticated()
@@ -30,6 +36,7 @@ export class HomeComponent implements OnInit {
     tempObservable.subscribe(data => {
         localStorage.setItem("user", data["id"])
         this._authService.login();
+        this.router.navigate(['/dashboard']);
     }
         // create new user in db and return that user with their id to be stored in session
         );

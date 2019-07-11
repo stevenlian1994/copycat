@@ -14,6 +14,7 @@ export class HttpService {
     getPosts(){
         return this._http.get('/getPosts')
     }
+    
     createPost(newPost){
         return this._http.post('/createPost', newPost)
     }

@@ -1,5 +1,42 @@
-<p>
-  Welcome to dashboard!
-</p>
+<div class="row">
+    <div class="col">
+        <p>Navbar</p>
+        <h1>Submit a post</h1>
+
+            <form (submit)="createPost()">
+                <label> Content:
+                        <input [(ngModel)]="newPost.content" type="text" name="newPost.content">
+                    </label><br>
+                    <label> Tags:
+                        <textarea [(ngModel)]="newTag.title" name="newTag.title">
+                        </textarea>
+                    </label>
+                <input type="submit" value="submit">
+            </form>
+
+            <!-- <h1>Submit a tag</h1>
+            <form (submit)="createTag()">
+                <label> Title:
+                    <input [(ngModel)]="newTag.content" type="text" name="newTag.title">
+                </label><br>
+                <input type="submit" value="submit">
+            </form> -->
+
+
+        <button (click)="logoutUser()">Logout</button>
+    </div>
+    <div class="col dashboard">
+        <p>Dashboard</p>
+        <ul>
+            <li *ngFor="let post of allPosts">
+                {{post['content']}}
+            </li>
+            </ul>
+    </div>
+    <div class="col">
+        <p>Searchbar</p>
+    </div>
+</div>
+
 
 

@@ -1,5 +1,35 @@
-.form-container{
-    display: inline-block;
+.main-container-1{
+    display:inline-block;
+    vertical-align: top;
+    /* border:1px solid black; */
+    color:white;
+    width:50%;
+    height:100vh;
+    background-color:aqua;
+}
+.main-container-1-text{
+    margin-top:40vh;
+    text-align:center;
+}
+.main-container-1-text ul li{
+    list-style: none;
+}
+.main-container-2{
+    text-align:center;
+    display:inline-block;
     vertical-align: top;
     border:1px solid black;
+    width:50%;
+    height:100vh;
+}
+.register-form-container, .login-form-container{
+    /* display: inline-block;
+    vertical-align: top; */
+    border:1px solid black;
+}
+.register-container{
+    margin-top:25vh;
+}
+.hide{
+    opacity:0;
 }
