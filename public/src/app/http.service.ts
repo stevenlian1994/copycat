@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+// import { Observable } from 'rxjs/Observable';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-
+    isLoggedIn = false
+    dict = {"isLoggedIn": 'string'}
+    // dict2 = new Observable<Object>
     constructor(private _http: HttpClient){}
 
     getPosts(){
@@ -25,6 +28,16 @@ export class HttpService {
         console.log('inside service', userLogin)
         return this._http.post('/loginUser/', userLogin )
     }
-
+    checkLogin(){
+        if(localStorage.getItem("user") !== null){
+            this.isLoggedIn = true;
+        } else {
+            this.isLoggedIn = false; 
+        }
+        console.log("is user logged in?:", this.isLoggedIn)
+        return this.isLoggedIn
+        // this.dict["isLoggedIn"]  = this.isLoggedIn
+        // return this.dict2
+    }
 }
 

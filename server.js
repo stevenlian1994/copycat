@@ -8,7 +8,7 @@ var mysql = require('mysql')
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password:'root',
+    password:'[root]',
     database: 'copycat'
 })
 
@@ -49,6 +49,7 @@ app.post('/createUser', function(req,res){
     })
 })
 
+
 app.all("*", (req,res,next) => {
     res.sendFile(path.resolve("./public/dist/public/index.html"))
 });
@@ -56,3 +57,4 @@ app.all("*", (req,res,next) => {
 var server = app.listen(8000, function(){
     console.log("listening on port 8000")
 })
+

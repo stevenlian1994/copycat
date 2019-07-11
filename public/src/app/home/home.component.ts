@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../http.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,28 +11,25 @@ import { HttpService } from '../http.service';
 export class HomeComponent implements OnInit {
     newUser = {username: '', password: '', firstName: '', lastName: ''};
     userLogin = {username: '', password: ''}
-    isLoggedIn = false;
-    public data:any=[];
-    constructor(private _httpService: HttpService){
+    public data:any;
+    @Output() isLoggedIn = false;
+    constructor(private _httpService: HttpService, private router: Router, private _authService: AuthService){
     }
 
   ngOnInit() {
-      this.checkLogin();
+    console.log(
+        "token",
+        this._authService.isAuthenticated()
+    )
+    this.isLoggedIn = this._authService.isAuthenticated();
+      console.log("inside homecomp")
   }
-  checkLogin(){
-    console.log(localStorage.getItem("user"))
-    if(localStorage.getItem("user") !== null){
-        this.isLoggedIn = true;
-    } else {
-        this.isLoggedIn = false; 
-    }
-    console.log(this.isLoggedIn)
-  }
+
   createUser(){
     let tempObservable = this._httpService.createUser(this.newUser)
     tempObservable.subscribe(data => {
         localStorage.setItem("user", data["id"])
-        this.checkLogin()
+        this._authService.login();
     }
         // create new user in db and return that user with their id to be stored in session
         );
@@ -44,14 +43,15 @@ export class HomeComponent implements OnInit {
         // create new user in db and return that user with their id to be stored in session
         // console.log("this is userlogin from db:", data['id'])
         localStorage.setItem("user", data["id"])
-        this.checkLogin()
-        }
+        this._authService.login();
+        this.router.navigate(['/dashboard']);
+    }
     );
     this.userLogin = {username: '', password: ''}
   }
   logoutUser(){
       localStorage.clear()
-      this.checkLogin();
+      this._authService.logout();
   }
 
 }
