@@ -2,3 +2,10 @@
     border: 1px solid black;
     height:100vh;
 }
+.posts-column{
+    overflow: scroll;
+}
+.post-container{
+    border:1px solid black;
+    list-style: none;
+}

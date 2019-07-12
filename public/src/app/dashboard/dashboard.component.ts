@@ -19,11 +19,14 @@ export class DashboardComponent implements OnInit {
     let myObservable = this._httpService.getPosts();
     myObservable.subscribe(data=>{
         this.allPosts = data;
+        for(var i = 0; i<this.allPosts.length; i++){
+            this.allPosts[i]['age'] = this.timeConversion(new Date().getTime() - new Date(this.allPosts[i]['created_at']).getTime());
+        }
         console.log(this.allPosts);
-    }
-    )
+    })
 
   }
+
     logoutUser(){
     localStorage.clear()
     this._authService.logout();
@@ -36,7 +39,9 @@ export class DashboardComponent implements OnInit {
     // now add to mysql
     let tempObservable = this._httpService.createPost(this.newPost)
     tempObservable.subscribe(data => {
-        console.log("Got our posts!", data);
+        console.log("Got our post!", data);
+        data['age'] = 'Now';
+        data['username'] = localStorage.getItem("username")
         this.allPosts.push(data);
         // this.allPosts.append(data)
         // // STEP 2: CREATE THE TAG AND RETURN TAG ID
@@ -53,6 +58,22 @@ export class DashboardComponent implements OnInit {
     let tempObservable = this._httpService.createTag(this.newTag)
     tempObservable.subscribe(data => console.log("Got our posts!", data));
     this.newTag = {title: ''}
+    }
+    
+    timeConversion(millisec) {
+        var seconds = (millisec / 1000).toFixed(1);
+        var minutes = (millisec / (1000 * 60)).toFixed(1);
+        var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+        var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+        if (parseInt(seconds) < 60) {
+            return seconds + " Sec";
+        } else if (parseInt(minutes) < 60) {
+            return minutes + " Min";
+        } else if (parseInt(hours) < 24) {
+            return hours + " Hrs";
+        } else {
+            return days + " Days"
+        }
     }
 
 }

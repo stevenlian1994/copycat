@@ -26,12 +26,25 @@ app.post('/loginUser', function(req,res){
 })
 
 app.get('/getPosts', function(req,res){
-    connection.query("SELECT * FROM posts", function(err, results){
+    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username FROM posts LEFT OUTER JOIN users ON posts.users_id = users.id", function(err, results){
         res.json(results)
     })
+app.post('/getTags', function(req,res){
+    // find all tags for post by post_id
+    // console.log('this is tags:', req.body);
+    res.json({"hello": "world"})
+    // connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, rows, fields){
+    //     res.json(req.body);
+    // } )
+
+
+    
+})
+
+
 })
 app.post('/createPost', function(req,res){
-    connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, results){
+    connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, rows, fields){
         res.json(req.body);
     } )
     // res.json({'no object':'to send back yet'})

@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit {
         // create new user in db and return that user with their id to be stored in session
         // console.log("this is userlogin from db:", data['id'])
         localStorage.setItem("user", data["id"])
+        localStorage.setItem("username", data["username"])
         this._authService.login();
         this.router.navigate(['/dashboard']);
     }
@@ -60,5 +61,4 @@ export class HomeComponent implements OnInit {
       localStorage.clear()
       this._authService.logout();
   }
-
 }

@@ -1,8 +1,9 @@
 TODO: 
     -Ian is working on the search bar
+    
     -connie and steven is working on the post with tags
         -make the post appear immediately on the dashboard
-        
+
     1. create the post 
         -and return the post_id to the component
     2. create the tag (if it doesnt exist yet)<--complicated

@@ -10,7 +10,7 @@
                     <label> Tags:
                         <textarea [(ngModel)]="newTag.title" name="newTag.title">
                         </textarea>
-                    </label>
+                    </label><br>
                 <input type="submit" value="submit">
             </form>
 
@@ -25,11 +25,19 @@
 
         <button (click)="logoutUser()">Logout</button>
     </div>
-    <div class="col dashboard">
+    <div class="col posts-column">
         <p>Dashboard</p>
         <ul>
-            <li *ngFor="let post of allPosts">
-                {{post['content']}}
+            <li class="post-container" *ngFor="let post of allPosts.reverse()">
+                <p>
+                    <b>{{post['username']}}</b> @{{post['username']}} - {{post['age']}}
+                </p>
+                <p>
+                    content: {{post['content']}}
+                </p>
+                <p>
+                    tags: 
+                </p>
             </li>
             </ul>
     </div>

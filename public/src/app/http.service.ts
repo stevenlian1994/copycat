@@ -14,6 +14,9 @@ export class HttpService {
     getPosts(){
         return this._http.get('/getPosts')
     }
+    getTags(postId){
+        return this._http.post('/getTags', postId)
+    }
     
     createPost(newPost){
         return this._http.post('/createPost', newPost)
