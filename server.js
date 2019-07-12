@@ -67,9 +67,15 @@ app.post('/createPost', function(req,res){
     
 
 app.post('/createTag', function(req,res){
-    connection.query(`INSERT INTO tags (title) VALUES ('${req.body.title}');`, function(err, rows, fields ){
+     connection.query(`SELECT * FROM tags WHERE title= '${req.body.title}'`,function(err, results){
+        if (results!= null){
+         res.json (results)}
+        else {
+        }
+        connection.query(`INSERT INTO tags (title) VALUES ('${req.body.title}');`, function(err, rows, fields ){
         console.log(rows.insertId);
         res.json({"id":rows.insertId, "body":req.body})
+    })
 })
 })
 app.post('/createUser', function(req,res){
