@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
     allPostsReversed = [];
     newPost = {content: ''}
     newTag = {title: ''}
-    newPostTag={'posts_id':'', 'tags_id':''}
+    newPostTag={'posts_id':''}
     newTagPlaceholder
 
 
@@ -31,62 +31,62 @@ export class DashboardComponent implements OnInit {
     })
   }
   createPost(){
-    // // STEP 1: CREATE THE POST AND RETURN POST ID
-    // this.newPost['users_id'] = localStorage.getItem("user"); 
-    // // now add to mysql
-    // let tempObservable = this._httpService.createPost(this.newPost)
-    // tempObservable.subscribe(data => {
-    //   data['username'] = localStorage.getItem("username")
-    //   data['age'] = 'Now';
-    //   data['content'] = data['body']['content']
-    //   console.log("Got our post:", data);
-    //   // this.allPosts.push(data);
-    //   this.newTagPlaceholder = data
-    //   console.log(this.newTagPlaceholder)
-    //   // this.allPosts.push(data);
-    //   // this.allPostsReversed = this.allPosts
-    //   this.allPostsReversed = this.allPosts.slice().reverse()
-    //   this.newPostTag['posts_id'] = data["id"]; 
-    //   // STEP 2
-    //   let tempObservable2 = this._httpService.createTag(this.newTag); 
-    //   tempObservable2.subscribe(data =>{
-    //     this.newPostTag['tags_id'] = data["id"]; 
-    //     console.log("Got our tag:", data);
-    //     this.newTagPlaceholder['tags'] = data['body']['title']
-    //     this.allPosts.push(this.newTagPlaceholder);
-    //     this.setAllPostsReversed()
-    //     // STEP 3
-    //     let tempObservable3 = this._httpService.getPostsTags(this.newPostTag); 
-    //     tempObservable3.subscribe(data =>{
-    //     console.log("Got POSTTAG", data);
-    //     })
-    //   })
-    // })
-
-    // TEST hashtags
+    // STEP 1: CREATE THE POST AND RETURN POST ID
     this.newPost['users_id'] = localStorage.getItem("user"); 
-    console.log(this.newPost)
-    // console.log(this.newPost['content'])
-    var content = this.newPost['content']
-    var hashIndexes = {}
-    var arrayOfHash = []
-    for(var i = 0; i < content.length; i++){
-      if(content[i] == "#"){
-        hashIndexes[i] = 1
-        for(var j = i; j<content.length;j++){
-          if(content[j] == " "){
-            hashIndexes[i] = j
+    // now add to mysql
+    let tempObservable = this._httpService.createPost(this.newPost)
+    tempObservable.subscribe(data => {
+      data['username'] = localStorage.getItem("username")
+      data['age'] = 'Now';
+      data['content'] = data['body']['content']
+      console.log("Got our post:", data);
+      // this.allPosts.push(data);
+      this.newTagPlaceholder = data
+      console.log(this.newTagPlaceholder)
+      // this.allPosts.push(data);
+      // this.allPostsReversed = this.allPosts
+      this.allPostsReversed = this.allPosts.slice().reverse()
+      this.newPostTag['posts_id'] = data["id"]; 
+      // STEP 2
+        // Find all hashtags
+        this.newPost['users_id'] = localStorage.getItem("user"); 
+        console.log(this.newPost)
+        // console.log(this.newPost['content'])
+        var content = this.newPost['content']
+        var hashIndexes = {}
+        var allTags = []
+        for(var i = 0; i < content.length; i++){
+          if(content[i] == "#"){
+            hashIndexes[i] = 1
+            for(var j = i; j<content.length;j++){
+              if(content[j] == " "){
+                hashIndexes[i] = j
+              }
+            }
+            if(hashIndexes[i] == 1){
+              hashIndexes[i] = j
+            }
+            allTags.push(content.substring(i+1,hashIndexes[i]))
           }
         }
-        if(hashIndexes[i] == 1){
-          hashIndexes[i] = j
-        }
-        console.log(content.substring(i,hashIndexes[i]))
-        // str.substring(1, 4);
-      }
-    }
 
-    // goal is array of hashtags
+
+      let tempObservable2 = this._httpService.createTag(allTags); 
+      tempObservable2.subscribe(data =>{
+        this.newPostTag['tag_ids'] = data
+        console.log("Got our tag:", data);
+        // this.newTagPlaceholder['tags'] = data['body']['title']
+        // this.allPosts.push(this.newTagPlaceholder);
+        // this.setAllPostsReversed()
+        // STEP 3
+        let tempObservable3 = this._httpService.getPostsTags(this.newPostTag); 
+              tempObservable3.subscribe(data =>{
+              console.log("Got POSTTAG", data);
+          })
+      })
+    })
+
+
 
 
 
