@@ -30,15 +30,24 @@ app.get('/getPosts', function(req,res){
         res.json(results)
     })
 })
+
 app.post('/createPost', function(req,res){
-    connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, results){
-        res.json(req.body);
-    } )
-    // res.json({'no object':'to send back yet'})
-})
+    // connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, results){
+    //     res.json(req.body);
+
+    connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');` , function(err, rows, fields) {
+        console.log(rows.insertId);
+        res.json({"id":rows.insertId, "body":req.body})
+    });
+        // connection.query(`{
+} )
+    
+
 app.post('/createTag', function(req,res){
-    connection.query(`INSERT INTO tags (title) VALUES ('${req.body.content} ');` )
-    res.json({'no object':'to send back yet'})
+    connection.query(`INSERT INTO tags (title) VALUES ('${req.body.content} ');`, function(err, rows, fields ){
+        console.log(rows.insertId);
+        res.json({"id":rows.insertId, "body":req.body})
+})
 })
 app.post('/createUser', function(req,res){
     connection.query(`INSERT INTO users (username, password, firstName, lastName) VALUES ('${req.body.username}', 
@@ -51,6 +60,11 @@ app.post('/createUser', function(req,res){
     })
 })
 
+app.post('/getPostsTags', function(req,res){
+    connection.query(`INSERT INTO posts_has_tags (posts_id, tags_id) VALUES ('${req.body.posts_id}, ${req.body.tags_id});`,function(err, results){
+        res.json(results)
+    })
+})
 
 app.all("*", (req,res,next) => {
     res.sendFile(path.resolve("./public/dist/public/index.html"))
@@ -59,4 +73,5 @@ app.all("*", (req,res,next) => {
 var server = app.listen(8000, function(){
     console.log("listening on port 8000")
 })
+
 

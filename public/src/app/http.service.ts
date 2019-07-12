@@ -40,5 +40,9 @@ export class HttpService {
         // this.dict["isLoggedIn"]  = this.isLoggedIn
         // return this.dict2
     }
+
+    getPostsTags(newPostTag){
+        return this._http.post('/getPostsTags', newPostTag)
+    }
 }
 
