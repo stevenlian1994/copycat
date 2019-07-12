@@ -74,15 +74,15 @@ export class DashboardComponent implements OnInit {
       let tempObservable2 = this._httpService.createTag(allTags); 
       tempObservable2.subscribe(data =>{
         this.newPostTag['tag_ids'] = data
-        console.log("Got our tag:", data);
+        console.log("returned from obs2:", data);
         // this.newTagPlaceholder['tags'] = data['body']['title']
         // this.allPosts.push(this.newTagPlaceholder);
         // this.setAllPostsReversed()
         // STEP 3
-        let tempObservable3 = this._httpService.getPostsTags(this.newPostTag); 
-              tempObservable3.subscribe(data =>{
-              console.log("Got POSTTAG", data);
-          })
+        // let tempObservable3 = this._httpService.getPostsTags(this.newPostTag); 
+        //       tempObservable3.subscribe(data =>{
+        //       console.log("Got POSTTAG", data);
+        //   })
       })
     })
 

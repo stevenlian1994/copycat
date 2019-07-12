@@ -53,17 +53,41 @@ app.post('/createTag', function(req,res){
   console.log('inside server', req.body)
   console.log(req.body.length)
   var arr = []
+
+  
   for(var i = 0; i < req.body.length; i++){
-    connection.query(`INSERT INTO tags (title) VALUES ('${req.body[i]}');`, function(err, rows, fields ){
-      // res.json({"id":rows.insertId, "body":req.body})
-          arr.push({"id":rows.insertId})
-          console.log('this is arr to return', arr)
-          if(arr.length == req.body.length){
-            res.json(arr)
-          }
-    })
+    // connection.query(`INSERT INTO tags (title) VALUES ('${req.body[i]}');`, function(err, rows, fields ){
+    //   // res.json({"id":rows.insertId, "body":req.body})
+    //       arr.push({"id":rows.insertId})
+    //       console.log('this is arr to return', arr)
+    //       if(arr.length == req.body.length){
+    //         res.json(arr)
+    //       }
+    // })
+
+    connection.query(`SELECT * FROM tags WHERE title= '${req.body[i]}'`,function(err, results){
+      console.log('here are the results:', results)
+       if (results.length == 0){
+        connection.query(`INSERT INTO tags (title) VALUES ('${req.body[i]}');`, function(err, rows, fields ){
+          // res.json({"id":rows.insertId, "body":req.body})
+              arr.push({"id":rows.insertId})
+              console.log('this is arr to return', arr)
+              if(arr.length == req.body.length){
+                res.json(arr)
+              }
+        })
+         // console.log('the tag alrdy exists')
+         //   res.json (results)
+        }
+        else {
+          console.log('id:', results[0]['id'])
+       }
+   })
   }
 })
+
+
+
 app.post('/createUser', function(req,res){
     connection.query(`INSERT INTO users (username, password, firstName, lastName) VALUES ('${req.body.username}', 
     '${req.body.password}' , '${req.body.firstName}', '${req.body.lastName}');`)
