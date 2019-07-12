@@ -5,12 +5,12 @@
 
             <form (submit)="createPost()">
                 <label> Content:
-                        <input [(ngModel)]="newPost.content" type="text" name="newPost.content">
-                    </label><br>
-                    <label> Tags:
+                    <textarea [(ngModel)]="newPost.content" type="text" name="newPost.content">
+                </label><br>
+                    <!-- <label> Tags:
                         <textarea [(ngModel)]="newTag.title" name="newTag.title">
                         </textarea>
-                    </label><br>
+                    </label><br> -->
                 <input type="submit" value="submit">
             </form>
 
@@ -37,6 +37,10 @@
                 </p>
                 <p>
                     tags: 
+                    <!-- <li *ngFor="let tag of post['tags']">
+hi
+                    </li>  -->
+                    {{post['tags']}}
                 </p>
             </li>
             </ul>

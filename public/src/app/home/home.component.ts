@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
     let tempObservable = this._httpService.createUser(this.newUser)
     tempObservable.subscribe(data => {
         localStorage.setItem("user", data["id"])
+        localStorage.setItem("username", data["username"])
         this._authService.login();
         this.router.navigate(['/dashboard']);
     }

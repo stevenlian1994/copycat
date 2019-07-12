@@ -26,23 +26,33 @@ app.post('/loginUser', function(req,res){
 })
 
 app.get('/getPosts', function(req,res){
-    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username FROM posts LEFT OUTER JOIN users ON posts.users_id = users.id", function(err, results){
+    // connection.query("SELECT posts.id, posts.content, posts.created_at, users.username FROM posts LEFT OUTER JOIN users ON posts.users_id = users.id", function(err, results){
+    //     res.json(results)
+    // })
+
+    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username,JSON_ARRAYAGG(tags.title) as tags FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
         res.json(results)
     })
-app.post('/getTags', function(req,res){
-    // find all tags for post by post_id
-    // console.log('this is tags:', req.body);
-    res.json({"hello": "world"})
-    // connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, rows, fields){
-    //     res.json(req.body);
-    // } )
+
+
+
+})
+
+
+// app.post('/getTags', function(req,res){
+//     // find all tags for post by post_id
+//     // console.log('this is tags:', req.body);
+//     res.json({"hello": "world"})
+//     // connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, rows, fields){
+//     //     res.json(req.body);
+//     // } )
 
 
     
-})
+// })
 
 
-})
+// })
 
 app.post('/createPost', function(req,res){
     // connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, results){
@@ -57,7 +67,7 @@ app.post('/createPost', function(req,res){
     
 
 app.post('/createTag', function(req,res){
-    connection.query(`INSERT INTO tags (title) VALUES ('${req.body.content} ');`, function(err, rows, fields ){
+    connection.query(`INSERT INTO tags (title) VALUES ('${req.body.title}');`, function(err, rows, fields ){
         console.log(rows.insertId);
         res.json({"id":rows.insertId, "body":req.body})
 })
