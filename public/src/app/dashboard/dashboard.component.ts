@@ -9,8 +9,11 @@ import { AuthService } from '../services/auth.service';
 })
 export class DashboardComponent implements OnInit {
     allPosts : any;
+    allPostsReversed: any;
     newPost = {content: ''}
     newTag = {title: ''}
+    newPostTag={'posts_id':'', 'tags_id':''}
+
 
   constructor(private _httpService: HttpService, private _authService: AuthService) { }
 
@@ -23,43 +26,44 @@ export class DashboardComponent implements OnInit {
             this.allPosts[i]['age'] = this.timeConversion(new Date().getTime() - new Date(this.allPosts[i]['created_at']).getTime());
         }
         console.log(this.allPosts);
+        
+        this.allPostsReversed = this.allPosts.slice().reverse()
+        // this.allPostsReversed.reverse()
     })
-
   }
-
-    logoutUser(){
+  logoutUser(){
     localStorage.clear()
     this._authService.logout();
     }
-
     createPost(){
         // STEP 1: CREATE THE POST AND RETURN POST ID
-        console.log("this is newtag title:", this.newTag.title)
-        this.newPost['users_id'] = localStorage.getItem("user")
+        this.newPost['users_id'] = localStorage.getItem("user"); 
     // now add to mysql
-    let tempObservable = this._httpService.createPost(this.newPost)
-    tempObservable.subscribe(data => {
-        console.log("Got our post!", data);
-        data['age'] = 'Now';
-        data['username'] = localStorage.getItem("username")
-        this.allPosts.push(data);
-        // this.allPosts.append(data)
-        // // STEP 2: CREATE THE TAG AND RETURN TAG ID
-        // let tempObservable2 = this._httpService.createTag(this.newTag)
-        // tempObservable2.subscribe(data =>{
-        //     console.log("Got our tag");
-        //     // another observable
-        //     // STEP 3: INSERT BOTH IDS INTO POST_HAS_TAGS
-        // })
-    });
-    }
+        let tempObservable = this._httpService.createPost(this.newPost)
+        tempObservable.subscribe(data => {
+            console.log("Got our post:", data);
+            data['age'] = 'Now';
+            data['username'] = localStorage.getItem("username")
+            data['content'] = data['body']['content']
+            // this.allPosts.push(data);
+            this.allPosts.push(data);
 
-    createTag(){
-    let tempObservable = this._httpService.createTag(this.newTag)
-    tempObservable.subscribe(data => console.log("Got our posts!", data));
-    this.newTag = {title: ''}
-    }
-    
+            // this.allPostsReversed = this.allPosts
+            this.allPostsReversed = this.allPosts.slice().reverse()
+            this.newPostTag['posts_id'] = data["id"]; 
+            // STEP 2
+            let tempObservable2 = this._httpService.createTag(this.newTag); 
+            tempObservable2.subscribe(data =>{
+            this.newPostTag['tags_id'] = data["id"]; 
+            console.log("Got our tag:", data);
+                // STEP 3
+                let tempObservable3 = this._httpService.getPostsTags(this.newPostTag); 
+                tempObservable3.subscribe(data =>{
+                console.log("Got POSTTAG", data);
+                })
+        })
+    })
+  }
     timeConversion(millisec) {
         var seconds = (millisec / 1000).toFixed(1);
         var minutes = (millisec / (1000 * 60)).toFixed(1);
@@ -75,5 +79,4 @@ export class DashboardComponent implements OnInit {
             return days + " Days"
         }
     }
-
 }
