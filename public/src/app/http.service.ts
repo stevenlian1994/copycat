@@ -21,8 +21,8 @@ export class HttpService {
     createPost(newPost){
         return this._http.post('/createPost', newPost)
     }
-    createTag(newTag){
-        return this._http.post('/createTag', newTag)
+    createTags(newTags){
+        return this._http.post('/createTags', newTags)
     }
     createUser(newUser){
         console.log('inside service', newUser)

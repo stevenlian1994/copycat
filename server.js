@@ -49,13 +49,27 @@ app.post('/createPost', function(req,res){
 } )
     
 
-app.post('/createTag', function(req,res){
+app.post('/createTags', function(req,res){
   console.log('inside server', req.body)
-  console.log(req.body.length)
+  console.log(typeof req.body) 
+  console.log(typeof req.body[0]) 
+  // string
+  console.log( req.body[0]) 
+  console.log('length of req.body', req.body.length)
+  var x = []
   var arr = []
-
-  
-  for(var i = 0; i < req.body.length; i++){
+  var newString = ""
+  for(var i = 0; i < req.body.length-1; i++){
+    x.push(req.body[i])
+    newString = newString.concat(`'${req.body[i]}', `)
+    // newString.push(`'${req.body[i]},'`)
+  }
+  newString = newString.concat(`'${req.body[i]}'`)
+  console.log(newString)
+  console.log('this is x', x)
+  console.log(typeof x)
+  // for each tag check if it already exists, else create
+  // for(var i = 0; i < req.body.length; i++){
     // connection.query(`INSERT INTO tags (title) VALUES ('${req.body[i]}');`, function(err, rows, fields ){
     //   // res.json({"id":rows.insertId, "body":req.body})
     //       arr.push({"id":rows.insertId})
@@ -64,26 +78,22 @@ app.post('/createTag', function(req,res){
     //         res.json(arr)
     //       }
     // })
+    console.log('inside forloop', newString)
+    // inside query, cannot use previous variables..???
+    // new connection query : 
 
-    connection.query(`SELECT * FROM tags WHERE title= '${req.body[i]}'`,function(err, results){
-      console.log('here are the results:', results)
-       if (results.length == 0){
-        connection.query(`INSERT INTO tags (title) VALUES ('${req.body[i]}');`, function(err, rows, fields ){
-          // res.json({"id":rows.insertId, "body":req.body})
-              arr.push({"id":rows.insertId})
-              console.log('this is arr to return', arr)
-              if(arr.length == req.body.length){
-                res.json(arr)
-              }
-        })
-         // console.log('the tag alrdy exists')
-         //   res.json (results)
-        }
-        else {
-          console.log('id:', results[0]['id'])
-       }
-   })
-  }
+    // INSERT INTO tags (title) SELECT title FROM tags WHERE NOT EXISTS (Select title From tags WHERE tags.id = tags.id)
+
+
+    connection.query(`INSERT INTO tags (title) VALUES ('def'), ('efg')`, function(err, rows, fields){
+      console.log('here are the results:', rows)
+      console.log('here are the results:', fields)
+      // if(i == req.body.length){
+      //   console.log("return json")
+        // res.json({"tags_id": rows.insertId})
+      // }
+    })
+  // }
 })
 
 

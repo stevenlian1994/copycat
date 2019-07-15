@@ -1,54 +1,26 @@
 <div class="row">
-    <div class="col">
-        <p>Navbar</p>
-        <h1>Submit a post</h1>
-
-            <form (submit)="createPost()">
-                <label> Content:
-                    <textarea [(ngModel)]="newPost.content" type="text" name="newPost.content">
-                </label><br>
-                    <!-- <label> Tags:
-                        <textarea [(ngModel)]="newTag.title" name="newTag.title">
-                        </textarea>
-                    </label><br> -->
-                <input type="submit" value="submit">
-            </form>
-
-            <!-- <h1>Submit a tag</h1>
-            <form (submit)="createTag()">
-                <label> Title:
-                    <input [(ngModel)]="newTag.content" type="text" name="newTag.title">
-                </label><br>
-                <input type="submit" value="submit">
-            </form> -->
-
-
-        <button (click)="logoutUser()">Logout</button>
-    </div>
-    <div class="col posts-column">
-        <p>Dashboard</p>
-        <ul>
-            <li class="post-container" *ngFor="let post of allPostsReversed">
-                <p>
-                    <b>{{post['username']}}</b> @{{post['username']}} - {{post['age']}}
-                </p>
-                <p>
-                    content: {{post['content']}}
-                </p>
-                <p>
-                    tags: 
-                    <!-- <li *ngFor="let tag of post['tags']">
-hi
-                    </li>  -->
-                    {{post['tags']}}
-                </p>
-            </li>
-            </ul>
-    </div>
-    <div class="col">
-        <p>Searchbar</p>
-    </div>
+  <div class="col">
+    <p>Navbar</p>
+    <h1>Submit a post</h1>
+        <form (submit)="createPost()">
+          <label> Content:
+            <textarea rows="4" cols="50" [(ngModel)] = "newPost.content" type="text" name="newPost.content"></textarea>
+          </label><br>
+            <input type="submit" value="submit">
+        </form>
+    <button (click)="logoutUser()">Logout</button>
+  </div>
+  <div class="col posts-column">
+      <p>Dashboard</p>
+      <ul>
+          <li class="post-container" *ngFor="let post of allPostsReversed">
+              <p><b>{{post['username']}}</b> @{{post['username']}} - {{post['age']}}</p>
+              <p>content: {{post['content']}}</p>
+              <p>tags: {{post['tags']}}</p>
+          </li>
+      </ul>
+  </div>
+  <div class="col">
+      <p>Searchbar</p>
+  </div>
 </div>
-
-
-

@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
     allPosts : any;
     allPostsReversed = [];
     newPost = {content: ''}
-    newTag = {title: ''}
+    // newTag = {title: ''}
     newPostTag={'posts_id':''}
     newTagPlaceholder
 
@@ -30,51 +30,47 @@ export class DashboardComponent implements OnInit {
       this.setAllPostsReversed()
     })
   }
+  // FIX THIS
+  addNewestPost(data){
+    data['username'] = localStorage.getItem("username")
+    data['age'] = 'Now';
+    data['content'] = data['body']['content']
+    this.newTagPlaceholder = data
+    // console.log(this.newTagPlaceholder)
+        // this.allPosts.push(data);
+    // this.allPostsReversed = this.allPosts
+    this.allPostsReversed = this.allPosts.slice().reverse()
+    this.newPostTag['posts_id'] = data["id"]; 
+  }
+
+
   createPost(){
     // STEP 1: CREATE THE POST AND RETURN POST ID
     this.newPost['users_id'] = localStorage.getItem("user"); 
-    // now add to mysql
     let tempObservable = this._httpService.createPost(this.newPost)
     tempObservable.subscribe(data => {
-      data['username'] = localStorage.getItem("username")
-      data['age'] = 'Now';
-      data['content'] = data['body']['content']
-      console.log("Got our post:", data);
-      // this.allPosts.push(data);
-      this.newTagPlaceholder = data
-      console.log(this.newTagPlaceholder)
-      // this.allPosts.push(data);
-      // this.allPostsReversed = this.allPosts
-      this.allPostsReversed = this.allPosts.slice().reverse()
-      this.newPostTag['posts_id'] = data["id"]; 
-      // STEP 2
-        // Find all hashtags
-        this.newPost['users_id'] = localStorage.getItem("user"); 
-        console.log(this.newPost)
-        // console.log(this.newPost['content'])
-        var content = this.newPost['content']
-        var hashIndexes = {}
-        var allTags = []
-        for(var i = 0; i < content.length; i++){
-          if(content[i] == "#"){
-            hashIndexes[i] = 1
-            for(var j = i; j<content.length;j++){
-              if(content[j] == " "){
-                hashIndexes[i] = j
-              }
-            }
-            if(hashIndexes[i] == 1){
-              hashIndexes[i] = j
-            }
-            allTags.push(content.substring(i+1,hashIndexes[i]))
-          }
-        }
+      this.newPostTag['posts_id'] = data['id'] //saving post id for post_has_tags query
+      // this.addNewestPost(data) FIX TAGS BEFORE WORKING ON THIS
+      // STEP 2 - Find all hashtags in content of post
+        var allTags = this.findHashTags(this.newPost['content'])
+        console.log('this is all tags:', allTags) 
+        //  allTags is an array of strings, but createTags is creating undefined titles for tags in db
+      // STEP 3 - Create all tags if needed and return tag ids
+        this.createTags(allTags)
+    })
+  }
+  createTags(allTags){
+    // STEP 1: call the server, sql query to check if tags already exists, return 
+    console.log('inside createTags:', typeof allTags)
+    console.log('inside createTags:', allTags.length)
+    // for(var i = 0; i<allTags.length;i++){
 
-
-      let tempObservable2 = this._httpService.createTag(allTags); 
+      let tempObservable2 = this._httpService.createTags(allTags); 
       tempObservable2.subscribe(data =>{
-        this.newPostTag['tag_ids'] = data
-        console.log("returned from obs2:", data);
+        console.log("this is our data:", data)
+        // data returned needs to be array of tag ids
+        // this.newPostTag['tag_ids'] = data
+        // console.log("returned from obs2:", data);
         // this.newTagPlaceholder['tags'] = data['body']['title']
         // this.allPosts.push(this.newTagPlaceholder);
         // this.setAllPostsReversed()
@@ -84,20 +80,41 @@ export class DashboardComponent implements OnInit {
         //       console.log("Got POSTTAG", data);
         //   })
       })
-    })
+    }
+  // }
 
-
-
-
-
+  findHashTags(content){
+    var hashIndexes = {}
+    var allTags = []
+    for(var i = 0; i < content.length; i++){
+      if(content[i] == "#"){
+        hashIndexes[i] = 1
+        for(var j = i; j<content.length;j++){
+          if(content[j] == " "){
+            hashIndexes[i] = j
+          }
+        }
+        if(hashIndexes[i] == 1){
+          hashIndexes[i] = j
+        }
+        allTags.push(content.substring(i+1,hashIndexes[i]))
+      }
+    }
+    return allTags
   }
+
   setAllPostsReversed(){
     this.allPostsReversed = []
     for(var j = this.allPosts.length-1; j>-1; j--){
       this.allPostsReversed.push(this.allPosts[j])
     }
   }
-
+  
+  calculateAgeOfPosts(posts){
+    for(var i = 0; i<posts.length; i++){
+      posts[i]['age'] = this.timeConversion(new Date().getTime() - new Date(posts[i]['created_at']).getTime());
+    }
+  }
   timeConversion(millisec) {
     var seconds = (millisec / 1000).toFixed(1);
     var minutes = (millisec / (1000 * 60)).toFixed(1);
@@ -117,10 +134,5 @@ export class DashboardComponent implements OnInit {
     localStorage.clear()
     this._authService.logout();
   }
-  calculateAgeOfPosts(posts){
-    for(var i = 0; i<posts.length; i++){
-      posts[i]['age'] = this.timeConversion(new Date().getTime() - new Date(posts[i]['created_at']).getTime());
-  }
-  }
-
+// end of class
 }
