@@ -4,6 +4,7 @@ var bodyParser = require('body-parser')
 var path = require('path')
 app.use(express.static( __dirname + '/public/dist/public' ));
 app.use(bodyParser.json());
+
 var mysql = require('mysql')
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -26,58 +27,32 @@ app.post('/loginUser', function(req,res){
 })
 
 app.get('/getPosts', function(req,res){
-    // connection.query("SELECT posts.id, posts.content, posts.created_at, users.username FROM posts LEFT OUTER JOIN users ON posts.users_id = users.id", function(err, results){
-    //     res.json(results)
-    // })
-
     connection.query("SELECT posts.id, posts.content, posts.created_at, users.username,JSON_ARRAYAGG(tags.title) as tags FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
         res.json(results)
     })
-
-
-
 })
-
-
-// app.post('/getTags', function(req,res){
-//     // find all tags for post by post_id
-//     // console.log('this is tags:', req.body);
-//     res.json({"hello": "world"})
-//     // connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, rows, fields){
-//     //     res.json(req.body);
-//     // } )
-
-
-    
-// })
-
-
-// })
 
 app.post('/createPost', function(req,res){
-    // connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');`,function(err, results){
-    //     res.json(req.body);
-
+  console.log("inside createPost", req.body)
     connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');` , function(err, rows, fields) {
-        console.log(rows.insertId);
+      console.log('inside createPost', rows.insertId);
         res.json({"id":rows.insertId, "body":req.body})
     });
-        // connection.query(`{
 } )
-    
 
-app.post('/createTag', function(req,res){
-     connection.query(`SELECT * FROM tags WHERE title= '${req.body.title}'`,function(err, results){
-        if (results!= null){
-         res.json (results)}
-        else {
-        }
-        connection.query(`INSERT INTO tags (title) VALUES ('${req.body.title}');`, function(err, rows, fields ){
-        console.log(rows.insertId);
-        res.json({"id":rows.insertId, "body":req.body})
-    })
+app.post('/createTag/:postId', function(req,res){
+  // insert tags if not already in db; no cb required
+  connection.query(`INSERT IGNORE INTO tags (title) VALUES ('${req.body.newTag}');`);
+  // use get tag based on title and get the id
+  connection.query(`SELECT * FROM tags WHERE title='${req.body.newTag}';`, function(err, rows){
+    // sql query for creating the relationship
+    // console.log('inside select', rows[0]['id'])
+    connection.query(`INSERT INTO posts_has_tags (posts_id, tags_id) VALUES (${req.params.postId}, ${rows[0]['id']})`), function(err, rows, fields){
+      res.json({'hello':'there'})
+    }
+  })
 })
-})
+
 app.post('/createUser', function(req,res){
     connection.query(`INSERT INTO users (username, password, firstName, lastName) VALUES ('${req.body.username}', 
     '${req.body.password}' , '${req.body.firstName}', '${req.body.lastName}');`)
@@ -90,9 +65,13 @@ app.post('/createUser', function(req,res){
 })
 
 app.post('/getPostsTags', function(req,res){
-    connection.query(`INSERT INTO posts_has_tags (posts_id, tags_id) VALUES ('${req.body.posts_id}', '${req.body.tags_id}');`,function(err, results){
-        res.json(results)
+  for(var i = 0; i < req.body.tag_ids.length; i++){
+    connection.query(`INSERT INTO posts_has_tags (posts_id, tags_id) VALUES ('${req.body.posts_id}', '${req.body.tag_ids[i]['id']}');`,function(err, results){
+      if(i == req.body.length){
+        res.json('hello')
+      }
     })
+  }
 })
 
 app.all("*", (req,res,next) => {

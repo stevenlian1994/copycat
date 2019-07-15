@@ -1,3 +1,14 @@
+Todo:
+1. check status on posts
+  -submit : 
+    -it submits to db.
+    -doesnt clear field
+    -doesnt update dashboard
+
+
+Misc.
+Fix h-tml on navbar..
+
 TODO: 
     -Ian is working on the search bar
     
@@ -24,7 +35,8 @@ TODO: add post by logged in user
     : add login validation..
     : add show login/reg if not logged in and log out if logged in
 
-TODO:
+T
+ODO:
 -added localstorage, store user id after registering, add posts with user id
 -SHOW ALL posts on home page
 -relationship between tags and posts
