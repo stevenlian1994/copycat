@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 export class HttpService {
     isLoggedIn = false
     dict = {"isLoggedIn": 'string'}
-    // dict2 = new Observable<Object>
     constructor(private _http: HttpClient){}
 
     getPosts(){
@@ -21,15 +20,13 @@ export class HttpService {
     createPost(newPost){
         return this._http.post('/createPost', newPost)
     }
-    createTags(newTags){
-        return this._http.post('/createTags', newTags)
+    createTag(newTag, postId){
+      return this._http.post(`/createTag/${postId}`, {"newTag": newTag})
     }
     createUser(newUser){
-        console.log('inside service', newUser)
         return this._http.post('/createUser', newUser)
     }
     loginUser(userLogin){
-        console.log('inside service', userLogin)
         return this._http.post('/loginUser/', userLogin )
     }
     checkLogin(){

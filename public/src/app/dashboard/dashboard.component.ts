@@ -42,6 +42,9 @@ export class DashboardComponent implements OnInit {
     this.allPostsReversed = this.allPosts.slice().reverse()
     this.newPostTag['posts_id'] = data["id"]; 
   }
+  // getNewestPost(postId){
+
+  // }
 
 
   createPost(){
@@ -52,20 +55,24 @@ export class DashboardComponent implements OnInit {
       this.newPostTag['posts_id'] = data['id'] //saving post id for post_has_tags query
       // this.addNewestPost(data) FIX TAGS BEFORE WORKING ON THIS
       // STEP 2 - Find all hashtags in content of post
-        var allTags = this.findHashTags(this.newPost['content'])
-        console.log('this is all tags:', allTags) 
+        var allTags = this.findHashTags(this.newPost['content']) 
         //  allTags is an array of strings, but createTags is creating undefined titles for tags in db
       // STEP 3 - Create all tags if needed and return tag ids
-        this.createTags(allTags)
+      for(let tag of allTags){
+        this.createTag(tag, data['id'])
+      }  
+    // }
     })
+    // var allTags = this.findHashTags(this.newPost['content']) 
+    // console.log('this is all tags:', allTags) 
+    // console.log('this is all tags:', allTags[0]) 
+    // this.createTag(allTags[0])
   }
-  createTags(allTags){
+  createTag(tag, postId){
     // STEP 1: call the server, sql query to check if tags already exists, return 
-    console.log('inside createTags:', typeof allTags)
-    console.log('inside createTags:', allTags.length)
-    // for(var i = 0; i<allTags.length;i++){
-
-      let tempObservable2 = this._httpService.createTags(allTags); 
+    console.log('inside createTags:', typeof tag)
+    console.log('inside createTags:', tag)
+      let tempObservable2 = this._httpService.createTag(tag, postId); 
       tempObservable2.subscribe(data =>{
         console.log("this is our data:", data)
         // data returned needs to be array of tag ids
@@ -81,7 +88,6 @@ export class DashboardComponent implements OnInit {
         //   })
       })
     }
-  // }
 
   findHashTags(content){
     var hashIndexes = {}
