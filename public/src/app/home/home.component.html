@@ -4,61 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="styles.css"> 
+     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Jaldi|Reenie+Beanie&display=swap" rel="stylesheet">
     <title>CopyCat</title>
+    <script>
+        $(document).ready(function () {
+        $('.forgot-pass').click(function(event) {
+        $(".pr-wrap").toggleClass("show-pass-reset");
+        }); 
+
+        $('.pass-reset-submit').click(function(event) {
+        $(".pr-wrap").removeClass("show-pass-reset");
+        }); 
+        });
+    </script>
 </head>
 <body>
     <div class="main-container-1">
         <div class="main-container-1-text">
-            <h2>Copycat App</h2>
+            <h1><img class="logo" src="assets/img/copycatLogo1.png">Copycat App</h1>
             <ul>
                 <li><h4>Follow your interests. </h4></li>
                 <li><h4>Hear what people are talking about.</h4></li>
                 <li><h4>Join the conversation.</h4></li>
             </ul>
+            <img class= "image" src="https://images.unsplash.com/photo-1543269865-0a740d43b90c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"/>
         </div>
-
     </div>
-    <div class="main-container-2">
-        
-        
+    <div class="main-container-2">  
         <div class="login-form-container">
-            <form (submit)="loginUser()">
-                <label>Username: 
-                    <input [(ngModel)]="userLogin.username" type="text" name="userLogin.username">
-                </label>
-                <label>Password: 
-                    <input [(ngModel)]="userLogin.password" type="text" name="userLogin.password">
-                </label>
-                <input type="submit" value="Log In">
+            <form  id="login-container" class="form-horizontal" (submit)="loginUser()">
+                <div class="form-group">
+                    <!-- <label class="control-label col-sm-2" for="username">Username:</label>    -->
+                    <div class="col-sm-11">
+                        <input [(ngModel)]="userLogin.username" type="text" class="form-control" id="username" placeholder="Enter Username" name="userLogin.username">
+                    </div>
+                </div>
+                <div class="form-group"> 
+                    <div class="col-sm-11">          
+                        <input [(ngModel)]="userLogin.password"  class="form-control" id="pwd" placeholder="Enter password"type="text" name="userLogin.password">
+                    </div>
+                </div> 
+                <div class="form-group">        
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit"  class="btn">Log In</button>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="register-container">
             <p>See what's happening in the world right now</p>
             <p>Join Copycat today.</p>
-            <button class="toggleContainer">Sign Up</button>
+            <p>
+                <button class="toggleContainer">Sign Up</button>
+            </p>
             <div class="register-form-container hide">
-                Register New User
-                <form (submit)="createUser()">
-                    <label>Username: 
-                        <input [(ngModel)]="newUser.username" type="text" name="newUser.username">
-                    </label><br>
-                    <label>Password: 
-                            <input [(ngModel)]="newUser.password" type="text" name="newUser.password">
-                    </label><br>
-                    <label>First Name: 
-                        <input [(ngModel)]="newUser.firstName" type="text" name="newUser.firstName">
-                    </label><br>
-                    <label>Last Name: 
-                        <input [(ngModel)]="newUser.lastName" type="text" name="newUser.lastName">
-                    </label><br>
-                    <input type="submit" value="Register">
-                </form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="form-title">
+                                Register New User</p>
+                        <form (submit)="createUser()" class="login">
+                                <label>Username: 
+                                    <input [(ngModel)]="newUser.username" type="text" name="newUser.username">
+                                </label><br>
+                                <label>Password: 
+                                        <input [(ngModel)]="newUser.password" type="text" name="newUser.password">
+                                </label><br>
+                                <label>First Name: 
+                                    <input [(ngModel)]="newUser.firstName" type="text" name="newUser.firstName">
+                                </label><br>
+                                <label>Last Name: 
+                                    <input [(ngModel)]="newUser.lastName" type="text" name="newUser.lastName">
+                                </label><br>
+                                <input id="registerbtn" type="submit" value="Register" class="btn btn-success btn-sm" />
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-
+        </div> 
     </div>
-    
 </body>
 </html>

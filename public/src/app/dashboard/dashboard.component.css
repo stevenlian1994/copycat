@@ -1,11 +1,138 @@
+body{
+    font-family: 'Jaldi', sans-serif;
+}
+.row{
+    background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
+    background: linear-gradient(120deg, #000, #f0a6ca);
+}
 .col{
     border: 1px solid black;
-    height:100vh;
 }
-.posts-column{
+.col-sm{
     overflow: scroll;
+
 }
 .post-container{
     border:1px solid black;
     list-style: none;
+    margin: 7px;
+    padding:7px; 
+    border:none; 
+    box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
 }
+tr{
+    margin: 3px;
+}
+.panel-body{
+    margin: 10px; 
+}
+.header{
+    height: 120px; 
+    width: 100%; 
+    background-color:#F8F9F9;
+    position: relative; 
+    display: inline-block;
+}
+h3{
+    color: white;
+}
+h2{
+    font-family: 'Reenie Beanie', cursive;
+    
+}
+.card{
+    margin:30px 0px;
+    overflow: scroll;
+}
+.logo{
+    right: 90px; 
+    height: 60px; 
+    margin: 6px; 
+    right: 4px
+}
+.btn{
+    background-color:#00D0C2 ; 
+}
+.leftbox{
+    position: relative;
+      display: inline-block; 
+}
+.rightbox{
+      position: relative;
+      display: inline-block; 
+      vertical-align:center; 
+      float:right; 
+      margin:20px; 
+      
+}
+.rightbox1{
+    position: relative;
+    display: inline-block; 
+    vertical-align:top; 
+}
+.rightbox2{
+    position: relative;
+    display: inline-block; 
+    vertical-align:top; 
+}
+.centerbox{
+    text-align:center;
+    position: relative;
+    display: inline-block; 
+}
+
+#logoutbutton{
+    margin:0px 40px; 
+}
+.search {
+    width: 150px;
+    float:right; 
+    position: relative;
+    display: flex;
+    bottom: 2px; 
+    margin:0px 30px; 
+    background: #f2f2f2;
+    font-family: 'Open Sans', sans-serif;
+
+}
+.searchTerm{
+    /* blue- #00B4CC */
+    width: 250px;
+    border: 3px solid gray;
+    border-right: none;
+    padding: 5px;
+    height: 40px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+}
+.searchTerm:focus{
+    color: black;
+}
+
+.searchButton {
+    width: 40px;
+    height: 40px;
+    border: 1px solid gray;
+    background: gray;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+/* .wrap{
+/* width: 30%; */
+/* position: relative;
+vertical-align:middle; 
+float: right;  */
+/* top: 50%;
+/* left: 50%; */
+/* transform: translate(-50%, -50%); */
+
+span{
+    color: gray;
+}
+
