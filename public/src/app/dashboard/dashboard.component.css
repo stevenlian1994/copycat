@@ -11,23 +11,30 @@ body{
     background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
     background: linear-gradient(120deg, #000, #f0a6ca);
     margin: 0px auto; 
+    min-height: 1000px; 
 
 }
 
 #navBar{
     color: white; 
     font-size:40px;
-    margin:20px;
     border:none;
+    position: relative; 
+    display:inline-block;
+    font-family: 'Jaldi', sans-serif;
+
 
 }
-.col{
-    border: 1px solid black;
+.navbar1{
+    margin:20px; 
+    position: relative; 
+    display:inline-block;
+ 
 }
 .col-sm{
     overflow: scroll;
-
 }
+
 .space{
   display:inline;
   vertical-align:top;
@@ -39,12 +46,6 @@ body{
     padding:7px; 
     border:none; 
     box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
-}
-tr{
-    margin: 3px;
-}
-.panel-body{
-    margin: 10px; 
 }
 .header{
     height: 120px; 
@@ -58,11 +59,6 @@ h3{
 }
 h2{
     font-family: 'Reenie Beanie', cursive;
-    
-}
-.card{
-    margin:30px 0px;
-    overflow: scroll;
 }
 .logo{
     right: 90px; 
@@ -70,9 +66,7 @@ h2{
     margin: 6px; 
     right: 4px
 }
-.btn{
-    background-color:#00D0C2 ; 
-}
+
 .leftbox{
     position: relative;
       display: inline-block; 
@@ -103,6 +97,8 @@ h2{
 
 #logoutbutton{
     margin:0px 40px; 
+    background-color:white;
+    border-color: #00D0C2 ; 
 }
 .search {
     width: 150px;
@@ -155,4 +151,11 @@ float: right;  */
 span{
     color: gray;
 }
-
+.fa-home{
+    color:white; 
+    font-size:40px;  
+}
+.fa-user-circle{
+    color:white; 
+    font-size:40px; 
+}

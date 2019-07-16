@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <h3>Create a post</h3>
+    <form (submit)="createPost()">
+        <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
+        <button id="btn" type="submit">Post New Message</button>
+    </form>
+        <div class="card">
+        <table class="table table-hover shopping-cart-wrap">
+            <thead class="text-muted">
+                <tr>Dashboard</tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <div class="post-container" *ngFor="let post of allPostsReversed">
+                        <p>
+                            <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
+                        </p>
+                        <p>
+
+                          <span *ngFor="let word of post['content']">
+                            <!-- <div *ngIf="word[0] == '#'"></div> -->
+                            <!-- <ng-template class="space" #thenBlock>
+                              <div></div>
+                              <a class="space" href='#'>{{word}}</a> 
+                            </ng-template>
+                            <ng-template class="space" #elseBlock>
+                              <span class="space" >{{word}} </span>
+                            </ng-template> -->
+                            <span *ngIf="word[0] == '#'">
+                                <a href='#'>{{word}} </a> 
+                                <!-- code to render a large video block-->
+                            </span>
+                            <span *ngIf="word[0] != '#'">
+                                <span>{{word}} </span>
+                            </span>
+                            <!-- <div *ngIf="word[0] == '#'; else elseBlock">{{value}}</div> -->
+                            <!-- <ng-template #elseBlock>Content to render when value is null.</ng-template> -->
+                              <!-- content: {{post['content']}}. -->
+                              <!-- <a href="#" innerHTML="comment">Asdf</a> -->
+                              <!-- <div ng-bind-html="<a>asdf </a>"></div> -->
+                          </span>
+                        </p>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -5,9 +5,17 @@ Todo:
     -doesnt clear field
     -doesnt update dashboard
 
+. clean up component.ts
+
+2. fix time
+
+3. cleanup server.js, service, and dashboard
+4. return to be displayed
+  -maybe a method in component, grabNewest
 
 Misc.
-Fix h-tml on navbar..
+Fix h-tml on navbar.. DONE
+
 
 TODO: 
     -Ian is working on the search bar

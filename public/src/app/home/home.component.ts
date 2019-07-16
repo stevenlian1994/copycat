@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
         localStorage.setItem("user", data["id"])
         localStorage.setItem("username", data["username"])
         this._authService.login();
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard/newsfeed']);
     }
         // create new user in db and return that user with their id to be stored in session
         );
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
         localStorage.setItem("user", data["id"])
         localStorage.setItem("username", data["username"])
         this._authService.login();
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard/newsfeed']);
     }
     );
     this.userLogin = {username: '', password: ''}
