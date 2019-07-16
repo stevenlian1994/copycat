@@ -108,18 +108,18 @@ export class DashboardComponent implements OnInit {
     }
   }
   timeConversion(millisec) {
-    var seconds = (millisec / 1000).toFixed(1);
-    var minutes = (millisec / (1000 * 60)).toFixed(1);
-    var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
-    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
-    if (parseInt(seconds) < 60) {
-        return seconds + " Sec";
-    } else if (parseInt(minutes) < 60) {
-        return minutes + " Min";
+    // var seconds = (millisec / 1000).toFixed(0);
+    var minutes = (millisec / (1000 * 60)).toFixed(0);
+    var hours = (millisec / (1000 * 60 * 60)).toFixed(0);
+    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0);
+    // if (parseInt(seconds) < 60) {
+    //     return seconds + "s";
+     if (parseInt(minutes) < 60) {
+        return minutes + "m";
     } else if (parseInt(hours) < 24) {
-        return hours + " Hrs";
+        return hours + "h";
     } else {
-        return days + " Days"
+        return days + "d"
     }
   }
   logoutUser(){

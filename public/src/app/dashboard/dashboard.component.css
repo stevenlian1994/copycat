@@ -1,9 +1,25 @@
 body{
     font-family: 'Jaldi', sans-serif;
+    margin: 0px auto; 
+}
+.middle-column{
+    position:absolute;
+    margin: 0px auto;  
+
 }
 .row{
     background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
     background: linear-gradient(120deg, #000, #f0a6ca);
+    margin: 0px auto; 
+
+}
+
+#navBar{
+    color: white; 
+    font-size:40px;
+    margin:20px;
+    border:none;
+
 }
 .col{
     border: 1px solid black;
