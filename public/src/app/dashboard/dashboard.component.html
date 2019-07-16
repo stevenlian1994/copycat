@@ -10,104 +10,88 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Jaldi|Reenie+Beanie&display=swap" rel="stylesheet">
-
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="header">
-        <div class="leftbox">
-            <img class="logo" src="assets/img/copycatLogo1.png">  
-        </div>
-        <div class="centerbox">
-            <h2>Welcome to Copycat</h2>
-        </div>
-        <div class="rightbox">
-            <div class="rightbox2">
-                <div class="search"  >
-                    <input type="text" class="searchTerm" placeholder="Search">
-                    <button type="submit" class="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="rightbox1"><button id="logoutbutton" class="btn" (click)="logoutUser()" style="float:right">Logout</button></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="panel panel-default">
-                <div class="panel-body">    
-                    <h3>Create a post</h3>
-                    <form (submit)="createPost()">
-                        <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5" style="margin-bottom:10px;"></textarea>
-                        <button class="btn btn-info" type="submit">Post New Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <table class="table table-hover shopping-cart-wrap">
-                    <thead class="text-muted">
-                        <tr>Dashboard</tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <div class="post-container" *ngFor="let post of allPostsReversed">
-                                <p>
-                                    <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
-                                </p>
-                                <p>
-                                    content: {{post['content']}}
-                                </p>
-                                <p>
-                                    tags: {{post['tags']}}
-                                </p>
+                
+                <div class="header">
+                    <div class="leftbox">
+                        <img class="logo" src="assets/img/copycatLogo1.png">  
+                    </div>
+                    <div class="centerbox">
+                        <h2>Welcome to Copycat</h2>
+                    </div>
+                    <div class="rightbox">
+                        <div class="rightbox2">
+                            <div class="search"  >
+                                <input type="text" class="searchTerm" placeholder="Search">
+                                <button type="submit" class="searchButton">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </div>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-3">
-        </div>
-    </div>
-</body>
-</html>
+                        </div>
+                        <div class="rightbox1"><button id="logoutbutton" class="btn" (click)="logoutUser()" style="float:right">Logout</button></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-11">
+                    <div class="row">
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">   
+                                
+                                <div  class='span2 sidebar'>
+                                        <ul class="nav nav-tabs nav-stacked">
+                                          <li><a  id="navBar" href='#'>Home</a></li>
+                                          <li><a  id="navBar" href='#'>Profile</a></li>
+                                        </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">      
+                            <form (submit)="createPost()">
+                                    <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5" style="margin-bottom:10px;"></textarea>
+                                    <button class="btn btn-info" type="submit">Post New Message</button>
+                                </form>
+                        <div class="card">
+                            
+                            <table class="table table-hover shopping-cart-wrap">
+                                <!-- <thead class="text-muted"> -->
 
-                   
+                                    <tr>Dashboard</tr>
+                                
+                                <tbody>
+                                    <tr>
+                                        <div class="post-container" *ngFor="let post of allPostsReversed">
+                                            <p>
+                                                <b>{{post['username']}}</b> <br><a href="/">@{{post['username']}} </a>   <span>{{post['age']}}</span>
+                                            </p>
+                                            <p>
+                                                {{post['content']}}
+                                            </p>
+                                            <p>
+                                                    tags:<a href="/">{{post['tags']}}</a>
+                                            </p>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                    </div>
                     
-<!-- <div class="row">
-  <div class="col">
-    <p>Navbar</p>
-    <h1>Submit a post</h1>
-        <form (submit)="createPost()">
-          <label> Content:
-            <textarea rows="4" cols="50" [(ngModel)] = "newPost.content" type="text" name="newPost.content"></textarea>
-          </label><br>
-            <input type="submit" value="submit">
-        </form>
+                
+                </div>
+                <div class="col"></div>
+                </div>
+                </div>
+            </body>
+            </html>
+            
+                               
+                                
 
-        <!-- <form (submit)="createTag()">
-          <label> Content:
-            <textarea>
-
-            </textarea>
-          </label>
-        </form> -->
-
-    <!-- <button (click)="logoutUser()">Logout</button>
-  </div>
-  <div class="col posts-column">
-      <p>Dashboard</p>
-      <ul>
-          <li class="post-container" *ngFor="let post of allPostsReversed">
-              <p><b>{{post['username']}}</b> @{{post['username']}} - {{post['age']}}</p>
-              <p>content: {{post['content']}}</p>
-              <p>tags: {{post['tags']}}</p>
-          </li>
-      </ul>
-  </div>
-  <div class="col">
-      <p>Searchbar</p>
-  </div>
-</div> -->
