@@ -9,13 +9,17 @@ import { HomeComponent } from './home/home.component';
 import { PostsComponent } from './posts/posts.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuardService } from "./guards/auth-guard.service";
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PostsComponent,
-    DashboardComponent
+    DashboardComponent,
+    NewsfeedComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
