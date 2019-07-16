@@ -8,6 +8,8 @@ body{
 
 }
 .row{
+    /* background: -webkit-linear-gradient(330deg,#f0a6ca, #000);
+    background: linear-gradient(#f0a6ca, #000); */
     background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
     background: linear-gradient(120deg, #000, #f0a6ca);
     margin: 0px auto; 
@@ -17,7 +19,7 @@ body{
 
 #navBar{
     color: white; 
-    font-size:40px;
+    font-size:24px;
     border:none;
     position: relative; 
     display:inline-block;
@@ -48,7 +50,7 @@ body{
     box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
 }
 .header{
-    height: 120px; 
+    height: 70px; 
     width: 100%; 
     background-color:#F8F9F9;
     position: relative; 
@@ -71,7 +73,7 @@ h2{
     position: relative;
       display: inline-block; 
 }
-.rightbox{
+/* .rightbox{
       position: relative;
       display: inline-block; 
       vertical-align:center; 
@@ -87,7 +89,7 @@ h2{
 .rightbox2{
     position: relative;
     display: inline-block; 
-    vertical-align:top; 
+    vertical-align:top;  */
 }
 .centerbox{
     text-align:center;
@@ -95,11 +97,11 @@ h2{
     display: inline-block; 
 }
 
-#logoutbutton{
+/* #logoutbutton{
     margin:0px 40px; 
     background-color:white;
-    border-color: #00D0C2 ; 
-}
+    border-color: ; 
+} */
 .search {
     width: 150px;
     float:right; 
@@ -152,10 +154,10 @@ span{
     color: gray;
 }
 .fa-home{
-    color:white; 
+    color:#B0E0E6; 
     font-size:40px;  
 }
 .fa-user-circle{
-    color:white; 
+    color:#B0E0E6; 
     font-size:40px; 
 }

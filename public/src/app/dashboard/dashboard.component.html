@@ -22,15 +22,8 @@
             <h2>Welcome to Copycat</h2>
         </div>
         <div class="rightbox">
-            <div class="rightbox2">
-                <div class="search"  >
-                    <input type="text" class="searchTerm" placeholder="Search">
-                    <button type="submit" class="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="rightbox1"><button id="logoutbutton" class="btn" (click)="logoutUser()" style="float:right">Logout</button></div>
+
+            
         </div>
     </div>
     <div class="row">
@@ -44,6 +37,7 @@
                                 <ul class="nav nav-tabs nav-stacked">
                                     <div class="navbar1"><i class="fa fa-home">  <a id="navBar" [routerLink]="['newsfeed']">   Home</a></i> </div>
                                     <div class="navbar1"><i class="fa fa-user-circle"><a id="navBar"  [routerLink]="['profile']">   Profile</a></i></div>
+                                    <div class="navbar1"><a id="navBar"   (click)="logoutUser()" >   Logout</a></div>
                                 </ul>
                         </div>
 

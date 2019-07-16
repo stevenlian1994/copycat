@@ -7,6 +7,7 @@
   <title>Document</title>
 </head>
 <body>
+    <div class="middle"> 
     <h3>Create a post</h3>
     <form (submit)="createPost()">
         <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
@@ -53,5 +54,7 @@
             </tbody>
         </table>
     </div>
+</div>
+
 </body>
 </html>
