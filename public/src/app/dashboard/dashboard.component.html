@@ -10,88 +10,87 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Jaldi|Reenie+Beanie&display=swap" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-                
-                <div class="header">
-                    <div class="leftbox">
-                        <img class="logo" src="assets/img/copycatLogo1.png">  
-                    </div>
-                    <div class="centerbox">
-                        <h2>Welcome to Copycat</h2>
-                    </div>
-                    <div class="rightbox">
-                        <div class="rightbox2">
-                            <div class="search"  >
-                                <input type="text" class="searchTerm" placeholder="Search">
-                                <button type="submit" class="searchButton">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="rightbox1"><button id="logoutbutton" class="btn" (click)="logoutUser()" style="float:right">Logout</button></div>
-                    </div>
+    <div class="header">
+        <div class="leftbox">
+            <img class="logo" src="assets/img/copycatLogo1.png">  
+        </div>
+        <div class="centerbox">
+            <h2>Welcome to Copycat</h2>
+        </div>
+        <div class="rightbox">
+            <div class="rightbox2">
+                <div class="search"  >
+                    <input type="text" class="searchTerm" placeholder="Search">
+                    <button type="submit" class="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
                 </div>
-                <div class="row">
-                    <div class="col"></div>
-                    <div class="col-11">
-                    <div class="row">
-                    <div class="col-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body">   
-                                
-                                <div  class='span2 sidebar'>
-                                        <ul class="nav nav-tabs nav-stacked">
-                                          <li><a  id="navBar" href='#'>Home</a></li>
-                                          <li><a  id="navBar" href='#'>Profile</a></li>
-                                        </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-5">      
-                            <form (submit)="createPost()">
-                                    <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5" style="margin-bottom:10px;"></textarea>
-                                    <button class="btn btn-info" type="submit">Post New Message</button>
-                                </form>
-                        <div class="card">
-                            
-                            <table class="table table-hover shopping-cart-wrap">
-                                <!-- <thead class="text-muted"> -->
+            </div>
+            <div class="rightbox1"><button id="logoutbutton" class="btn" (click)="logoutUser()" style="float:right">Logout</button></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-body">    
+                    <h3>Create a post</h3>
+                    <form (submit)="createPost()">
+                        <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5" style="margin-bottom:10px;"></textarea>
+                        <button class="btn btn-info" type="submit">Post New Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <table class="table table-hover shopping-cart-wrap">
+                    <thead class="text-muted">
+                        <tr>Dashboard</tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <div class="post-container" *ngFor="let post of allPostsReversed">
+                                <p>
+                                    <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
+                                </p>
+                                <p>
 
-                                    <tr>Dashboard</tr>
-                                
-                                <tbody>
-                                    <tr>
-                                        <div class="post-container" *ngFor="let post of allPostsReversed">
-                                            <p>
-                                                <b>{{post['username']}}</b> <br><a href="/">@{{post['username']}} </a>   <span>{{post['age']}}</span>
-                                            </p>
-                                            <p>
-                                                {{post['content']}}
-                                            </p>
-                                            <p>
-                                                    tags:<a href="/">{{post['tags']}}</a>
-                                            </p>
-                                        </div>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                    </div>
-                    
-                
-                </div>
-                <div class="col"></div>
-                </div>
-                </div>
-            </body>
-            </html>
-            
-                               
-                                
+                                  <span *ngFor="let word of post['content']">
+                                    <!-- <div *ngIf="word[0] == '#'"></div> -->
+                                    <!-- <ng-template class="space" #thenBlock>
+                                      <div></div>
+                                      <a class="space" href='#'>{{word}}</a> 
+                                    </ng-template>
+                                    <ng-template class="space" #elseBlock>
+                                      <span class="space" >{{word}} </span>
+                                    </ng-template> -->
+                                    <span *ngIf="word[0] == '#'">
+                                        <a href='#'>{{word}} </a> 
+                                        <!-- code to render a large video block-->
+                                    </span>
+                                    <span *ngIf="word[0] != '#'">
+                                        <span>{{word}} </span>
+                                    </span>
+                                    <!-- <div *ngIf="word[0] == '#'; else elseBlock">{{value}}</div> -->
+                                    <!-- <ng-template #elseBlock>Content to render when value is null.</ng-template> -->
+                                      <!-- content: {{post['content']}}. -->
+                                      <!-- <a href="#" innerHTML="comment">Asdf</a> -->
+                                      <!-- <div ng-bind-html="<a>asdf </a>"></div> -->
+                                  </span>
+                                </p>
+                            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-3">
+        </div>
+    </div>
+</body>
+</html>
 
+                   

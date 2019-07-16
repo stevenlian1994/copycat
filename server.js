@@ -42,15 +42,15 @@ app.post('/createPost', function(req,res){
 
 app.post('/createTag/:postId', function(req,res){
   // insert tags if not already in db; no cb required
-  connection.query(`INSERT IGNORE INTO tags (title) VALUES ('${req.body.newTag}');`);
-  // use get tag based on title and get the id
-  connection.query(`SELECT * FROM tags WHERE title='${req.body.newTag}';`, function(err, rows){
-    // sql query for creating the relationship
-    // console.log('inside select', rows[0]['id'])
-    connection.query(`INSERT INTO posts_has_tags (posts_id, tags_id) VALUES (${req.params.postId}, ${rows[0]['id']})`), function(err, rows, fields){
-      res.json({'hello':'there'})
-    }
+  connection.query(`INSERT IGNORE INTO tags (title) VALUES ('${req.body.newTag}');`, function(err, rows){
+    // use get tag based on title and get the id
+    connection.query(`SELECT * FROM tags WHERE title='${req.body.newTag}';`, function(err, rows){
+      // sql query for creating the relationship
+      connection.query(`INSERT INTO posts_has_tags (posts_id, tags_id) VALUES (${req.params.postId}, ${rows[0]['id']})`, function(err, rows, fields){
+        res.json({'hello':'there'})
+      })
   })
+})
 })
 
 app.post('/createUser', function(req,res){
