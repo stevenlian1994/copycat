@@ -68,7 +68,7 @@
                                       <span class="space" >{{word}} </span>
                                     </ng-template> -->
                                     <span *ngIf="word[0] == '#'">
-                                        <a href='\{{word}}'>{{word}} </a> 
+                                        <a href="javascript: return false;" (click)="filterToHashtag()">{{word}} </a>
                                         <!-- code to render a large video block-->
                                     </span>
                                     <span *ngIf="word[0] != '#'">

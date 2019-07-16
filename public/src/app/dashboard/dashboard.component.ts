@@ -21,6 +21,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.getAllPosts()
   }
+  filterToHashtag(){
+    console.log('inside filterToHashTag() method')
+    this.allPostsReversed = [];
+  }
+
+
   getAllPosts(){
     let myObservable = this._httpService.getPosts();
     myObservable.subscribe(data=>{
