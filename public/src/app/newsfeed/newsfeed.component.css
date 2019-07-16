@@ -9,6 +9,11 @@ body{
     margin: 0px auto;  
 
 }
+
+.disable-links {
+  pointer-events: none;
+}
+
 .row{
     background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
     background: linear-gradient(120deg, #000, #f0a6ca);

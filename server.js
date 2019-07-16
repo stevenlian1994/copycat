@@ -31,6 +31,13 @@ app.get('/getPosts', function(req,res){
         res.json(results)
     })
 })
+app.get('/getFilteredPosts/:title', function(req,res){
+  console.log(req.params.title)
+  connection.query(`SELECT posts.id, posts.content, posts.created_at, users.username FROM posts LEFT JOIN posts_has_tags ON posts.id = posts_has_tags.posts_id LEFT OUTER JOIN users ON posts.users_id = users.id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id WHERE tags.title = '${req.params.title}';`, function(err, results){
+    console.log(results)
+    res.json(results)
+  })
+})
 
 app.post('/createPost', function(req,res){
   console.log("inside createPost", req.body)

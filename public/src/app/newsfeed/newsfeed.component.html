@@ -24,28 +24,13 @@
                             <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
                         </p>
                         <p>
-
                           <span *ngFor="let word of post['content']">
-                            <!-- <div *ngIf="word[0] == '#'"></div> -->
-                            <!-- <ng-template class="space" #thenBlock>
-                              <div></div>
-                              <a class="space" href='#'>{{word}}</a> 
-                            </ng-template>
-                            <ng-template class="space" #elseBlock>
-                              <span class="space" >{{word}} </span>
-                            </ng-template> -->
                             <span *ngIf="word[0] == '#'">
-                                <a href='#'>{{word}} </a> 
-                                <!-- code to render a large video block-->
+                                <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
                             </span>
                             <span *ngIf="word[0] != '#'">
                                 <span>{{word}} </span>
                             </span>
-                            <!-- <div *ngIf="word[0] == '#'; else elseBlock">{{value}}</div> -->
-                            <!-- <ng-template #elseBlock>Content to render when value is null.</ng-template> -->
-                              <!-- content: {{post['content']}}. -->
-                              <!-- <a href="#" innerHTML="comment">Asdf</a> -->
-                              <!-- <div ng-bind-html="<a>asdf </a>"></div> -->
                           </span>
                         </p>
                     </div>
