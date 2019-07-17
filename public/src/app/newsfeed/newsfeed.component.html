@@ -21,20 +21,34 @@
             <tbody>
                 <tr>
                     <div class="post-container" *ngFor="let post of allPostsReversed">
-                        <p>
-                            <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
-                        </p>
-                        <p>
-                          <span *ngFor="let word of post['content']">
-                            <span *ngIf="word[0] == '#'">
-                                <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
-                            </span>
-                            <span *ngIf="word[0] != '#'">
-                                <span>{{word}} </span>
-                            </span>
-                          </span>
-                        </p>
+                          <div class="row">
+                            <div class="col-1">
+                              <img class="img-fluid" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
+                            </div>
+                            <div class="col">
+                              <p>
+                                  <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
+                              </p>
+                              <p>
+                                <span *ngFor="let word of post['content']">
+                                  <span *ngIf="word[0] == '#'">
+                                      <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
+                                  </span>
+                                  <span *ngIf="word[0] != '#'">
+                                      <span>{{word}} </span>
+                                  </span>
+                                </span>
+                              </p>
+
+                            </div>
+                          </div>
+
+
+
+
+
                     </div>
+
                 </tr>
             </tbody>
         </table>

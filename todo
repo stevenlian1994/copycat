@@ -1,97 +1,12 @@
 Todo:
-1. check status on posts
-  -submit : 
-    -it submits to db.
-    -doesnt clear field
-    -doesnt update dashboard
+  -hashtag component - trends for you
 
-. clean up component.ts
-
-2. fix time
-
-3. cleanup server.js, service, and dashboard
-4. return to be displayed
-  -maybe a method in component, grabNewest
-
-Misc.
-Fix h-tml on navbar.. DONE
-
-
-TODO: 
-    -Ian is working on the search bar
-    
-    -connie and steven is working on the post with tags
-        -make the post appear immediately on the dashboard
-
-    1. create the post 
-        -and return the post_id to the component
-    2. create the tag (if it doesnt exist yet)<--complicated
-        -and return the tag_id to the component
-    3. INSERT add the post_id and tag_id to table post_has_tags
-
-
-
-DONE:
-    -login and registration feature, dont show other pages
-    -once logged in, show other pages
-    -vice versa
-
- added post by registered user
-    - cleaning up source code from console.logs.. and comments
-
-TODO: add post by logged in user
-    : add login validation..
-    : add show login/reg if not logged in and log out if logged in
-
-T
-ODO:
--added localstorage, store user id after registering, add posts with user id
--SHOW ALL posts on home page
--relationship between tags and posts
-    -create new tags 
-
-LOGIN AND REGISTRATION
--add USERS table
--login and registration page
--validation doesn't need to be super complex
-    -link users to posts.
--once user is logged in, how are we going to maintain their session,
-prevent them from accessing other pages
-
-
-
-POSTS
--add CRUD for posts
-    -read all - DONE
-    -create - DONE
-    -delete
-    -update
-    -read one
-
--flesh out POSTS table
-
-TAGS
--add TAGS table
--create many to many relationship between POSTS and TAGS
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DONE:
-made mysql connection
--connect angular to mysql
-
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DONE
--set up our tech stack
-    -node, express, angular, mysql
--connected angular with mysql, 
--set up all the tables and relationships between tables
-    -i have tested the many to many relationships
-
-Your Roles:
--work on dashboard and posts components
-    -search posts by TAGS
-    -CRUD for posts, user should be able to write new tags, if tag already exists, dont make a new tag
-        -posts should be connected to tags and vice-versa
--add styling
+Done/WIP:
+  -posts
+  -hashtags
+  -posts-hashtags relationship
+  -dashboard parent component, and child components
+  -searchbar 
+    -by users
+    -by tags
+  -hashtags redirect to hashtag component
