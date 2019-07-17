@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
     let myObservable = this._httpService.uploadProfilePicture(this.selectedFile);
     myObservable.subscribe(data=>{
       // console.log("onUpload"+ data);
-      this.createImageFromBlob(data);
+      // this.createImageFromBlob(data);
       
     })
     // this.http.post('my-backend.com/file-upload', this.selectedFile)

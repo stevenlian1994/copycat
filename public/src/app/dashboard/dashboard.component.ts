@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,10 +17,13 @@ export class DashboardComponent implements OnInit {
     // newTagPlaceholder
 
 
-  constructor(private _httpService: HttpService, private _authService: AuthService) { }
+  constructor(private _httpService: HttpService, private _authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     // this.getAllPosts()
+  }
+  userRedirect(){
+    this.router.navigate(['/dashboard/user/', localStorage.getItem('username')]);
   }
   // getAllPosts()s{
   //   let myObservable = this._httpService.getPosts();

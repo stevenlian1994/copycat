@@ -1,24 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { AuthService } from '../services/auth.service';
+import { Observable } from "rxjs";
+import { FormControl } from "@angular/forms";
+import { map, startWith } from "rxjs/operators";
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { RouterInitializer } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-newsfeed',
   templateUrl: './newsfeed.component.html',
   styleUrls: ['./newsfeed.component.css']
 })
+
+
 export class NewsfeedComponent implements OnInit {
   allPosts : any;
+  allUsers : any;
   allPostsReversed = [];
-  newPost = {content: ''}
-  newPostTag={'posts_id':''}
+  newPost = {content: ''};
+  newPostTag={'posts_id':''};
+  options: string[] = [];
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]>;
 
-   constructor(private _httpService: HttpService,  private router: Router, private _authService: AuthService) { }
+
+  constructor(private _httpService: HttpService,  private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
-    this.getAllPosts()
+    this.getAllPosts();
+    this.getAllUsers();
+
   }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => 
+      option.toLowerCase().includes(filterValue)
+    );
+  }
+
+  getAllUsers(){
+    console.log("sdfasdfasdf");
+    let myObservable = this._httpService.getUsers();
+    myObservable.subscribe(data=>{
+      console.log('got our data into comp', data)
+      this.allUsers = data;
+      // console.log(this.allUsers);
+      for (let i=0; i<this.allUsers.length; i++){
+        this.options.push(this.allUsers[i]["username"])
+      };
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map(value => this._filter(value))
+      );
+    })
+  }
+
   getAllPosts(){
     let myObservable = this._httpService.getPosts();
     myObservable.subscribe(data=>{
@@ -33,6 +72,7 @@ export class NewsfeedComponent implements OnInit {
     console.log('hi inside redirect', hashtag[0])
     this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
   }
+
   createPost(){
     // STEP 1: CREATE THE POST AND RETURN POST ID
     this.newPost['users_id'] = localStorage.getItem("user"); 
@@ -56,6 +96,7 @@ export class NewsfeedComponent implements OnInit {
       }  
     })
   }
+  
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
       let tempObservable2 = this._httpService.createTag(tag, postId); 
@@ -65,7 +106,7 @@ export class NewsfeedComponent implements OnInit {
         }
       })
     }
-
+  
   findHashTags(content){
     var hashIndexes = {}
     var allTags = []
@@ -115,6 +156,11 @@ export class NewsfeedComponent implements OnInit {
     }
   }
 
+  goUser(option) {
+    console.log(option);
+    this.router.navigate(["dashboard/user", option]);
+  }
 
+  
 
 }
