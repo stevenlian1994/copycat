@@ -54,6 +54,7 @@ h2{
 .middle{
      height:100vh; 
     border-left: 1px solid black;
+    border-right: 1px solid black;
     padding: 10px 19px;
     position: relative;  
     top:30px;

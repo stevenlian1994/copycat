@@ -6,7 +6,8 @@
     top:30px; 
     padding:40px; 
     background-color: white;
-    border-left: 1px solid black; 
+    border-left: 1px solid black;
+    border-right: 1px solid black; 
 }
 .profileImage{
     width:100px; 

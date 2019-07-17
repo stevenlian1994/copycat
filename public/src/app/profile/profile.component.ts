@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getUser(); 
-    this.getTotalTweets(this.totalTweets); 
+    this.getTotalTweets(); 
   }
   getUser(){
         let username2=localStorage.getItem("username");
@@ -24,10 +24,10 @@ export class ProfileComponent implements OnInit {
         console.log( "aaa" + username2)
     }
   
-  getTotalTweets(tweet){
+  getTotalTweets(){
   let users_id=localStorage.getItem("user");
   console.log("bbb"+users_id);
-  let myObservable = this._httpService.getTotalTweets(tweet,users_id);
+  let myObservable = this._httpService.getTotalTweets(users_id);
   myObservable.subscribe(data=>{
     console.log("ccc"+ data);
     this.totalTweets=data;
