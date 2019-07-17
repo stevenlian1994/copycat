@@ -16,6 +16,10 @@ body{
     min-height: 1000px; 
 
 }
+.asdf{
+  display:inline-block;
+  vertical-align: top;
+}
 
 #navBar{
     color: white; 

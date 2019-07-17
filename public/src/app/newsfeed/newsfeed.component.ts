@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-newsfeed',
@@ -11,11 +12,9 @@ export class NewsfeedComponent implements OnInit {
   allPosts : any;
   allPostsReversed = [];
   newPost = {content: ''}
-  // newTag = {title: ''}
   newPostTag={'posts_id':''}
-  newTagPlaceholder
 
-   constructor(private _httpService: HttpService, private _authService: AuthService) { }
+   constructor(private _httpService: HttpService,  private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
     this.getAllPosts()
@@ -29,7 +28,11 @@ export class NewsfeedComponent implements OnInit {
       this.setAllPostsReversed()
     })
   }
-
+  hashtagRedirect(hashtag){
+    hashtag[0] = hashtag[0].substring(1,hashtag[0].length)
+    console.log('hi inside redirect', hashtag[0])
+    this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
+  }
   createPost(){
     // STEP 1: CREATE THE POST AND RETURN POST ID
     this.newPost['users_id'] = localStorage.getItem("user"); 
@@ -92,11 +95,7 @@ export class NewsfeedComponent implements OnInit {
   setAllPostsReversed(){
     this.allPostsReversed = []
     for(var j = this.allPosts.length-1; j>-1; j--){
-      // this.allPosts[j]['content'] = this.allPosts[j]['content'].concat(' <a href="#">asdf</a>')
-      // this.allPosts[j]['content'] = '<a href="#">hello</a>'
       this.allPosts[j]['content'] = this.allPosts[j]['content'].split(' ')
-
-      console.log(this.allPosts[j]['content'])
       this.allPostsReversed.push(this.allPosts[j])
     }
   }

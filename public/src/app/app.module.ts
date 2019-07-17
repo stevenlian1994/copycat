@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuardService } from "./guards/auth-guard.service";
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HashtagComponent } from './hashtag/hashtag.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProfileComponent } from './profile/profile.component';
     PostsComponent,
     DashboardComponent,
     NewsfeedComponent,
-    ProfileComponent
+    ProfileComponent,
+    HashtagComponent
   ],
   imports: [
     BrowserModule,

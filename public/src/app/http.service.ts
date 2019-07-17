@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +11,9 @@ export class HttpService {
 
     getPosts(){
         return this._http.get('/getPosts')
+    }
+    getFilteredPosts(hashtag){
+        return this._http.get(`/getFilteredPosts/${hashtag}`)
     }
     getTags(postId){
         return this._http.post('/getTags', postId)
@@ -37,8 +39,6 @@ export class HttpService {
         }
         console.log("is user logged in?:", this.isLoggedIn)
         return this.isLoggedIn
-        // this.dict["isLoggedIn"]  = this.isLoggedIn
-        // return this.dict2
     }
 
     getPostsTags(newPostTag){
