@@ -1,10 +1,12 @@
+
 .blockContainer{
-    height:100%; 
+    height:700px; 
     width:400px; 
     position:relative;
     top:30px; 
-    padding:15px; 
-    background-color: white; 
+    padding:40px; 
+    background-color: white;
+    border-left: 1px solid black; 
 }
 .profileImage{
     width:100px; 
@@ -14,3 +16,4 @@
 h2{
     color:#00D0C2 ; 
 }
+

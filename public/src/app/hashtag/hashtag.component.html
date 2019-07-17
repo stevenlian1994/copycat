@@ -6,7 +6,7 @@
         <tbody>
             <tr>
                 <div class="post-container" *ngFor="let post of allPostsReversed">
-                    <p><b>{{post['username']}}</b> @ {{post['username']}} - {{post['age']}}</p>
+                    <p><b>{{post['username']}}</b> @ {{post['username']}} - <span>{{post['age']}}</span></p>
                     <p>
                         <span *ngFor="let word of post['content']">
                           <span *ngIf="word[0] == '#'">
