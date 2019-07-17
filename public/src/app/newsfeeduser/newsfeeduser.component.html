@@ -19,6 +19,24 @@
             </div>
         </div>
 
+        <form>
+            <mat-form-field>
+                <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
+                    {{option}}
+                </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+        <h3>Create a post</h3>
+
+
+
+        <!-- <form (submit)="createPost()">
+            <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
+            <button id="btn" type="submit">Post New Message</button>
+        </form> -->
         <div class="card">
             <table class="table table-hover shopping-cart-wrap">
                 <tbody>

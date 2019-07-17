@@ -5,9 +5,10 @@ import { Observable } from "rxjs";
 import { FormControl } from "@angular/forms";
 import { map, startWith } from "rxjs/operators";
 import { ActivatedRoute } from '@angular/router';
-import { Router, NavigationEnd, Event } from '@angular/router';
 import { RouterInitializer } from '@angular/router/src/router_module';
 import { Params } from '@angular/router';
+import { Router, NavigationEnd, Event } from '@angular/router';
+
 
 @Component({
   selector: 'app-newsfeeduser',
@@ -15,7 +16,8 @@ import { Params } from '@angular/router';
   styleUrls: ['./newsfeeduser.component.css']
 })
 export class NewsfeeduserComponent implements OnInit {
-
+  allUsers : any;
+  options: string[] = [];
   allPosts : any;
   allPostsReversed = [];
   userId: String;
@@ -24,6 +26,8 @@ export class NewsfeeduserComponent implements OnInit {
   totalTweets:any; 
   // imageFile: any;
   // selectedFile: any;
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]>;
   
   constructor(private _httpService: HttpService, private _authService: AuthService, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe( params => this.userId=params.userId);
@@ -43,8 +47,39 @@ export class NewsfeeduserComponent implements OnInit {
     this.getUser(); 
     this.getTotalTweets(this.totalTweets); 
 
+    this.router.events.subscribe(
+      (event: Event) => {
+             if (event instanceof NavigationEnd) {
+               this.getUserPosts(this.userId);
+             }
+      });
+    this.getAllUsers();
+    this.getUserPosts(this.userId);
   }
   
+  getAllUsers(){
+    console.log("sdfasdfasdf");
+    let myObservable = this._httpService.getUsers();
+    myObservable.subscribe(data=>{
+      console.log('got our data into comp', data)
+      this.allUsers = data;
+      // console.log(this.allUsers);
+      for (let i=0; i<this.allUsers.length; i++){
+        this.options.push(this.allUsers[i]["username"])
+      };
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map(value => this._filter(value))
+      );
+    })
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => 
+      option.toLowerCase().includes(filterValue)
+    );
+  }
 
   getUserPosts(userId){
     
@@ -120,4 +155,9 @@ this.totalTweets=data;
 })
 }
 
+  goUser(option) {
+    console.log(option);
+    this.router.navigate(["dashboard/user", option]);
+    
+  }
 }
