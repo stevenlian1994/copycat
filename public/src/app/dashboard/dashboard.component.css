@@ -1,6 +1,7 @@
 body{
     font-family: 'Jaldi', sans-serif;
     margin: 0px auto; 
+    width:100%; 
 }
 .middle-column{
     position:absolute;
@@ -10,11 +11,12 @@ body{
 .row{
     /* background: -webkit-linear-gradient(330deg,#f0a6ca, #000);
     background: linear-gradient(#f0a6ca, #000); */
-    background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
-    background: linear-gradient(120deg, #000, #f0a6ca);
+    /* background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
+    background: linear-gradient(120deg, #000, #f0a6ca); */
+  
     margin: 0px auto; 
-    min-height: 1000px; 
-
+    min-height: 100%; 
+    
 }
 .asdf{
   display:inline-block;
@@ -22,25 +24,28 @@ body{
 }
 
 #navBar{
-    color: white; 
     font-size:24px;
     border:none;
     position: relative; 
     display:inline-block;
     font-family: 'Jaldi', sans-serif;
-
-
+    color: black; 
+    margin: 0px 10px; 
 }
 .navbar1{
     margin:20px; 
     position: relative; 
     display:inline-block;
+    left:40px;
  
 }
 .col-sm{
     overflow: scroll;
 }
-
+.span2{
+    position: relative; 
+    left:50px;
+}
 .space{
   display:inline;
   vertical-align:top;
@@ -56,7 +61,9 @@ body{
 .header{
     height: 70px; 
     width: 100%; 
-    background-color:#F8F9F9;
+     background-color:#e3e1e0; 
+    
+    
     position: relative; 
     display: inline-block;
 }
@@ -94,7 +101,7 @@ h2{
     position: relative;
     display: inline-block; 
     vertical-align:top;  */
-}
+
 .centerbox{
     text-align:center;
     position: relative;
@@ -165,3 +172,4 @@ span{
     color:#B0E0E6; 
     font-size:40px; 
 }
+

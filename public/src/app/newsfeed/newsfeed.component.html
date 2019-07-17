@@ -10,11 +10,13 @@
     <div class="middle"> 
     <h3>Create a post</h3>
     <form (submit)="createPost()">
-        <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
+        <textarea class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
         <button id="btn" type="submit">Post New Message</button>
     </form>
-        <div class="card">
-        <table class="table table-hover shopping-cart-wrap">
+
+        <div class="card" style="height:500px; overflow-y: scroll">
+        <div class="overflow-auto">
+        <table class="table overflow-container">
             <thead class="text-muted">
                 <tr>Dashboard</tr>
             </thead>
@@ -39,6 +41,7 @@
             </tbody>
         </table>
     </div>
+</div>
 </div>
 
 </body>

@@ -81,6 +81,16 @@ app.post('/getPostsTags', function(req,res){
   }
 })
 
+
+app.get('/getTotalTweets/:users_id', function(req,res){
+  console.log("gegeg"+ req.params.users_id)
+  connection.query(`SELECT COUNT(users_id) as 'userNumber' FROM posts WHERE users_id=1;`, function(err, results){
+    console.log("vvvv"+(results[0].userNumber))
+    res.json(results[0].userNumber)
+  })
+})
+
+
 app.all("*", (req,res,next) => {
     res.sendFile(path.resolve("./public/dist/public/index.html"))
 });

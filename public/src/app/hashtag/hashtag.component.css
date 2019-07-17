@@ -28,6 +28,7 @@ vertical-align:top;
   padding:7px; 
   border:none; 
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
+  background-color:white; 
 }
 tr{
   margin: 3px;
@@ -52,7 +53,7 @@ h2{
 .card{
   margin:80px 0px;
   overflow: scroll;
-
+  background-color:#B0E0E6; 
 }
 
 #btn{
