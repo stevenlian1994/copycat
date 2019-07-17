@@ -24,7 +24,7 @@ export class NewsfeedComponent implements OnInit {
     myObservable.subscribe(data=>{
       this.allPosts = data;
       this.calculateAgeOfPosts(this.allPosts)
-      // Method to reset AllPostsReversed
+      // Method to reset AllPostsReversed 
       this.setAllPostsReversed()
     })
   }
@@ -39,18 +39,18 @@ export class NewsfeedComponent implements OnInit {
     let tempObservable = this._httpService.createPost(this.newPost)
     tempObservable.subscribe(data => {
       this.newPostTag['posts_id'] = data['id'] //saving post id for post_has_tags query
-      console.log('data from posting', data)
       // STEP 2 - Find all hashtags in content of post
         var allTags = this.findHashTags(this.newPost['content']) 
         //  allTags is an array of strings, but createTags is creating undefined titles for tags in db
       // STEP 3 - Create all tags if needed and return tag ids
+      if(allTags.length == 0){
+        this.getAllPosts()
+      }
       for(let i in allTags){
         if(allTags[i] == allTags[allTags.length-1]){
           var boolean = true
-          console.log('our bool:', boolean)
         } else {
           var boolean = false
-          console.log('our bool:', boolean)
         }
         this.createTag(allTags[i], data['id'], boolean)
       }  
@@ -58,15 +58,9 @@ export class NewsfeedComponent implements OnInit {
   }
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
-    console.log('inside createTags:', typeof tag)
-    console.log('inside createTags:', tag)
-    console.log('inside createTags:', isLast)
       let tempObservable2 = this._httpService.createTag(tag, postId); 
       tempObservable2.subscribe(data =>{
-        console.log("this is our data from creating tags:", data)
-        console.log(isLast)
         if(isLast){
-          console.log('lets get all posts!!')
           this.getAllPosts()
         }
       })

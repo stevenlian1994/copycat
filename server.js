@@ -2,6 +2,7 @@ var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
 var path = require('path')
+var fs = require('fs');
 app.use(express.static( __dirname + '/public/dist/public' ));
 app.use(bodyParser.json());
 
@@ -24,6 +25,15 @@ app.post('/loginUser', function(req,res){
         console.log(results[0])
         res.json(results[0])
     })
+})
+app.post('/uploadProfilePicture', function(req,res){
+  req.on('data', function(data){
+    console.log('inside server,', data)
+    console.log('inside server,', typeof data)
+    console.log('inside server,', data.length)
+    res.json(data)
+  })
+    // console.log('inside server,', req.body)
 })
 
 app.get('/getPosts', function(req,res){
