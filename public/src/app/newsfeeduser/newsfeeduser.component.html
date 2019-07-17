@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Copycat Msg</title>
+</head>
+<body>
+    <div class="left_side">
+        <h3>Create a post</h3>
+        
+        <!-- <form (submit)="createPost()">
+            <textarea class="form-control counted" [(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
+            <button id="btn" type="submit">Post New Message</button>
+        </form> -->
+        <div class="card">
+            <table class="table table-hover shopping-cart-wrap">
+                <thead class="text-muted">
+                    <tr>Dashboard</tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <div class="post-container" *ngFor="let post of allPosts">
+                            <p>
+                                <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
+
+                            </p>
+                            <p>
+                                <span *ngFor="let word of post['content']">
+                            
+                                <span *ngIf="word[0] == '#'">
+                                    <a href='#'>{{word}} </a> 
+                                </span>
+                                <span *ngIf="word[0] != '#'">
+                                    <span>{{word}} </span>
+                                </span>
+
+                                </span>
+                            </p>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="right_side">
+        <!-- <form>
+            <mat-form-field>
+                <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
+                    {{option}}
+                </mat-option>
+                </mat-autocomplete>
+                
+            </mat-form-field>
+        </form> -->
+    </div>
+</body>
+</html>
+

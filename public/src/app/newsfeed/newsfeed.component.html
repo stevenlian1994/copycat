@@ -8,6 +8,16 @@
 </head>
 <body>
     <div class="middle"> 
+    <form>
+        <mat-form-field>
+            <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
+                {{option}}
+            </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
     <h3>Create a post</h3>
     <form (submit)="createPost()">
         <textarea class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
@@ -56,7 +66,12 @@
         </table>
     </div>
 </div>
+
 </div>
+
+    <!-- <div class="right">
+        
+    </div> -->
 
 </body>
 </html>
