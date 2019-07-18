@@ -8,7 +8,7 @@
 </head>
 <body>
 
- <div class="col-sm-7">
+ <div class="col-sm-8">
     <div class="middle"> 
     <h3>Create a post</h3>
     <form (submit)="createPost()">
@@ -29,8 +29,8 @@
                               <img class="img-fluid" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
                             </div>
                             <div class="col">
-                              <p>
-                                  <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
+                              <p> 
+                                  <b> <a style="color:black" (click)="profileRedirect(['users'])" > {{post['username']}}</a></b> @{{post['username']}} - <span>{{post['age']}}</span>
                               </p>
                               <p>
                                 <span *ngFor="let word of post['content']">

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-newsfeed',
@@ -14,7 +15,7 @@ export class NewsfeedComponent implements OnInit {
   newPost = {content: ''}
   newPostTag={'posts_id':''}
 
-   constructor(private _httpService: HttpService,  private router: Router, private _authService: AuthService) { }
+   constructor(private _httpService: HttpService, private route: ActivatedRoute,  private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
     this.getAllPosts()
@@ -33,6 +34,15 @@ export class NewsfeedComponent implements OnInit {
     console.log('hi inside redirect', hashtag[0])
     this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
   }
+
+  profileRedirect(user){
+    // user[0] = user[0].substring(1,user[0].length)
+    // console.log('hi inside redirect', hashtag[0])
+    console.log("get User Id"+ this.route.params); 
+    this.router.navigate(['/dashboard/profile/', users_id);
+  }
+
+
   createPost(){
     // STEP 1: CREATE THE POST AND RETURN POST ID
     this.newPost['users_id'] = localStorage.getItem("user"); 
@@ -56,6 +66,8 @@ export class NewsfeedComponent implements OnInit {
       }  
     })
   }
+
+
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
     console.log('inside createTags:', typeof tag)
