@@ -10,7 +10,7 @@ var mysql = require('mysql')
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password:'[root]',
+    password:'root',
     database: 'copycat'
 })
 
@@ -29,15 +29,25 @@ app.post('/loginUser', function(req,res){
 app.post('/uploadProfilePicture', function(req,res){
   req.on('data', function(data){
     console.log('inside server,', data)
-    console.log('inside server,', typeof data)
-    console.log('inside server,', data.length)
-    res.json(data)
+    console.log('inside server type,', typeof data)
+    // update users set password='hello' WHERE id=1 ;
+    connection.query(`UPDATE users SET profilePicture='${data}' WHERE id=1;`, function(err, results){
+      if(err){
+        console.log(err)
+        console.log('we are in err')
+      } else{
+        console.log('we are in result')
+      }
+      res.json(results)
+      
+  })
+    // res.json(data)
   })
     // console.log('inside server,', req.body)
 })
 
 app.get('/getPosts', function(req,res){
-    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username,JSON_ARRAYAGG(tags.title) as tags FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
+    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.profilePicture FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
         res.json(results)
     })
 })
@@ -73,6 +83,14 @@ app.get('/getUsers', function(req,res){
   // console.log(results);
   // console.log("yoyoyoyoyoyoo");
 })
+app.get('/getUser/:id', function(req,res){
+  connection.query(`SELECT * FROM users WHERE id=${req.params.id}`, function(err, results){
+      console.log('this is our', results);
+      res.json(results);
+  })
+})
+
+
 app.get('/getFilteredPosts/:title', function(req,res){
   console.log(req.params.title)
   connection.query(`SELECT posts.id, posts.content, posts.created_at, users.username FROM posts LEFT JOIN posts_has_tags ON posts.id = posts_has_tags.posts_id LEFT OUTER JOIN users ON posts.users_id = users.id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id WHERE tags.title = '${req.params.title}';`, function(err, results){
@@ -103,8 +121,8 @@ app.post('/createTag/:postId', function(req,res){
 })
 
 app.post('/createUser', function(req,res){
-    connection.query(`INSERT INTO users (username, password, firstName, lastName) VALUES ('${req.body.username}', 
-    '${req.body.password}' , '${req.body.firstName}', '${req.body.lastName}');`)
+    connection.query(`INSERT INTO users (username, password, firstName, lastName, profilePicture) VALUES ('${req.body.username}', 
+    '${req.body.password}' , '${req.body.firstName}', '${req.body.lastName}', '${req.body.profilePicture}');`)
     var x =connection.query(`SELECT * FROM users WHERE username = '${req.body.username}'`, function(err, rows, fields){
         if (err) throw err;
         for (var i in rows) {

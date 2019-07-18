@@ -10,9 +10,11 @@ import * as $ from 'jquery';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    newUser = {username: '', password: '', firstName: '', lastName: ''};
+    newUser = {username: '', password: '', firstName: '', lastName: '', profilePicture: ''};
     userLogin = {username: '', password: ''}
     public data:any;
+    profilePictures:any;
+
     @Output() isLoggedIn = false;
     constructor(private _httpService: HttpService, private router: Router, private _authService: AuthService){
     }
@@ -31,17 +33,24 @@ export class HomeComponent implements OnInit {
   }
 
   createUser(){
-    let tempObservable = this._httpService.createUser(this.newUser)
-    tempObservable.subscribe(data => {
-        localStorage.setItem("user", data["id"])
-        localStorage.setItem("username", data["username"])
-        this._authService.login();
-        this.router.navigate(['/dashboard/newsfeed']);
-    }
-        // create new user in db and return that user with their id to be stored in session
-        );
-    // blank out user form
-    this.newUser = {username: '', password: '', firstName: '', lastName: ''};
+    let tempObservable2 = this._httpService.getProfilePicture()
+    tempObservable2.subscribe(data => {
+      console.log(data)
+      // this.profilePictures=data
+      this.newUser.profilePicture = data[Math.floor(Math.random() * 29)]['download_url']
+      console.log(this.newUser.profilePicture)
+      let tempObservable = this._httpService.createUser(this.newUser)
+      tempObservable.subscribe(data => {
+          localStorage.setItem("user", data["id"])
+          localStorage.setItem("username", data["username"])
+          this._authService.login();
+          this.router.navigate(['/dashboard/newsfeed']);
+      })
+      // blank out user form
+      this.newUser = {username: '', password: '', firstName: '', lastName: '', profilePicture: ''};
+
+    })
+
   }
   loginUser() {
     // console.log(this.userLogin)

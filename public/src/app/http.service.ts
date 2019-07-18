@@ -15,6 +15,9 @@ export class HttpService {
     getUsers(){
         return this._http.get("/getUsers")
     }
+    getUser(userId){
+      return this._http.get(`/getUser/${userId}`)
+    }
 
     getUserPosts(userId){
         return this._http.get("/getUserPosts/" + userId)
@@ -28,6 +31,9 @@ export class HttpService {
     }
     getTags(postId){
         return this._http.post('/getTags', postId)
+    }
+    getProfilePicture(){
+      return this._http.get('https://picsum.photos/v2/list')
     }
     
     createPost(newPost){

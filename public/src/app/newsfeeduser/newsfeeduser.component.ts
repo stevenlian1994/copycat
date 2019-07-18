@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterInitializer } from '@angular/router/src/router_module';
 import { Params } from '@angular/router';
 import { Router, NavigationEnd, Event } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-newsfeeduser',
@@ -22,8 +23,11 @@ export class NewsfeeduserComponent implements OnInit {
   allPosts : any;
   allPostsReversed = [];
   userId: String;
-  
-  
+  imageFile: any;
+  selectedFile: any;
+  imageurl: any;
+  myUser:any;
+
   username1={}; 
   totalTweets:any; 
   // imageFile: any;
@@ -31,7 +35,7 @@ export class NewsfeeduserComponent implements OnInit {
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
   
-  constructor(private _httpService: HttpService, private _authService: AuthService, private route: ActivatedRoute, private router: Router) {
+  constructor(private _httpService: HttpService, private _authService: AuthService, private sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe( params => this.userId=params.userId);
   }
   
@@ -42,7 +46,6 @@ export class NewsfeeduserComponent implements OnInit {
               this.getUserPosts(this.userId);
               this.getUser(); 
               this.getTotalTweets(); 
-              
              }
       });
 
@@ -51,16 +54,32 @@ export class NewsfeeduserComponent implements OnInit {
     this.getUser(); 
     this.getTotalTweets();
     this.getAllTags();
-
-    this.router.events.subscribe(
-      (event: Event) => {
-             if (event instanceof NavigationEnd) {
-               this.getUserPosts(this.userId);
-             }
-      });
     this.getAllUsers();
-    this.getUserPosts(this.userId);
-    this.getAllTags();
+  }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0]
+    console.log('inside on file change', this.selectedFile)
+  }
+  onUpload() {
+    let myObservable = this._httpService.uploadProfilePicture(this.selectedFile);
+    myObservable.subscribe(data=>{
+      console.log(data)
+
+      this.convertBuffer(data)
+    })
+  }
+  convertBuffer(data){
+    let TYPED_ARRAY = new Uint8Array(data['data']);
+    const STRING_CHAR = String.fromCharCode.apply(null, TYPED_ARRAY);
+    // const STRING_CHAR = TYPED_ARRAY.reduce((data, byte)=> {
+    //   return data + String.fromCharCode(byte);
+    //   }, '');
+    let base64String = btoa(STRING_CHAR);
+    // console.log(base64String)
+    console.log('before sanitize')
+    this.imageurl = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
+    console.log(this.imageurl)
   }
   
   getAllUsers(){
@@ -143,33 +162,30 @@ export class NewsfeeduserComponent implements OnInit {
   getUser(){
     // let username2=localStorage.getItem("username");
     // this.username1=username2;
+    let myObservable = this._httpService.getUser(localStorage.getItem('user'));
+    myObservable.subscribe(data=>{
+      this.myUser = data[0]
+      console.log(this.myUser)
+    })
     this.username1 = this.userId;
-}
-// previewFile(){
-//   console.log('inside previewfile method ~~~~~~~~~~~~')
-//   console.log(this.imageFile)
-//   console.log(typeof this.imageFile)
-
-// }
+  }
 
   getTotalTweets(){
   let users_id=localStorage.getItem("user");
-  console.log("bbb"+users_id);
+  console.log("total tweets1"+users_id);
   let myObservable = this._httpService.getTotalTweets(users_id);
   myObservable.subscribe(data=>{
-  console.log("ccc"+ data);
+  console.log("total tweets2"+ data);
   this.totalTweets=data;
   })
   }
 
   goUser(option) {
-    // console.log(option);
     this.router.navigate(["dashboard/user", option]);
     
   }
 
   trendredirect(hashtag){
-    console.log(hashtag + "   whywhywhywhywhywhywhywhywhywhywhywhy")
     this.router.navigate(['/dashboard/hashtag/', hashtag]);
   }
 
@@ -177,9 +193,7 @@ export class NewsfeeduserComponent implements OnInit {
     let myObservable = this._httpService.getAllTags();
     myObservable.subscribe(data=>{
       this.allTags = data;
-      console.log(this.allTags, "this is bewyonce!!!");
-      
-     
+      console.log("this is all tags:", this.allTags);
     })
   }
 }

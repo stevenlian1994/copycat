@@ -58,6 +58,7 @@ export class NewsfeedComponent implements OnInit {
     })
   }
 
+
   getAllTags(){
     let myObservable = this._httpService.getAllTags();
     myObservable.subscribe(data=>{
@@ -99,6 +100,7 @@ export class NewsfeedComponent implements OnInit {
     this.newPost['users_id'] = localStorage.getItem("user"); 
     let tempObservable = this._httpService.createPost(this.newPost);
     tempObservable.subscribe(data => {
+      this.newPost = {content: ''};
       this.newPostTag['posts_id'] = data['id'] //saving post id for post_has_tags query
       // STEP 2 - Find all hashtags in content of post
         var allTags = this.findHashTags(this.newPost['content']) 
@@ -180,14 +182,4 @@ export class NewsfeedComponent implements OnInit {
   goUser(option) {
     this.router.navigate(["dashboard/user", option]);
   }
-
-  messageReset(){
-    // document.querySelector("#msgBox").textContent = "";
-    document.querySelector("#msgBox").value = "";
-    // console.dir(document);
-
-  }
-
-  
-
 }

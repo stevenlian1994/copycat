@@ -38,7 +38,7 @@
                               <div class="post-container" *ngFor="let post of allPostsReversed">
                                     <div class="row">
                                       <div class="col-2">
-                                        <img class="img-responsive post-image" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
+                                        <img class="img-responsive post-image" src="{{post['profilePicture']}}">
                                       </div>
                                       <div class="col">
                                         <p> 
@@ -87,8 +87,8 @@
 
 
           <div *ngIf="allTags" >
-            <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[0]['title'])" >{{allTags[0]['title']}}</a></p>
-            <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[1]['title'])" >{{allTags[1]['title']}}</a></p>
+            <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[0]['title'])" >#{{allTags[0]['title']}}</a></p>
+            <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[1]['title'])" >#{{allTags[1]['title']}}</a></p>
           </div>
       </div>
     </div>
