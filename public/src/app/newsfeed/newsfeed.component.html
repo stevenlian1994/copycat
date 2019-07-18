@@ -11,6 +11,7 @@
   <div class="row">
     <div class="col-8">
       <div class="middle"> 
+        
       <form>
             <mat-form-field>
                 <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
@@ -22,6 +23,7 @@
             </mat-form-field>
 
       </form>
+
       <h3>Create a post</h3>
       <form (submit)="createPost()">
           <textarea id= "msgBox" class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
@@ -45,6 +47,12 @@
                                             <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
                                             <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
                                             - <span>{{post['age']}}</span>
+                                            
+                                            <button *ngIf="ownId==post['userid']" (click)="postDelete(post['id'])">Delete</button>
+
+                                            <button *ngIf="ownId==post['userid']" (click)="followUser(post['userid'])">Follow</button>
+
+                                            <!-- <button (click)="postDelete(post['id'])">Delete</button> -->
                                         </p>
                                         <p>
                                           <span *ngFor="let word of post['content']">
@@ -73,8 +81,6 @@
             <p><img alt="image"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
             <p><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
           </div>
-
-
 
       </div>
       <div>

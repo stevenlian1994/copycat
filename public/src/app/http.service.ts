@@ -12,6 +12,7 @@ export class HttpService {
     uploadProfilePicture(imageFile){
       return this._http.post('/uploadProfilePicture', imageFile)
     }
+
     getUsers(){
         return this._http.get("/getUsers")
     }
@@ -26,6 +27,7 @@ export class HttpService {
     getFilteredPosts(hashtag){
         return this._http.get(`/getFilteredPosts/${hashtag}`)
     }
+
     getTags(postId){
         return this._http.post('/getTags', postId)
     }
@@ -33,15 +35,19 @@ export class HttpService {
     createPost(newPost){
         return this._http.post('/createPost', newPost)
     }
+
     createTag(newTag, postId){
       return this._http.post(`/createTag/${postId}`, {"newTag": newTag})
     }
+
     createUser(newUser){
         return this._http.post('/createUser', newUser)
     }
+
     loginUser(userLogin){
         return this._http.post('/loginUser/', userLogin )
     }
+    
     checkLogin(){
         if(localStorage.getItem("user") !== null){
             this.isLoggedIn = true;
@@ -63,5 +69,13 @@ export class HttpService {
         return this._http.get("/getTags");
 
     }
+
+    postDelete(postId){
+        console.log("SAMSO " + postId);
+        return this._http.delete(`/postDelete/${postId}`);
+    }
+
+
+
 }
 

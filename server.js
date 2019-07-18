@@ -26,6 +26,7 @@ app.post('/loginUser', function(req,res){
         res.json(results[0])
     })
 })
+
 app.post('/uploadProfilePicture', function(req,res){
   req.on('data', function(data){
     console.log('inside server,', data)
@@ -37,7 +38,7 @@ app.post('/uploadProfilePicture', function(req,res){
 })
 
 app.get('/getPosts', function(req,res){
-    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username,JSON_ARRAYAGG(tags.title) as tags FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
+    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.id as userid, JSON_ARRAYAGG(tags.title) as tags FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
         res.json(results)
     })
 })
@@ -132,6 +133,15 @@ app.post('/getPostsTags', function(req,res){
   }
 })
 
+app.delete("/postDelete/:postId", function(req,res){
+  connection.query(`DELETE FROM posts_has_tags WHERE posts_id = ${req.params.postId} ;`);
+  connection.query(`DELETE FROM posts WHERE posts.id = ${req.params.postId} ;`, function(err, results){
+    res.json(results);
+  });
+
+
+})
+
 
 app.get('/getTotalTweets/:users_id', function(req,res){
   console.log("gegeg"+ req.params.users_id)
@@ -148,5 +158,4 @@ app.all("*", (req,res,next) => {
 var server = app.listen(8000, function(){
     console.log("listening on port 8000")
 })
-
 
