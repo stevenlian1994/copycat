@@ -7,13 +7,16 @@ import { ProfileComponent } from './profile/profile.component';
 import { PostsComponent } from './posts/posts.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { HashtagComponent} from './hashtag/hashtag.component';
+import { NewsfeeduserComponent } from './newsfeeduser/newsfeeduser.component';
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], children: [
         { path: 'newsfeed', component: NewsfeedComponent },
-        { path: 'profile/:id', component: ProfileComponent },
+        // { path: 'profile/:id', component: ProfileComponent },
+        // { path: 'profile', component: ProfileComponent },
+        { path: 'user/:userId', component: NewsfeeduserComponent  },
         { path: 'hashtag/:title', component: HashtagComponent },
       ]
      },
@@ -26,4 +29,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
+
+
+
+

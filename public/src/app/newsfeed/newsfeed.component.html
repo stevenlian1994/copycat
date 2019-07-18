@@ -10,6 +10,16 @@
 
  <div class="col-sm-8">
     <div class="middle"> 
+    <form>
+        <mat-form-field>
+            <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
+                {{option}}
+            </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
     <h3>Create a post</h3>
     <form (submit)="createPost()">
         <textarea class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
@@ -25,8 +35,8 @@
                 <tr>
                     <div class="post-container" *ngFor="let post of allPostsReversed">
                           <div class="row">
-                            <div class="col-1">
-                              <img class="img-fluid" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
+                            <div class="col-2">
+                              <img class="img-responsive post-image" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
                             </div>
                             <div class="col">
                               <p> 
@@ -57,9 +67,14 @@
         </table>
     </div>
 </div>
+
 </div>
 </div>
 <div class="col-sm-2"></div>
+
+    <!-- <div class="right">
+        
+    </div> -->
 
 </body>
 </html>

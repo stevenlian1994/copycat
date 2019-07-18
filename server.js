@@ -2,6 +2,7 @@ var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
 var path = require('path')
+var fs = require('fs');
 app.use(express.static( __dirname + '/public/dist/public' ));
 app.use(bodyParser.json());
 
@@ -25,11 +26,52 @@ app.post('/loginUser', function(req,res){
         res.json(results[0])
     })
 })
+app.post('/uploadProfilePicture', function(req,res){
+  req.on('data', function(data){
+    console.log('inside server,', data)
+    console.log('inside server,', typeof data)
+    console.log('inside server,', data.length)
+    res.json(data)
+  })
+    // console.log('inside server,', req.body)
+})
 
 app.get('/getPosts', function(req,res){
     connection.query("SELECT posts.id, posts.content, posts.created_at, users.username,JSON_ARRAYAGG(tags.title) as tags FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
         res.json(results)
     })
+})
+
+app.get("/getUserPosts/:userId", function(req,res){
+  // console.log("KONEEEEEE!!!!", + req.params.userId)
+  connection.query(`SELECT id FROM users WHERE users.username='${req.params.userId}';`,
+  function(err, results) {
+      // console.log(results[0]["id"] + " Ian Cha")
+      // connection.query(`SELECT * FROM posts WHERE posts.users_id='${results[0]["id"]}';`,
+      connection.query(`SELECT * FROM posts INNER JOIN users on posts.users_id = users.id WHERE posts.users_id='${results[0]["id"]}';`,
+      // connection.query(`SELECT * FROM posts INNER JOIN users on posts.users_id = users.id;`,
+
+  function(err, results){
+      console.log(JSON.stringify(results), "this is sparta!!!!");
+      res.json(results)
+  })
+  }
+
+  )
+
+  console.log("KONEEEEEE!!!!")
+})
+
+
+app.get('/getUsers', function(req,res){
+  console.log('inside getusersss')
+  connection.query(`SELECT * FROM users`, function(err, results){
+      console.log('this is our', results);
+      res.json(results);
+      
+  })
+  // console.log(results);
+  // console.log("yoyoyoyoyoyoo");
 })
 app.get('/getFilteredPosts/:title', function(req,res){
   console.log(req.params.title)
@@ -89,7 +131,6 @@ app.get('/getTotalTweets/:users_id', function(req,res){
     res.json(results[0].userNumber)
   })
 })
-
 
 app.all("*", (req,res,next) => {
     res.sendFile(path.resolve("./public/dist/public/index.html"))

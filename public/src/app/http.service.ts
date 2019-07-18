@@ -9,6 +9,17 @@ export class HttpService {
     dict = {"isLoggedIn": 'string'}
     constructor(private _http: HttpClient){}
 
+    uploadProfilePicture(imageFile){
+      return this._http.post('/uploadProfilePicture', imageFile)
+    }
+    getUsers(){
+        return this._http.get("/getUsers")
+    }
+
+    getUserPosts(userId){
+        return this._http.get("/getUserPosts/" + userId)
+    }
+
     getPosts(){
         return this._http.get('/getPosts')
     }

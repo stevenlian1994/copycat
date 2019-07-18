@@ -1,31 +1,69 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { AuthService } from '../services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
-
+import { Observable } from "rxjs";
+import { FormControl } from "@angular/forms";
+import { map, startWith } from "rxjs/operators";
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { RouterInitializer } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-newsfeed',
   templateUrl: './newsfeed.component.html',
   styleUrls: ['./newsfeed.component.css']
 })
+
+
 export class NewsfeedComponent implements OnInit {
   allPosts : any;
+  allUsers : any;
   allPostsReversed = [];
-  newPost = {content: ''}
-  newPostTag={'posts_id':''}
+  newPost = {content: ''};
+  newPostTag={'posts_id':''};
+  options: string[] = [];
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]>;
+
 
    constructor(private _httpService: HttpService, private route: ActivatedRoute,  private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
-    this.getAllPosts()
+    this.getAllPosts();
+    this.getAllUsers();
+
   }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => 
+      option.toLowerCase().includes(filterValue)
+    );
+  }
+
+  getAllUsers(){
+    console.log("sdfasdfasdf");
+    let myObservable = this._httpService.getUsers();
+    myObservable.subscribe(data=>{
+      console.log('got our data into comp', data)
+      this.allUsers = data;
+      // console.log(this.allUsers);
+      for (let i=0; i<this.allUsers.length; i++){
+        this.options.push(this.allUsers[i]["username"])
+      };
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map(value => this._filter(value))
+      );
+    })
+  }
+
   getAllPosts(){
     let myObservable = this._httpService.getPosts();
     myObservable.subscribe(data=>{
       this.allPosts = data;
       this.calculateAgeOfPosts(this.allPosts)
-      // Method to reset AllPostsReversed
+      // Method to reset AllPostsReversed 
       this.setAllPostsReversed()
     })
   }
@@ -39,7 +77,7 @@ export class NewsfeedComponent implements OnInit {
     // user[0] = user[0].substring(1,user[0].length)
     // console.log('hi inside redirect', hashtag[0])
     console.log("get User Id"+ this.route.params); 
-    this.router.navigate(['/dashboard/profile/', users_id);
+    // this.router.navigate(['/dashboard/profile/', users_id);
   }
 
 
@@ -49,41 +87,34 @@ export class NewsfeedComponent implements OnInit {
     let tempObservable = this._httpService.createPost(this.newPost)
     tempObservable.subscribe(data => {
       this.newPostTag['posts_id'] = data['id'] //saving post id for post_has_tags query
-      console.log('data from posting', data)
       // STEP 2 - Find all hashtags in content of post
         var allTags = this.findHashTags(this.newPost['content']) 
         //  allTags is an array of strings, but createTags is creating undefined titles for tags in db
       // STEP 3 - Create all tags if needed and return tag ids
+      if(allTags.length == 0){
+        this.getAllPosts()
+      }
       for(let i in allTags){
         if(allTags[i] == allTags[allTags.length-1]){
           var boolean = true
-          console.log('our bool:', boolean)
         } else {
           var boolean = false
-          console.log('our bool:', boolean)
         }
         this.createTag(allTags[i], data['id'], boolean)
       }  
     })
   }
 
-
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
-    console.log('inside createTags:', typeof tag)
-    console.log('inside createTags:', tag)
-    console.log('inside createTags:', isLast)
       let tempObservable2 = this._httpService.createTag(tag, postId); 
       tempObservable2.subscribe(data =>{
-        console.log("this is our data from creating tags:", data)
-        console.log(isLast)
         if(isLast){
-          console.log('lets get all posts!!')
           this.getAllPosts()
         }
       })
     }
-
+  
   findHashTags(content){
     var hashIndexes = {}
     var allTags = []
@@ -133,6 +164,11 @@ export class NewsfeedComponent implements OnInit {
     }
   }
 
+  goUser(option) {
+    console.log(option);
+    this.router.navigate(["dashboard/user", option]);
+  }
 
+  
 
 }
