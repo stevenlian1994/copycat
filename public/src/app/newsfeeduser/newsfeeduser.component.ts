@@ -9,19 +9,21 @@ import { RouterInitializer } from '@angular/router/src/router_module';
 import { Params } from '@angular/router';
 import { Router, NavigationEnd, Event } from '@angular/router';
 
-
 @Component({
   selector: 'app-newsfeeduser',
   templateUrl: './newsfeeduser.component.html',
   styleUrls: ['./newsfeeduser.component.css']
 })
+
 export class NewsfeeduserComponent implements OnInit {
+  allTags : any;
   allUsers : any;
   options: string[] = [];
   allPosts : any;
   allPostsReversed = [];
   userId: String;
-
+  
+  
   username1={}; 
   totalTweets:any; 
   // imageFile: any;
@@ -32,7 +34,7 @@ export class NewsfeeduserComponent implements OnInit {
   constructor(private _httpService: HttpService, private _authService: AuthService, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe( params => this.userId=params.userId);
   }
-
+  
   ngOnInit() {
     this.router.events.subscribe(
       (event: Event) => {
@@ -40,12 +42,15 @@ export class NewsfeeduserComponent implements OnInit {
               this.getUserPosts(this.userId);
               this.getUser(); 
               this.getTotalTweets(); 
+              
              }
       });
+
     console.log(this.userId);
     this.getUserPosts(this.userId);
     this.getUser(); 
-    this.getTotalTweets(); 
+    this.getTotalTweets();
+    this.getAllTags();
 
     this.router.events.subscribe(
       (event: Event) => {
@@ -55,6 +60,7 @@ export class NewsfeeduserComponent implements OnInit {
       });
     this.getAllUsers();
     this.getUserPosts(this.userId);
+    this.getAllTags();
   }
   
   getAllUsers(){
@@ -160,5 +166,20 @@ export class NewsfeeduserComponent implements OnInit {
     // console.log(option);
     this.router.navigate(["dashboard/user", option]);
     
+  }
+
+  trendredirect(hashtag){
+    console.log(hashtag + "   whywhywhywhywhywhywhywhywhywhywhywhy")
+    this.router.navigate(['/dashboard/hashtag/', hashtag]);
+  }
+
+  getAllTags(){
+    let myObservable = this._httpService.getAllTags();
+    myObservable.subscribe(data=>{
+      this.allTags = data;
+      console.log(this.allTags, "this is bewyonce!!!");
+      
+     
+    })
   }
 }

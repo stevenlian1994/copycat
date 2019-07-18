@@ -48,8 +48,8 @@ export class HttpService {
         } else {
             this.isLoggedIn = false; 
         }
-        console.log("is user logged in?:", this.isLoggedIn)
-        return this.isLoggedIn
+        console.log("is user logged in?:", this.isLoggedIn);
+        return this.isLoggedIn;
     }
 
     getPostsTags(newPostTag){
@@ -57,6 +57,11 @@ export class HttpService {
     }
     getTotalTweets(users_id){
         return this._http.get(`/getTotalTweets/${users_id}`)
+    }
+
+    getAllTags(){
+        return this._http.get("/getTags");
+
     }
 }
 

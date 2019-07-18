@@ -10,7 +10,7 @@ var mysql = require('mysql')
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password:'root',
+    password:'[root]',
     database: 'copycat'
 })
 
@@ -112,6 +112,15 @@ app.post('/createUser', function(req,res){
         }
     })
 })
+
+app.get("/getTags", function(req, res){
+  connection.query(`SELECT * FROM tags`, function(err, results){
+    console.log(results, "this is iuan cha");
+    res.json(results);
+
+  })
+})
+
 
 app.post('/getPostsTags', function(req,res){
   for(var i = 0; i < req.body.tag_ids.length; i++){

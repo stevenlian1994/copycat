@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { RouterInitializer } from '@angular/router/src/router_module';
 
+
 @Component({
   selector: 'app-newsfeed',
   templateUrl: './newsfeed.component.html',
@@ -16,6 +17,7 @@ import { RouterInitializer } from '@angular/router/src/router_module';
 
 
 export class NewsfeedComponent implements OnInit {
+  allTags : any;
   allPosts : any;
   allUsers : any;
   allPostsReversed = [];
@@ -31,6 +33,7 @@ export class NewsfeedComponent implements OnInit {
   ngOnInit() {
     this.getAllPosts();
     this.getAllUsers();
+    this.getAllTags();
   }
 
   private _filter(value: string): string[] {
@@ -55,6 +58,16 @@ export class NewsfeedComponent implements OnInit {
     })
   }
 
+  getAllTags(){
+    let myObservable = this._httpService.getAllTags();
+    myObservable.subscribe(data=>{
+      this.allTags = data;
+      console.log(this.allTags, "this is bewyonce!!!");
+      
+     
+    })
+  }
+
   getAllPosts(){
     let myObservable = this._httpService.getPosts();
     myObservable.subscribe(data=>{
@@ -64,21 +77,27 @@ export class NewsfeedComponent implements OnInit {
       this.setAllPostsReversed()
     })
   }
+
   hashtagRedirect(hashtag){
-    hashtag[0] = hashtag[0].substring(1,hashtag[0].length)
+    console.log(hashtag + "   whywhywhywhywhywhywhywhywhywhywhywhy")
+    hashtag[0] = hashtag[0].substring(1,hashtag[0].length);
+    console.log(hashtag + "   whywhywhywhywhywhywhywhywhywhywhywhy")
     this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
+  }
+
+  trendredirect(hashtag){
+    console.log(hashtag + "   whywhywhywhywhywhywhywhywhywhywhywhy")
+    this.router.navigate(['/dashboard/hashtag/', hashtag]);
   }
 
   profileRedirect(username){
     this.router.navigate(['/dashboard/user/', username[0]]);
   }
   
-
-
   createPost(){
     // STEP 1: CREATE THE POST AND RETURN POST ID
     this.newPost['users_id'] = localStorage.getItem("user"); 
-    let tempObservable = this._httpService.createPost(this.newPost)
+    let tempObservable = this._httpService.createPost(this.newPost);
     tempObservable.subscribe(data => {
       this.newPostTag['posts_id'] = data['id'] //saving post id for post_has_tags query
       // STEP 2 - Find all hashtags in content of post
@@ -160,6 +179,13 @@ export class NewsfeedComponent implements OnInit {
 
   goUser(option) {
     this.router.navigate(["dashboard/user", option]);
+  }
+
+  messageReset(){
+    // document.querySelector("#msgBox").textContent = "";
+    document.querySelector("#msgBox").value = "";
+    // console.dir(document);
+
   }
 
   
