@@ -42,12 +42,9 @@ export class NewsfeedComponent implements OnInit {
   }
 
   getAllUsers(){
-    console.log("sdfasdfasdf");
     let myObservable = this._httpService.getUsers();
     myObservable.subscribe(data=>{
-      console.log('got our data into comp', data)
       this.allUsers = data;
-      // console.log(this.allUsers);
       for (let i=0; i<this.allUsers.length; i++){
         this.options.push(this.allUsers[i]["username"])
       };
@@ -69,7 +66,6 @@ export class NewsfeedComponent implements OnInit {
   }
   hashtagRedirect(hashtag){
     hashtag[0] = hashtag[0].substring(1,hashtag[0].length)
-    console.log('hi inside redirect', hashtag[0])
     this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
   }
 
@@ -157,7 +153,6 @@ export class NewsfeedComponent implements OnInit {
   }
 
   goUser(option) {
-    console.log(option);
     this.router.navigate(["dashboard/user", option]);
   }
 

@@ -23,12 +23,11 @@ export class HomeComponent implements OnInit {
             $(".register-form-container").toggleClass("hide");
         });
     });
-    console.log(
-        "token",
-        this._authService.isAuthenticated()
-    )
+    // console.log(
+    //     "token",
+    //     this._authService.isAuthenticated()
+    // )
     this.isLoggedIn = this._authService.isAuthenticated();
-      console.log("inside homecomp")
   }
 
   createUser(){

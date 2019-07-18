@@ -58,10 +58,9 @@ export class NewsfeeduserComponent implements OnInit {
   }
   
   getAllUsers(){
-    console.log("sdfasdfasdf");
     let myObservable = this._httpService.getUsers();
     myObservable.subscribe(data=>{
-      console.log('got our data into comp', data)
+      // console.log('got our data into comp', data)
       this.allUsers = data;
       // console.log(this.allUsers);
       for (let i=0; i<this.allUsers.length; i++){
@@ -86,7 +85,7 @@ export class NewsfeeduserComponent implements OnInit {
     let myObservable = this._httpService.getUserPosts(userId);
     myObservable.subscribe(data=>{
       this.allPosts = data;
-      console.log(data);
+      // console.log(data);
       this.calculateAgeOfPosts(this.allPosts)
       // Method to reset AllPostsReversed
       this.setAllPostsReversed()
@@ -94,7 +93,7 @@ export class NewsfeeduserComponent implements OnInit {
   }
   hashtagRedirect(hashtag){
     hashtag[0] = hashtag[0].substring(1,hashtag[0].length)
-    console.log('hi inside redirect', hashtag[0])
+    // console.log('hi inside redirect', hashtag[0])
     this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
   }
 
@@ -129,7 +128,7 @@ export class NewsfeeduserComponent implements OnInit {
       // this.allPosts[j]['content'] = '<a href="#">hello</a>'
       this.allPosts[j]['content'] = this.allPosts[j]['content'].split(' ')
 
-      console.log(this.allPosts[j]['content'])
+      // console.log(this.allPosts[j]['content'])
       this.allPostsReversed.push(this.allPosts[j])
     }
   }
@@ -156,7 +155,7 @@ this.totalTweets=data;
 }
 
   goUser(option) {
-    console.log(option);
+    // console.log(option);
     this.router.navigate(["dashboard/user", option]);
     
   }
