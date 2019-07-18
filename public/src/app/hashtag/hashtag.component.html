@@ -1,30 +1,42 @@
-<div class="middle">
-<div class="col-sm-7">
-<div class="card">
-    <table class="table table-hover shopping-cart-wrap">
-        <thead class="text-muted">
-            <tr>Dashboard</tr>
-        </thead>
-        <tbody>
-            <tr>
-                <div class="post-container" *ngFor="let post of allPostsReversed">
-                    <p><b>{{post['username']}}</b> @ {{post['username']}} - <span>{{post['age']}}</span></p>
-                    <p>
-                        <span *ngFor="let word of post['content']">
-                          <span *ngIf="word[0] == '#'">
-                              <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
-                              <!-- <a href='/dashboard/hashtag/{{word.substring(1,word.length)}}'>{{word}} </a>  -->
-                          </span>
-                          <span *ngIf="word[0] != '#'">
-                              <span>{{word}} </span>
-                          </span>
-                        </span>
-                      </p>
-                </div>
-            </tr>
-        </tbody>
-    </table>
-</div>
-</div>
-<div class="col-sm-2"></div>
+<div class="row">
+  <div class="col-8">
+    <div class="middle">
+    <div class="col-sm-7">
+    <div class="card">
+        <table class="table table-hover shopping-cart-wrap">
+            <thead class="text-muted">
+                <tr>Dashboard</tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <div class="post-container" *ngFor="let post of allPostsReversed">
+                        <!-- <p><b>{{post['username']}}</b> @ {{post['username']}} - <span>{{post['age']}}</span></p> -->
+                        <p> 
+                          <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
+                          <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
+                          - <span>{{post['age']}}</span>
+                        </p>
+                                  <p>
+                            <span *ngFor="let word of post['content']">
+                              <span *ngIf="word[0] == '#'">
+                                  <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
+                                  <!-- <a href='/dashboard/hashtag/{{word.substring(1,word.length)}}'>{{word}} </a>  -->
+                              </span>
+                              <span *ngIf="word[0] != '#'">
+                                  <span>{{word}} </span>
+                              </span>
+                            </span>
+                          </p>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="col-sm-2"></div>
+    </div>
+  </div>
+  <div class="col-4">
+    asdf
+  </div>
 </div>

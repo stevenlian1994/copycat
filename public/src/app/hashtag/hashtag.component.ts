@@ -40,6 +40,9 @@ export class HashtagComponent implements OnInit {
     console.log('hi inside redirect', hashtag[0])
     this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
   }
+  profileRedirect(username){
+    this.router.navigate(['/dashboard/user/', username[0]]);
+  }
   setAllPostsReversed(){
     this.allPostsReversed = []
     for(var j = this.filteredPosts.length-1; j>-1; j--){

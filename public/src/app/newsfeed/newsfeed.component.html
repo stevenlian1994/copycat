@@ -4,77 +4,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <title>Document</title>
 </head>
 <body>
-
- <div class="col-sm-8">
-    <div class="middle"> 
-    <form>
-        <mat-form-field>
-            <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
-                {{option}}
-            </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-    </form>
-    <h3>Create a post</h3>
-    <form (submit)="createPost()">
-        <textarea class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
-        <button id="btn" type="submit">Post New Message</button>
-    </form>
-        <div class="card" style="height:500px; overflow-y: scroll">
-        <div class="overflow-auto">
-        <table class="table overflow-container">
-            <thead class="text-muted">
-                <tr>Dashboard</tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <div class="post-container" *ngFor="let post of allPostsReversed">
-                          <div class="row">
-                            <div class="col-2">
-                              <img class="img-responsive post-image" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
-                            </div>
-                            <div class="col">
-                              <p> 
-                                  <b> <a style="color:black" (click)="profileRedirect(['users'])" > {{post['username']}}</a></b> @{{post['username']}} - <span>{{post['age']}}</span>
-                              </p>
-                              <p>
-                                <span *ngFor="let word of post['content']">
-                                  <span *ngIf="word[0] == '#'">
-                                      <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
-                                  </span>
-                                  <span *ngIf="word[0] != '#'">
-                                      <span>{{word}} </span>
-                                  </span>
-                                </span>
-                              </p>
-
-                            </div>
-                          </div>
-
-
-
-
-
-                    </div>
-
-                </tr>
-            </tbody>
-        </table>
+  <div class="row">
+    <div class="col-8">
+      <div class="middle"> 
+      <form>
+          <mat-form-field>
+              <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
+                  {{option}}
+              </mat-option>
+              </mat-autocomplete>
+          </mat-form-field>
+      </form>
+      <h3>Create a post</h3>
+      <form (submit)="createPost()">
+          <textarea class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
+          <button id="btn" type="submit">Post New Message</button>
+      </form>
+              <div class="card" style="height:500px; overflow-y: scroll">
+                <div class="overflow-auto">
+                  <table class="table overflow-container">
+                      <thead class="text-muted">
+                          <tr>Dashboard</tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <div class="post-container" *ngFor="let post of allPostsReversed">
+                                    <div class="row">
+                                      <div class="col-2">
+                                        <img class="img-responsive post-image" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
+                                      </div>
+                                      <div class="col">
+                                        <p> 
+                                            <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
+                                            <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
+                                            - <span>{{post['age']}}</span>
+                                        </p>
+                                        <p>
+                                          <span *ngFor="let word of post['content']">
+                                            <span *ngIf="word[0] == '#'">
+                                                <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
+                                            </span>
+                                            <span *ngIf="word[0] != '#'">
+                                                <span>{{word}} </span>
+                                            </span>
+                                          </span>
+                                        </p>
+                                      </div>
+                                    </div>
+                              </div>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+      </div>
     </div>
-</div>
+    <div class="col-4">
+      <div>
+          <h2>Who to Follow</h2>
+          <div *ngIf="allUsers" >
+            <p><img alt="image"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
+            <p><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
+          </div>
 
-</div>
-</div>
-<div class="col-sm-2"></div>
-
-    <!-- <div class="right">
-        
-    </div> -->
-
+      </div>
+      <div>
+          <h2>Trends for you</h2>
+          <!-- <div *ngIf="allUsers" >
+              <p>{{allUsers[0]['username']}}</p>
+              <p>{{allUsers[1]['username']}}</p>
+          </div> -->
+          <p>#copycat</p>
+          <p>#javascript</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

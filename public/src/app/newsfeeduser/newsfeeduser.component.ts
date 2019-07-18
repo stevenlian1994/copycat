@@ -96,7 +96,9 @@ export class NewsfeeduserComponent implements OnInit {
     // console.log('hi inside redirect', hashtag[0])
     this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
   }
-
+  profileRedirect(username){
+    this.router.navigate(['/dashboard/user/', username[0]]);
+  }
   
 
   calculateAgeOfPosts(posts){
