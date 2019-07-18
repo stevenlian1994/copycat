@@ -55,8 +55,8 @@ export class HttpService {
     getPostsTags(newPostTag){
         return this._http.post('/getPostsTags', newPostTag)
     }
-    getTotalTweets(totalTweet, users_id){
-        return this._http.get(`/getTotalTweets/${users_id}`, totalTweet)
+    getTotalTweets(users_id){
+        return this._http.get(`/getTotalTweets/${users_id}`)
     }
 }
 

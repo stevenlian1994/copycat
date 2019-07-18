@@ -39,13 +39,13 @@ export class NewsfeeduserComponent implements OnInit {
              if (event instanceof NavigationEnd) {
               this.getUserPosts(this.userId);
               this.getUser(); 
-              this.getTotalTweets(this.totalTweets); 
+              this.getTotalTweets(); 
              }
       });
     console.log(this.userId);
     this.getUserPosts(this.userId);
     this.getUser(); 
-    this.getTotalTweets(this.totalTweets); 
+    this.getTotalTweets(); 
 
     this.router.events.subscribe(
       (event: Event) => {
@@ -144,15 +144,15 @@ export class NewsfeeduserComponent implements OnInit {
 
 // }
 
-getTotalTweets(tweet){
-let users_id=localStorage.getItem("user");
-console.log("bbb"+users_id);
-let myObservable = this._httpService.getTotalTweets(tweet,users_id);
-myObservable.subscribe(data=>{
-console.log("ccc"+ data);
-this.totalTweets=data;
-})
-}
+  getTotalTweets(){
+  let users_id=localStorage.getItem("user");
+  console.log("bbb"+users_id);
+  let myObservable = this._httpService.getTotalTweets(users_id);
+  myObservable.subscribe(data=>{
+  console.log("ccc"+ data);
+  this.totalTweets=data;
+  })
+  }
 
   goUser(option) {
     // console.log(option);

@@ -14,7 +14,8 @@ const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], children: [
         { path: 'newsfeed', component: NewsfeedComponent },
-        { path: 'profile', component: ProfileComponent },
+        // { path: 'profile/:id', component: ProfileComponent },
+        // { path: 'profile', component: ProfileComponent },
         { path: 'user/:userId', component: NewsfeeduserComponent  },
         { path: 'hashtag/:title', component: HashtagComponent },
       ]

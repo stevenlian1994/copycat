@@ -7,6 +7,8 @@
   <title>Document</title>
 </head>
 <body>
+
+ <div class="col-sm-8">
     <div class="middle"> 
     <form>
         <mat-form-field>
@@ -23,7 +25,6 @@
         <textarea class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
         <button id="btn" type="submit">Post New Message</button>
     </form>
-
         <div class="card" style="height:500px; overflow-y: scroll">
         <div class="overflow-auto">
         <table class="table overflow-container">
@@ -38,8 +39,8 @@
                               <img class="img-responsive post-image" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
                             </div>
                             <div class="col">
-                              <p>
-                                  <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
+                              <p> 
+                                  <b> <a style="color:black" (click)="profileRedirect(['users'])" > {{post['username']}}</a></b> @{{post['username']}} - <span>{{post['age']}}</span>
                               </p>
                               <p>
                                 <span *ngFor="let word of post['content']">
@@ -68,6 +69,8 @@
 </div>
 
 </div>
+</div>
+<div class="col-sm-2"></div>
 
     <!-- <div class="right">
         

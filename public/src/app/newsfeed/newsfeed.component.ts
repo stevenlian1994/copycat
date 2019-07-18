@@ -26,7 +26,7 @@ export class NewsfeedComponent implements OnInit {
   filteredOptions: Observable<string[]>;
 
 
-  constructor(private _httpService: HttpService,  private router: Router, private _authService: AuthService) { }
+   constructor(private _httpService: HttpService, private route: ActivatedRoute,  private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
     this.getAllPosts();
@@ -69,6 +69,14 @@ export class NewsfeedComponent implements OnInit {
     this.router.navigate(['/dashboard/hashtag/', hashtag[0]]);
   }
 
+  profileRedirect(user){
+    // user[0] = user[0].substring(1,user[0].length)
+    // console.log('hi inside redirect', hashtag[0])
+    console.log("get User Id"+ this.route.params); 
+    // this.router.navigate(['/dashboard/profile/', users_id);
+  }
+
+
   createPost(){
     // STEP 1: CREATE THE POST AND RETURN POST ID
     this.newPost['users_id'] = localStorage.getItem("user"); 
@@ -92,7 +100,7 @@ export class NewsfeedComponent implements OnInit {
       }  
     })
   }
-  
+
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
       let tempObservable2 = this._httpService.createTag(tag, postId); 
