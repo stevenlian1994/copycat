@@ -21,7 +21,10 @@ img{
 .disable-links {
   pointer-events: none;
 }
-
+.who-to-follow-profilePicture{
+  max-height:100px;
+  max-width:100px;
+}
 .row{
     /* background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
     background: linear-gradient(120deg, #000, #f0a6ca); */

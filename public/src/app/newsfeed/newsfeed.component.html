@@ -89,8 +89,8 @@
       <div>
           <h2>Who to Follow</h2>
           <div *ngIf="allUsers" >
-            <p><img alt="image"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
-            <p><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
+            <p><img class="who-to-follow-profilePicture" src="{{allUsers[0]['profilePicture']}}"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
+            <p><img class="who-to-follow-profilePicture" src="{{allUsers[1]['profilePicture']}}"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
           </div>
       </div>
       <div>

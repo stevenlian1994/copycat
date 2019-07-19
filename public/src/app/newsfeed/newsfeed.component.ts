@@ -53,6 +53,7 @@ export class NewsfeedComponent implements OnInit {
     let myObservable = this._httpService.getUsers();
     myObservable.subscribe(data=>{
       this.allUsers = data;
+      console.log('allUsers:', this.allUsers)
       for (let i=0; i<this.allUsers.length; i++){
         this.options.push(this.allUsers[i]["username"])
       };
@@ -197,32 +198,4 @@ export class NewsfeedComponent implements OnInit {
     this.router.navigate(["dashboard/user", option]);
   }
 
-  messageReset(){
-    // document.querySelector("#msgBox").textContent = "";
-    // document.querySelector("#msgBox").value = "";
-    // console.dir(document)
-
-
-
-  // postDelete(postId){
-  //   console.log(postId);
-
-  //   let tempObservable = this._httpService.postDelete(postId);
-  //   tempObservable.subscribe(data =>{
-  //     this.getAllPosts()
-  //   })
-  // }
-
-  // followUser(usersId){
-  //   let myObservable = this._httpService.followUser(userId);
-  //   myObservable.subscribe(data => {
-  //     // your codes here
-
-
-      
-  //   })
-
-
-
-  }
 }

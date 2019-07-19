@@ -15,9 +15,9 @@
         
           <div class="container" >
               <div class="blockContainer">
-              <img class="profileImage" src="{{myUser['profilePicture']}}"> 
+              <img *ngIf="myUser" class="profileImage" src="{{myUser['profilePicture']}}"> 
             
-              <h1>{{username1}} </h1> <a href="/" onclick="return false;" (click)="profileRedirect([username1])">@{{username1}} </a> 
+              <h1>{{userName}} </h1> <a href="/" onclick="return false;" (click)="profileRedirect([userName])">@{{userName}} </a> 
               <p>Tweets: {{totalTweets}}</p>
 
 
@@ -37,12 +37,9 @@
                   <tbody>
                       <tr>
                           <div class="post-container" *ngFor="let post of allPostsReversed">
-                              <!-- <p>
-                                  <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
-                              </p> -->
                               <div class="row">
                                 <div class="col-2">
-                                  <img src="{{myUser['profilePicture']}}" alt="asdf">
+                                  <img *ngIf="myUser" src="{{myUser['profilePicture']}}" alt="">
                                 </div>
                                 <div class="col-10">
                                   <p> 
@@ -109,21 +106,3 @@
   </div>
 </body>
 </html>
-
-
-<!-- 
-<input
-style="display: none"
-type="file" (change)="onFileChanged($event)"
-#fileInput>
-<button (click)="fileInput.click()">Select File</button>
-<button (click)="onUpload()">Upload!</button>
-
- <input type="file" [(ngModel)]="imageFile" name="imageFile" ><br> -->
-<!-- <input type="file" (change)="onFileChanged($event)">
-<button (click)="onUpload()">Upload!</button> -->
-<!-- <input value="submit" type="submit"> -->
-<!-- </form>
-
-
-<img src="{{imageFile}}" height="200" alt="Image preview..."> --> 
