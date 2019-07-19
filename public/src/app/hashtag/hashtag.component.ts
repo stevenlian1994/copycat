@@ -115,4 +115,7 @@ export class HashtagComponent implements OnInit {
         return days + "d"
     }
   }
+  goUser(option) {
+    this.router.navigate(["dashboard/user", option]);
+  }
 }

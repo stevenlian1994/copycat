@@ -51,7 +51,6 @@ export class NewsfeedComponent implements OnInit {
     let myObservable = this._httpService.getUsers();
     myObservable.subscribe(data=>{
       this.allUsers = data;
-      console.log('allUsers:', this.allUsers)
       for (let i=0; i<this.allUsers.length; i++){
         this.options.push(this.allUsers[i]["username"])
       };
@@ -67,7 +66,6 @@ export class NewsfeedComponent implements OnInit {
     let myObservable = this._httpService.getAllTags();
     myObservable.subscribe(data=>{
       this.allHashTags = data;      
-      console.log('all Hash Tags', this.allHashTags)
     })
   }
 
@@ -193,6 +191,12 @@ export class NewsfeedComponent implements OnInit {
 
   goUser(option) {
     this.router.navigate(["dashboard/user", option]);
+  }
+  postDelete(postId){
+    let tempObservable = this._httpService.postDelete(postId);
+      tempObservable.subscribe(data =>{
+        this.getAllPosts()
+      })
   }
 
   followUser(userId){
