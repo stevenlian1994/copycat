@@ -48,7 +48,7 @@ app.post('/uploadProfilePicture', function(req,res){
 })
 
 app.get('/getPosts', function(req,res){
-    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.profilePicture FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
+    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.id as userid, users.profilePicture FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
         res.json(results)
     })
 })

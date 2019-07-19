@@ -81,10 +81,10 @@ export class HttpService {
         return this._http.delete(`/postDelete/${postId}`);
     }
 
-    followUser(userId) {
-        return this._http.post(`/followUser/${userId}`);
+    // followUser(userId) {
+    //     return this._http.post(`/followUser/${userId}`);
         
-    }
+    // }
 
 
 

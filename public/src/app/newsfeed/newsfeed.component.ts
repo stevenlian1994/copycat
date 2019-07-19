@@ -7,7 +7,7 @@ import { map, startWith } from "rxjs/operators";
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { RouterInitializer } from '@angular/router/src/router_module';
-import { userInfo } from 'os';
+// import { userInfo } from 'os';
 
 
 @Component({
@@ -194,18 +194,18 @@ export class NewsfeedComponent implements OnInit {
     })
   }
 
-  followUser(usersId){
-    let myObservable = this._httpService.followUser(userId);
-    myObservable.subscribe(data => {
-      // your codes here
+  // followUser(usersId){
+  //   let myObservable = this._httpService.followUser(userId);
+  //   myObservable.subscribe(data => {
+  //     // your codes here
 
 
       
-    })
+  //   })
 
 
 
 
-  }
+  // }
 
 }
