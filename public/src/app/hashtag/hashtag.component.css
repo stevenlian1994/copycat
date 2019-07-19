@@ -1,25 +1,40 @@
- 
 body{
   font-family: 'Jaldi', sans-serif;
   margin: 0px auto; 
-  background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
-  background: linear-gradient(120deg, #000, #f0a6ca);
 }
 .middle-column{
-  position:absolute;
-  margin: 0px auto;  
-}
-.middle{
-  border-left: 1px solid black;
-  height:600px;
-}
-.row{
-  background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
-  background: linear-gradient(120deg, #000, #f0a6ca);
+  position: relative;
   margin: 0px auto; 
-
+}
+img{
+max-width:100%;
+max-height:100%; 
+}
+.post-image{
+/* height:100%;
+display:inline-block;
+vertical-align: top; */
+width: 100%;
+object-fit: cover;
+height: 100%; /* only if you want fixed height */
+}
+.disable-links {
+pointer-events: none;
 }
 
+.row{
+  /* background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
+  background: linear-gradient(120deg, #000, #f0a6ca); */
+  background-color:white;
+  margin: 0px auto; 
+}
+
+.table{
+  background-color:#B0E0E6; 
+}
+.post-container{
+  background-color:white;
+}
 .space{
 display:inline;
 vertical-align:top;
@@ -31,46 +46,36 @@ vertical-align:top;
   padding:7px; 
   border:none; 
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
-  background-color:white; 
-
 }
 tr{
   margin: 3px;
 }
-/* .panel-body{
-  margin: 10px; 
 
-} */
-.header{
-  height: 120px; 
-  width: 100%; 
-  background-color:#F8F9F9;
-  position: relative; 
-  display: inline-block;
-}
+
 h3{
-  color: white;
+  color: gray;
 }
 h2{
   font-family: 'Reenie Beanie', cursive;
   
 }
 .card{
-  margin:20px 14px;
-  overflow: scroll;
-  background-color:#B0E0E6; 
-
+  margin:80px 10px;
+  border:none;
 }
 
-#btn{
-  color:white; 
-  background-color:#00D0C2;
-  border-radius:5px; 
-  float:right;
-  margin: 0 px 0px 5px 5px; 
+.middle{
+   height:100vh; 
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  padding: 10px 19px;
+  position: relative;  
+  top:30px;
 }
+
 
 span{
   color: gray;
 }
+
 

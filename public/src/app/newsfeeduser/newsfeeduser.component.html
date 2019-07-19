@@ -9,18 +9,12 @@
 <body>
   <div class="row">
     <div class="col-8">
-
-      <div class="left_side">
-        
-        
-          <div class="container" >
-              <div class="blockContainer">
+    <div class="middle"> 
               <img class="profileImage" src="assets/img/batman1.jpg"> 
             
-              <h2>{{username1}} </h2> <a href="/" onclick="return false;" (click)="profileRedirect([username1])">@{{username1}} </a> 
+              <h1>{{username1}} </h1> <a href="/" onclick="return false;" (click)="profileRedirect([username1])">@{{username1}} </a> 
               <p>Tweets: {{totalTweets}}</p>
-              </div>
-          </div>
+
 
           <form>
               <mat-form-field>
@@ -33,14 +27,19 @@
               </mat-form-field>
           </form>
   
-          <div class="card">
-              <table class="table table-hover shopping-cart-wrap">
-                  <tbody>
-                      <tr>
-                          <div class="post-container" *ngFor="let post of allPostsReversed">
-                              <!-- <p>
-                                  <b>{{post['username']}}</b> @{{post['username']}} - <span>{{post['age']}}</span>
-                              </p> -->
+          <div class="card" style="height:100vh; overflow-y: scroll">
+              <table class="table overflow-container">
+                <thead class="text-muted">
+                    <tr>Dashboard</tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <div class="post-container" *ngFor="let post of allPostsReversed">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img class="img-responsive post-image" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg">
+                                </div>
+                                <div class="col">
                               <p> 
                                   <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
                                   <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
@@ -55,17 +54,18 @@
                                   <span *ngIf="word[0] != '#'">
                                       <span>{{word}} </span>
                                   </span>
-  
                                   </span>
                               </p>
+                            </div>
+                          </div>
                           </div>
                       </tr>
                   </tbody>
               </table>
           </div>
       </div>
-  
-      <div class="right_side">
+    </div>
+
           <!-- <form>
               <mat-form-field>
                   <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
@@ -77,8 +77,7 @@
                   
               </mat-form-field>
           </form> -->
-      </div>
-    </div>
+
     <div class="col-4">
         <div>
             <h2>Who to Follow</h2>
@@ -86,7 +85,6 @@
               <p><img alt="image"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
               <p><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
             </div>
-  
         </div>
         <div>
             <h2>Trends for you</h2>
@@ -99,10 +97,25 @@
                 <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[1]['title'])" >{{allTags[1]['title']}}</a></p>
             </div>
         </div>
-    </div>
   </div>
-  
-    
+  </div>
 </body>
 </html>
 
+
+<!-- 
+<input
+style="display: none"
+type="file" (change)="onFileChanged($event)"
+#fileInput>
+<button (click)="fileInput.click()">Select File</button>
+<button (click)="onUpload()">Upload!</button>
+
+ <input type="file" [(ngModel)]="imageFile" name="imageFile" ><br> -->
+<!-- <input type="file" (change)="onFileChanged($event)">
+<button (click)="onUpload()">Upload!</button> -->
+<!-- <input value="submit" type="submit"> -->
+<!-- </form>
+
+
+<img src="{{imageFile}}" height="200" alt="Image preview..."> --> 

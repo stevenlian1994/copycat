@@ -5,22 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <title>Document</title>
 </head>
 <body>
   <div class="row">
     <div class="col-8">
       <div class="middle"> 
-      <form>
+      <form class="form-inline ml-auto">
+            <i class="fa fa-search" style="border:none; font-size:24px"></i>
             <mat-form-field>
-                <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+             <div class="md-form my-0" >
+                <input id="searchBtn"   type="text" placeholder="Search" matInput [matAutocomplete]="auto" [formControl]="myControl" />
+                <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
                     {{option}}
                 </mat-option>
                 </mat-autocomplete>
+            </div>
             </mat-form-field>
-
       </form>
       <h3>Create a post</h3>
       <form (submit)="createPost()">
@@ -28,7 +32,6 @@
           <button id="btn" type="submit" (click)="messageReset()">Post New Message</button>
       </form>
               <div class="card" style="height:500px; overflow-y: scroll">
-                <div class="overflow-auto">
                   <table class="table overflow-container">
                       <thead class="text-muted">
                           <tr>Dashboard</tr>
@@ -56,6 +59,16 @@
                                             </span>
                                           </span>
                                         </p>
+                                        <p style="float:right">
+                                            <span> {{post['userLikes']}}<a href="#" onclick="return false;" (click)="addLike([post['id']])"> <img style="width:20px; height:20px; " src="assets/img/heart1.png"></a></span>
+                                             <!-- <span *ngIf="word[0] == '#'">
+                                                <img style="width:20px; height:20px; " src=" assets/img/heart1.png"></a>
+                                            </span>
+                                            <span *ngIf="word[0] == '#'">
+                                                <i class="fas fa-heart"></i>
+                                            </span> -->
+                                        </p>
+                    
                                       </div>
                                     </div>
                               </div>
@@ -63,7 +76,6 @@
                       </tbody>
                   </table>
               </div>
-            </div>
       </div>
     </div>
     <div class="col-4">
@@ -73,9 +85,6 @@
             <p><img alt="image"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
             <p><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
           </div>
-
-
-
       </div>
       <div>
           <h2>Trends for you</h2>
@@ -83,9 +92,6 @@
               <p>{{allUsers[0]['username']}}</p>
               <p>{{allUsers[1]['username']}}</p>
           </div> -->
-
-
-
           <div *ngIf="allTags" >
             <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[0]['title'])" >{{allTags[0]['title']}}</a></p>
             <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[1]['title'])" >{{allTags[1]['title']}}</a></p>

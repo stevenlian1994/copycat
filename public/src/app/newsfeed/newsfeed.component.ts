@@ -26,6 +26,7 @@ export class NewsfeedComponent implements OnInit {
   options: string[] = [];
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
+  
 
 
    constructor(private _httpService: HttpService, private route: ActivatedRoute,  private router: Router, private _authService: AuthService) { }
@@ -34,6 +35,7 @@ export class NewsfeedComponent implements OnInit {
     this.getAllPosts();
     this.getAllUsers();
     this.getAllTags();
+    
   }
 
   private _filter(value: string): string[] {
@@ -118,6 +120,18 @@ export class NewsfeedComponent implements OnInit {
     })
   }
 
+  addLike(posts_id){
+    let user1= localStorage.getItem("user"); 
+    console.log("addlike user"+ user1)
+    console.log("addlike post"+ posts_id)
+    let tempObservable2 = this._httpService.addLike(user1,posts_id); 
+      tempObservable2.subscribe(data =>{
+        console.log("in add Like:" + data)
+      })
+  }
+
+    
+
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
       let tempObservable2 = this._httpService.createTag(tag, postId); 
@@ -183,11 +197,11 @@ export class NewsfeedComponent implements OnInit {
 
   messageReset(){
     // document.querySelector("#msgBox").textContent = "";
-    document.querySelector("#msgBox").value = "";
-    // console.dir(document);
+    // document.querySelector("#msgBox").value = "";
+    // console.dir(document)
 
   }
 
-  
+
 
 }

@@ -61,6 +61,7 @@ h2{
 }
 .card{
     margin:80px 10px;
+    border:none; 
 }
 
 .middle{
@@ -84,3 +85,27 @@ span{
     color: gray;
 }
 
+
+#searchBtn{
+    height:40px;
+    position: relative;
+    vertical-align:center;
+   
+}
+
+
+
+#searchBtn::placeholder{
+    font-size:24px;
+   
+}
+
+input, 
+input::-webkit-input-placeholder{
+    font:24px;
+    color: red;
+}
+
+.mat-autocomplete{
+    border:none;
+}
