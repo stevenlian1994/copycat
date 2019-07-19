@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { PostsComponent } from './posts/posts.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuardService } from "./guards/auth-guard.service";
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
@@ -23,7 +22,6 @@ import { NewsfeeduserComponent } from './newsfeeduser/newsfeeduser.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    PostsComponent,
     DashboardComponent,
     NewsfeedComponent,
     ProfileComponent,

@@ -9,10 +9,6 @@ export class HttpService {
     dict = {"isLoggedIn": 'string'}
     constructor(private _http: HttpClient){}
 
-    uploadProfilePicture(imageFile){
-      return this._http.post('/uploadProfilePicture', imageFile)
-    }
-
     getUsers(){
         return this._http.get("/getUsers")
     }
@@ -20,8 +16,8 @@ export class HttpService {
       return this._http.get(`/getUser/${userId}`)
     }
 
-    getUserPosts(userId){
-        return this._http.get("/getUserPosts/" + userId)
+    getUserPosts(userName){
+        return this._http.get("/getUserPosts/" + userName)
     }
 
     getPosts(){
@@ -73,17 +69,13 @@ export class HttpService {
 
     getAllTags(){
         return this._http.get("/getTags");
-
     }
     addLike(users_id,posts_id){
-        console.log("in service route " + users_id )
-        console.log("in service route " + posts_id )
         return this._http.get(`/addLike/${posts_id}/${users_id}`);
     }
     
 
     postDelete(postId){
-        console.log("SAMSO " + postId);
         return this._http.delete(`/postDelete/${postId}`);
     }
 

@@ -10,10 +10,70 @@
     <title>Document</title>
 </head>
 <body>
+  
   <div class="row">
     <div class="col-8">
       <div class="middle"> 
-      <form class="form-inline ml-auto">
+        <form (submit)="createPost()">
+            <textarea id= "msgBox" class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="What's Happening" rows="5"></textarea>
+            <button id="btn" type="submit">Post New Message</button>
+        </form>
+        <div class="card" style="height:500px; overflow-y: scroll">
+            <table class="table overflow-container">
+                <thead class="text-muted">
+                    <tr>Dashboard</tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <div class="post-container" *ngFor="let post of allPostsReversed">
+                              <div class="row">
+                                <div class="col-2">
+                                  <img class="img-responsive post-image" src="{{post['profilePicture']}}">
+                                </div>
+                                <div class="col">
+                                  <p> 
+                                      <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
+                                      <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
+                                      - <span>{{post['age']}}</span>
+                                      
+                                      <button *ngIf="ownId==post['userid']" (click)="postDelete(post['id'])">Delete</button>
+
+                                      <button *ngIf="ownId!=post['userid']" (click)="followUser(post['userid'])">Follow</button>
+
+                                      <!-- <button (click)="postDelete(post['id'])">Delete</button> -->
+                                  </p>
+                                  <p>
+                                    <span *ngFor="let word of post['content']">
+                                      <span *ngIf="word[0] == '#'">
+                                          <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
+                                      </span>
+                                      <span *ngIf="word[0] != '#'">
+                                          <span>{{word}} </span>
+                                      </span>
+                                    </span>
+                                  </p>
+                                  <p style="float:right">
+                                      <span> {{post['userLikes']}}<a href="#" onclick="return false;" (click)="addLike([post['id']])"> <img style="width:20px; height:20px; " src="assets/img/heart1.png"></a></span>
+                                        <!-- <span *ngIf="word[0] == '#'">
+                                          <img style="width:20px; height:20px; " src=" assets/img/heart1.png"></a>
+                                      </span>
+                                      <span *ngIf="word[0] == '#'">
+                                          <i class="fas fa-heart"></i>
+                                      </span> -->
+                                  </p>
+              
+                                </div>
+                              </div>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div>
+        <form class="form-inline ml-auto">
             <i class="fa fa-search" style="border:none; font-size:24px"></i>
             <mat-form-field>
              <div class="md-form my-0" >
@@ -26,8 +86,10 @@
             </div>
             </mat-form-field>
       </form>
+      </div>
 
-      <h3>Create a post</h3>
+
+      <!-- <h3>Create a post</h3>
       <form (submit)="createPost()">
           <textarea id= "msgBox" class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
           <button id="btn" type="submit" (click)="messageReset()">Post New Message</button>
@@ -67,12 +129,7 @@
                                         </p>
                                         <p style="float:right">
                                             <span> {{post['userLikes']}}<a href="#" onclick="return false;" (click)="addLike([post['id']])"> <img style="width:20px; height:20px; " src="assets/img/heart1.png"></a></span>
-                                             <!-- <span *ngIf="word[0] == '#'">
-                                                <img style="width:20px; height:20px; " src=" assets/img/heart1.png"></a>
-                                            </span>
-                                            <span *ngIf="word[0] == '#'">
-                                                <i class="fas fa-heart"></i>
-                                            </span> -->
+                                             
                                         </p>
                     
                                       </div>
@@ -82,26 +139,21 @@
                       </tbody>
                   </table>
               </div>
-      </div>
-    </div>
-    <div class="col-4">
+      </div> -->
+    
       <div>
           <h2>Who to Follow</h2>
           <div *ngIf="allUsers" >
-            <p><img alt="image"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
-            <p><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
+            <p><img class="who-to-follow-profilePicture" src="{{allUsers[0]['profilePicture']}}"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
+            <p><img class="who-to-follow-profilePicture" src="{{allUsers[1]['profilePicture']}}"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
           </div>
       </div>
       <div>
           <h2>Trends for you</h2>
-          <!-- <div *ngIf="allUsers" >
-              <p>{{allUsers[0]['username']}}</p>
-              <p>{{allUsers[1]['username']}}</p>
-          </div> -->
-          <!-- <div *ngIf="allTags" >
-            <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[0]['title'])" >#{{allTags[0]['title']}}</a></p>
-            <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[1]['title'])" >#{{allTags[1]['title']}}</a></p>
-          </div> -->
+          <div *ngIf="allHashTags" >
+            <p><a href="#" onclick="return false;" (click)="trendredirect(allHashTags[0]['title'])" >#{{allHashTags[0]['title']}}</a></p>
+            <p><a href="#" onclick="return false;" (click)="trendredirect(allHashTags[1]['title'])" >#{{allHashTags[1]['title']}}</a></p>
+          </div>
       </div>
     </div>
   </div>

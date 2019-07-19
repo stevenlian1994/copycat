@@ -1,5 +1,51 @@
 Todo:
+~~Steven
+-clean up code
+  -server.js
+  -service 
+  -components
+    -dashboard
+    -guards
+    -hashtag (NEEDS fix)
+    -home
+    -newsfeed
+    -newsfeeduser
+    -posts
+    -profile
+
+~~Connie
+-Icon for Logout
+-who to follow
+
+
+
+-searchbar
+-trends for you 
+-searchbar tags
+-Logout icon
+-move searchbar in PROFILE, 
+-fix hashtag component
+
+
+
+
+
+
+
+
+
+
+
+Todo:
   -hashtag component - trends for you
+  -link your name on post to your profile
+  -profile/newsfeeduser component
+  -authenticate password?
+  -authenticate signup
+  -trending tweets
+  -profile image next to post
+  -post pictures
+  -retweet
 
 Done/WIP:
   -posts

@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { ProfileComponent } from './profile/profile.component';
-import { PostsComponent } from './posts/posts.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { HashtagComponent} from './hashtag/hashtag.component';
 import { NewsfeeduserComponent } from './newsfeeduser/newsfeeduser.component';
@@ -16,11 +15,10 @@ const routes: Routes = [
         { path: 'newsfeed', component: NewsfeedComponent },
         // { path: 'profile/:id', component: ProfileComponent },
         // { path: 'profile', component: ProfileComponent },
-        { path: 'user/:userId', component: NewsfeeduserComponent  },
+        { path: 'user/:userName', component: NewsfeeduserComponent  },
         { path: 'hashtag/:title', component: HashtagComponent },
       ]
      },
-    {path: 'posts', component: PostsComponent, canActivate: [AuthGuardService]},
     // {path: 'newsfeed', component: NewsfeedComponent, canActivate: [AuthGuardService]},
     // {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
 ];
