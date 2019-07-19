@@ -17,10 +17,9 @@
               <div class="blockContainer">
               <img class="profileImage" src="{{myUser['profilePicture']}}"> 
             
-              <h2>{{username1}} </h2> <a href="/" onclick="return false;" (click)="profileRedirect([username1])">@{{username1}} </a> 
+              <h1>{{username1}} </h1> <a href="/" onclick="return false;" (click)="profileRedirect([username1])">@{{username1}} </a> 
               <p>Tweets: {{totalTweets}}</p>
-              </div>
-          </div>
+
 
           <form>
               <mat-form-field>
@@ -71,8 +70,8 @@
               </table>
           </div>
       </div>
-  
-      <div class="right_side">
+    </div>
+
           <!-- <form>
               <mat-form-field>
                   <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
@@ -84,8 +83,7 @@
                   
               </mat-form-field>
           </form> -->
-      </div>
-    </div>
+
     <div class="col-4">
         <div>
             <h2>Who to Follow</h2>
@@ -93,7 +91,6 @@
               <p><img alt="image"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
               <p><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
             </div>
-  
         </div>
         <div>
             <h2>Trends for you</h2>
@@ -106,10 +103,27 @@
                 <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[1]['title'])" >#{{allTags[1]['title']}}</a></p>
             </div> -->
         </div>
-    </div>
   </div>
-  
-    
+  </div>
+  </div>
+  </div>
 </body>
 </html>
 
+
+<!-- 
+<input
+style="display: none"
+type="file" (change)="onFileChanged($event)"
+#fileInput>
+<button (click)="fileInput.click()">Select File</button>
+<button (click)="onUpload()">Upload!</button>
+
+ <input type="file" [(ngModel)]="imageFile" name="imageFile" ><br> -->
+<!-- <input type="file" (change)="onFileChanged($event)">
+<button (click)="onUpload()">Upload!</button> -->
+<!-- <input value="submit" type="submit"> -->
+<!-- </form>
+
+
+<img src="{{imageFile}}" height="200" alt="Image preview..."> --> 

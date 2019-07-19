@@ -75,6 +75,12 @@ export class HttpService {
         return this._http.get("/getTags");
 
     }
+    addLike(users_id,posts_id){
+        console.log("in service route " + users_id )
+        console.log("in service route " + posts_id )
+        return this._http.get(`/addLike/${posts_id}/${users_id}`);
+    }
+    
 
     postDelete(postId){
         console.log("SAMSO " + postId);

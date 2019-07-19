@@ -24,11 +24,11 @@ body{
 }
 
 #navBar{
-    font-size:24px;
+    font-size:40px;
     border:none;
     position: relative; 
     display:inline-block;
-    font-family: 'Jaldi', sans-serif;
+    font-family: 'Reenie Beanie', cursive;
     color: black; 
     margin: 0px 10px; 
 }

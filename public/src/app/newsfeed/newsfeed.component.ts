@@ -39,6 +39,7 @@ export class NewsfeedComponent implements OnInit {
     this.getAllPosts();
     this.getAllUsers();
     this.getAllTags();
+    
   }
 
   private _filter(value: string): string[] {
@@ -75,6 +76,7 @@ export class NewsfeedComponent implements OnInit {
     let myObservable = this._httpService.getPosts();
     myObservable.subscribe(data=>{
       this.allPosts = data;
+      console.log(this.allPosts)
       this.calculateAgeOfPosts(this.allPosts)
       // Method to reset AllPostsReversed 
       this.setAllPostsReversed();
@@ -119,6 +121,18 @@ export class NewsfeedComponent implements OnInit {
       }  
     })
   }
+
+  addLike(posts_id){
+    let user1= localStorage.getItem("user"); 
+    console.log("addlike user"+ user1)
+    console.log("addlike post"+ posts_id)
+    let tempObservable2 = this._httpService.addLike(user1,posts_id); 
+      tempObservable2.subscribe(data =>{
+        console.log("in add Like:" + data)
+      })
+  }
+
+    
 
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
@@ -183,16 +197,21 @@ export class NewsfeedComponent implements OnInit {
     this.router.navigate(["dashboard/user", option]);
   }
 
+  messageReset(){
+    // document.querySelector("#msgBox").textContent = "";
+    // document.querySelector("#msgBox").value = "";
+    // console.dir(document)
 
 
-  postDelete(postId){
-    console.log(postId);
 
-    let tempObservable = this._httpService.postDelete(postId);
-    tempObservable.subscribe(data =>{
-      this.getAllPosts()
-    })
-  }
+  // postDelete(postId){
+  //   console.log(postId);
+
+  //   let tempObservable = this._httpService.postDelete(postId);
+  //   tempObservable.subscribe(data =>{
+  //     this.getAllPosts()
+  //   })
+  // }
 
   // followUser(usersId){
   //   let myObservable = this._httpService.followUser(userId);
@@ -205,7 +224,5 @@ export class NewsfeedComponent implements OnInit {
 
 
 
-
-  // }
-
+  }
 }
