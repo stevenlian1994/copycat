@@ -7,6 +7,7 @@ import { map, startWith } from "rxjs/operators";
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { RouterInitializer } from '@angular/router/src/router_module';
+import { userInfo } from 'os';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class NewsfeedComponent implements OnInit {
   ownId : any;
 
 
-   constructor(private _httpService: HttpService, private route: ActivatedRoute,  private router: Router, private _authService: AuthService) { }
+  constructor(private _httpService: HttpService, private route: ActivatedRoute,  private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
     this.ownId = localStorage.getItem("user");
@@ -188,10 +189,23 @@ export class NewsfeedComponent implements OnInit {
     console.log(postId);
 
     let tempObservable = this._httpService.postDelete(postId);
-      tempObservable.subscribe(data =>{
-        this.getAllPosts()
-      })
+    tempObservable.subscribe(data =>{
+      this.getAllPosts()
+    })
   }
 
+  followUser(usersId){
+    let myObservable = this._httpService.followUser(userId);
+    myObservable.subscribe(data => {
+      // your codes here
+
+
+      
+    })
+
+
+
+
+  }
 
 }
