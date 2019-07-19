@@ -42,6 +42,13 @@ app.get("/getUserPosts/:userName", function(req,res){
   })
 })
 
+app.get('/getFilteredPosts/:title', function(req,res){
+  connection.query(`SELECT posts.id, posts.content, posts.created_at, users.username, users.profilePicture FROM posts LEFT JOIN posts_has_tags ON posts.id = posts_has_tags.posts_id LEFT OUTER JOIN users ON posts.users_id = users.id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id WHERE tags.title = '${req.params.title}';`, function(err, results){
+    console.log(results)
+    res.json(results)
+  })
+})
+
 app.get('/getUsers', function(req,res){
   connection.query(`SELECT * FROM users`, function(err, results){
       console.log('this is our', results);
@@ -56,12 +63,6 @@ app.get('/getUser/:id', function(req,res){
 })
 
 
-app.get('/getFilteredPosts/:title', function(req,res){
-  connection.query(`SELECT posts.id, posts.content, posts.created_at, users.username FROM posts LEFT JOIN posts_has_tags ON posts.id = posts_has_tags.posts_id LEFT OUTER JOIN users ON posts.users_id = users.id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id WHERE tags.title = '${req.params.title}';`, function(err, results){
-    console.log(results)
-    res.json(results)
-  })
-})
 
 app.post('/createPost', function(req,res){
     connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');` , function(err, rows, fields) {
@@ -71,6 +72,7 @@ app.post('/createPost', function(req,res){
 } )
 
 app.post('/createTag/:postId', function(req,res){
+  console.log('inside create Tag POST')
   // insert tags if not already in db; no cb required
   connection.query(`INSERT IGNORE INTO tags (title) VALUES ('${req.body.newTag}');`, function(err, rows){
     // use get tag based on title and get the id

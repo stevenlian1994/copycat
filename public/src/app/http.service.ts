@@ -69,7 +69,6 @@ export class HttpService {
 
     getAllTags(){
         return this._http.get("/getTags");
-
     }
     addLike(users_id,posts_id){
         return this._http.get(`/addLike/${posts_id}/${users_id}`);

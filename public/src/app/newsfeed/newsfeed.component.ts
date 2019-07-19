@@ -18,6 +18,7 @@ import { RouterInitializer } from '@angular/router/src/router_module';
 
 
 export class NewsfeedComponent implements OnInit {
+  allHashTags : any;
   allTags : any;
   allPosts : any;
   allUsers : any;
@@ -28,18 +29,15 @@ export class NewsfeedComponent implements OnInit {
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
   postId : any;
-  ownId : any;
+  ownId = localStorage.getItem("user");
 
 
   constructor(private _httpService: HttpService, private route: ActivatedRoute,  private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
-    this.ownId = localStorage.getItem("user");
-    console.log(this.ownId);
     this.getAllPosts();
     this.getAllUsers();
     this.getAllTags();
-    
   }
 
   private _filter(value: string): string[] {
@@ -68,8 +66,8 @@ export class NewsfeedComponent implements OnInit {
   getAllTags(){
     let myObservable = this._httpService.getAllTags();
     myObservable.subscribe(data=>{
-      this.allTags = data;      
-     
+      this.allHashTags = data;      
+      console.log('all Hash Tags', this.allHashTags)
     })
   }
 
@@ -77,7 +75,6 @@ export class NewsfeedComponent implements OnInit {
     let myObservable = this._httpService.getPosts();
     myObservable.subscribe(data=>{
       this.allPosts = data;
-      console.log(this.allPosts)
       this.calculateAgeOfPosts(this.allPosts)
       // Method to reset AllPostsReversed 
       this.setAllPostsReversed();
@@ -103,11 +100,10 @@ export class NewsfeedComponent implements OnInit {
     this.newPost['users_id'] = localStorage.getItem("user"); 
     let tempObservable = this._httpService.createPost(this.newPost);
     tempObservable.subscribe(data => {
-      this.newPost = {content: ''};
       this.newPostTag['posts_id'] = data['id'] //saving post id for post_has_tags query
       // STEP 2 - Find all hashtags in content of post
-        var allTags = this.findHashTags(this.newPost['content']) 
-        //  allTags is an array of strings, but createTags is creating undefined titles for tags in db
+      var allTags = this.findHashTags(this.newPost['content']) 
+      //  allTags is an array of strings, but createTags is creating undefined titles for tags in db
       // STEP 3 - Create all tags if needed and return tag ids
       if(allTags.length == 0){
         this.getAllPosts()
@@ -120,6 +116,7 @@ export class NewsfeedComponent implements OnInit {
         }
         this.createTag(allTags[i], data['id'], boolean)
       }  
+      this.newPost = {content: ''};
     })
   }
 
@@ -133,10 +130,9 @@ export class NewsfeedComponent implements OnInit {
       })
   }
 
-    
-
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
+    console.log('inside createTag')
       let tempObservable2 = this._httpService.createTag(tag, postId); 
       tempObservable2.subscribe(data =>{
         if(isLast){
