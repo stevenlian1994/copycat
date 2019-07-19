@@ -47,7 +47,7 @@ export class HttpService {
     loginUser(userLogin){
         return this._http.post('/loginUser/', userLogin )
     }
-    
+
     checkLogin(){
         if(localStorage.getItem("user") !== null){
             this.isLoggedIn = true;
@@ -73,6 +73,11 @@ export class HttpService {
     postDelete(postId){
         console.log("SAMSO " + postId);
         return this._http.delete(`/postDelete/${postId}`);
+    }
+
+    followUser(userId) {
+        return this._http.post(`/followUser/${userId}`);
+        
     }
 
 
