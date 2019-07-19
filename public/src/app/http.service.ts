@@ -87,12 +87,15 @@ export class HttpService {
         return this._http.delete(`/postDelete/${postId}`);
     }
 
-    // followUser(userId) {
-    //     return this._http.post(`/followUser/${userId}`);
-        
-    // }
+    followUser(followUserArg) {
+        // followUserArg = JSON.stringify(followUserArg);
+        console.log("MAmamamia!!!! " + followUserArg);
+        return this._http.post("/followUser", followUserArg);
+
+    }
 
 
 
+
+    
 }
-

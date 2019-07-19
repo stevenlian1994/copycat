@@ -197,32 +197,19 @@ export class NewsfeedComponent implements OnInit {
     this.router.navigate(["dashboard/user", option]);
   }
 
-  messageReset(){
-    // document.querySelector("#msgBox").textContent = "";
-    // document.querySelector("#msgBox").value = "";
-    // console.dir(document)
+  followUser(userId){
+    let followUserArg = {follower : this.ownId, followee : userId}
+    let myObservable = this._httpService.followUser(followUserArg);
+    myObservable.subscribe(data => {
+      console.log(data);
 
-
-
-  // postDelete(postId){
-  //   console.log(postId);
-
-  //   let tempObservable = this._httpService.postDelete(postId);
-  //   tempObservable.subscribe(data =>{
-  //     this.getAllPosts()
-  //   })
-  // }
-
-  // followUser(usersId){
-  //   let myObservable = this._httpService.followUser(userId);
-  //   myObservable.subscribe(data => {
-  //     // your codes here
-
+    })
 
       
   //   })
-
-
+  
 
   }
 }
+
+

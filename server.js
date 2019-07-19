@@ -173,10 +173,21 @@ app.delete("/postDelete/:postId", function(req,res){
   connection.query(`DELETE FROM posts WHERE posts.id = ${req.params.postId} ;`, function(err, results){
     res.json(results);
   });
+})
+
+app.post("/followUser", function(req,res){
+  console.log(req.body, "U wanna build a snow man???");
+
+  // return ("hellow!");
+  connection.query(`INSERT INTO followees (followees_id, followers_id) VALUES ('${req.body.follower}', '${req.body.followee}');`, function(err, results){
+    res.json(results);
+  });
+
+
+
 
 
 })
-
 
 app.get('/getTotalTweets/:users_id', function(req,res){
   console.log("gegeg"+ req.params.users_id)
@@ -186,9 +197,10 @@ app.get('/getTotalTweets/:users_id', function(req,res){
   })
 })
 
-// app.post("/followUser/:userId", function(req,res){
-//   console.log("")
-// })
+app.post("/followUser/:userId", function(req,res){
+  console.log("This is for the following " + req.params.userId);
+  // connection.query(`SELECT * FROM `)
+})
 
 
 

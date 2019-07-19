@@ -52,9 +52,8 @@
                                             
                                             <button *ngIf="ownId==post['userid']" (click)="postDelete(post['id'])">Delete</button>
 
-                                            <button *ngIf="ownId==post['userid']" (click)="followUser(post['userid'])">Follow</button>
+                                            <button *ngIf="ownId!=post['userid']" (click)="followUser(post['userid'])">Follow</button>
 
-                                            <!-- <button (click)="postDelete(post['id'])">Delete</button> -->
                                         </p>
                                         <p>
                                           <span *ngFor="let word of post['content']">
