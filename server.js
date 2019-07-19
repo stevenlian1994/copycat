@@ -26,6 +26,7 @@ app.post('/loginUser', function(req,res){
         res.json(results[0])
     })
 })
+
 app.post('/uploadProfilePicture', function(req,res){
   req.on('data', function(data){
     console.log('inside server,', data)
@@ -150,6 +151,15 @@ app.post('/getPostsTags', function(req,res){
   }
 })
 
+app.delete("/postDelete/:postId", function(req,res){
+  connection.query(`DELETE FROM posts_has_tags WHERE posts_id = ${req.params.postId} ;`);
+  connection.query(`DELETE FROM posts WHERE posts.id = ${req.params.postId} ;`, function(err, results){
+    res.json(results);
+  });
+
+
+})
+
 
 app.get('/getTotalTweets/:users_id', function(req,res){
   console.log("gegeg"+ req.params.users_id)
@@ -166,5 +176,4 @@ app.all("*", (req,res,next) => {
 var server = app.listen(8000, function(){
     console.log("listening on port 8000")
 })
-
 
