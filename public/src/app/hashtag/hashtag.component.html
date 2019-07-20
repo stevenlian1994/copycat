@@ -2,18 +2,21 @@
   <div class="col-8">
     <div class="middle">
     
-      <form class="form-inline ml-auto">
-          <i class="fa fa-search" style="border:none; font-size:24px"></i>
-          <mat-form-field>
-            <div class="md-form my-0" >
-              <input id="searchBtn"   type="text" placeholder="Search" matInput [matAutocomplete]="auto" [formControl]="myControl" />
-              <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayFn">
-              <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
-                  {{option}}
-              </mat-option>
+        <form class="form-inline ml-auto">
+            <i class="fa fa-search" style="border:none; font-size:24px"></i>
+            <mat-form-field>
+             <div class="md-form my-0" >
+                <input id="searchBtn"   type="text" placeholder="{{hashtag}}" matInput [matAutocomplete]="auto" [formControl]="myControl" />
+                <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
+                    {{option}}
+                </mat-option>
+                <mat-option *ngFor="let option2 of filteredOptionsTags | async" [value]="option2" (click)="goTag(option2)">
+                    #{{option2}}
+                </mat-option>
               </mat-autocomplete>
-          </div>
-          </mat-form-field>
+            </div>
+            </mat-form-field>
       </form>
 
     <div class="card"  style="height:100vh; overflow-y: scroll">

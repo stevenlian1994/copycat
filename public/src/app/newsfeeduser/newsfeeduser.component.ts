@@ -17,7 +17,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 
 export class NewsfeeduserComponent implements OnInit {
+  allHashTags2: any;
+  optionsTags: string[] = [];
+  filteredOptionsTags: Observable<string[]>;
   allTags : any;
+  allHashTags : any;
   allUsers : any;
   options: string[] = [];
   allPosts : any;
@@ -42,6 +46,7 @@ export class NewsfeeduserComponent implements OnInit {
               this.getUserPosts(this.userName);
               this.getUser(); 
               this.getTotalTweets(); 
+              this.updateOptionTags();
              }
       });
 
@@ -50,6 +55,7 @@ export class NewsfeeduserComponent implements OnInit {
     this.getTotalTweets();
     this.getAllTags();
     this.getAllUsers();
+    this.updateOptionTags();
   }
   getAllUsers(){
     let myObservable = this._httpService.getUsers();
@@ -65,10 +71,32 @@ export class NewsfeeduserComponent implements OnInit {
     })
   }
 
+
+  updateOptionTags(){
+    let myObservable2 = this._httpService.getAllTags();
+    myObservable2.subscribe(data=>{
+      this.allHashTags2= data
+      for (let i=0; i<this.allHashTags2.length; i++){
+        this.optionsTags.push(this.allHashTags2[i]["title"])
+      };
+      this.filteredOptionsTags = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map(value => this._filter2(value))
+      );
+    })
+  }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => 
       option.toLowerCase().includes(filterValue)
+    );
+  }
+
+  private _filter2(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.optionsTags.filter(optionTag => 
+      optionTag.toLowerCase().includes(filterValue)
     );
   }
 
@@ -148,8 +176,12 @@ export class NewsfeeduserComponent implements OnInit {
   getAllTags(){
     let myObservable = this._httpService.getAllTags();
     myObservable.subscribe(data=>{
-      this.allTags = data;
-      console.log("this is all tags:", this.allTags);
+      this.allHashTags = data;
+      console.log("this is all tags:", this.allHashTags);
     })
+  }
+
+  goTag(tag){
+    this.router.navigate(["dashboard/hashtag/", tag])
   }
 }

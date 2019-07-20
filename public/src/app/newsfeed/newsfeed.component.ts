@@ -19,6 +19,7 @@ import { RouterInitializer } from '@angular/router/src/router_module';
 
 export class NewsfeedComponent implements OnInit {
   allHashTags : any;
+  allHashTags2: any;
   allTags : any;
   allPosts : any;
   allUsers : any;
@@ -26,8 +27,10 @@ export class NewsfeedComponent implements OnInit {
   newPost = {content: ''};
   newPostTag={'posts_id':''};
   options: string[] = [];
+  optionsTags: string[] = [];
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
+  filteredOptionsTags: Observable<string[]>;
   postId : any;
   ownId = localStorage.getItem("user");
 
@@ -38,12 +41,19 @@ export class NewsfeedComponent implements OnInit {
     this.getAllPosts();
     this.getAllUsers();
     this.getAllTags();
+    this.updateOptionTags();
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => 
       option.toLowerCase().includes(filterValue)
+    );
+  }
+  private _filter2(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.optionsTags.filter(optionTag => 
+      optionTag.toLowerCase().includes(filterValue)
     );
   }
 
@@ -61,6 +71,20 @@ export class NewsfeedComponent implements OnInit {
     })
   }
 
+  updateOptionTags(){
+    let myObservable2 = this._httpService.getAllTags();
+    myObservable2.subscribe(data=>{
+      this.allHashTags2= data
+      for (let i=0; i<this.allHashTags2.length; i++){
+        this.optionsTags.push(this.allHashTags2[i]["title"])
+      };
+      this.filteredOptionsTags = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map(value => this._filter2(value))
+      );
+    })
+
+  }
 
   getAllTags(){
     let myObservable = this._httpService.getAllTags();
@@ -191,6 +215,11 @@ export class NewsfeedComponent implements OnInit {
   goUser(option) {
     this.router.navigate(["dashboard/user", option]);
   }
+  goTag(tag){
+    this.router.navigate(["dashboard/hashtag/", tag])
+  }
+
+
   postDelete(postId){
     let tempObservable = this._httpService.postDelete(postId);
       tempObservable.subscribe(data =>{

@@ -21,7 +21,7 @@
         <div class="card" style="height:500px; overflow-y: scroll">
             <table class="table overflow-container">
                 <thead class="text-muted">
-                    <tr>Dashboard</tr>
+
                 </thead>
                 <tbody>
                     <tr>
@@ -53,6 +53,8 @@
                                     </span>
                                   </p>
                                   <p style="float:right">
+                                      <span> <a>follow icon </a></span>
+                                      <span> <a>delete icon</a></span>
                                       <span> {{post['userLikes']}}<a href="#" onclick="return false;" (click)="addLike([post['id']])"> <img style="width:20px; height:20px; " src="assets/img/heart1.png"></a></span>
                                         <!-- <span *ngIf="word[0] == '#'">
                                           <img style="width:20px; height:20px; " src=" assets/img/heart1.png"></a>
@@ -82,10 +84,16 @@
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
                     {{option}}
                 </mat-option>
-                </mat-autocomplete>
+                <mat-option *ngFor="let option2 of filteredOptionsTags | async" [value]="option2" (click)="goTag(option2)">
+                    #{{option2}}
+                </mat-option>
+              </mat-autocomplete>
             </div>
             </mat-form-field>
       </form>
+
+
+
       </div>
       <div>
           <h2>Who to Follow</h2>
