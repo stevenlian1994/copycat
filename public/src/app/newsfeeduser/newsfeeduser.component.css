@@ -1,7 +1,14 @@
-.profileImage{
-  width:200px;
-  height:200px;
-}
+.who-to-follow-profilePicture{
+    border-radius:100%;
+    height:50px;
+    width:50px;
+    margin:5px;
+  }
+  #dashboardProfilePic{
+    border-radius:100%;
+    height:50px;
+    width:50px;
+  }
 /* 
 .blockContainer{
     height:700px; 
@@ -22,6 +29,10 @@
     top:30px;
 }
 
+#rightCol{
+    position: relative;  
+    top:30px;
+  }
 .profileImage{
     width:150px; 
     height: 150px; 
@@ -122,4 +133,70 @@ span{
 
 .fa-heart{
     color:white; 
+}
+
+#searchBtn{
+    height:40px;
+    position: relative;
+    vertical-align:center;
+    border:none;
+   
+}
+
+
+.followContainer{
+    min-height:50px;
+    width:300px;
+    background-color:lightgray;
+    border: 1px solid gray;
+}
+
+
+#followerHeader{
+    height:50px; 
+    text-align:center;
+    
+    font-family: 'Reenie Beanie', cursive;
+    font-size:30px; 
+    color:gray;
+    padding:10px;
+
+}
+td{
+    border-color:gray;
+}
+#smalltable{
+    border: 1px solid #f5e2e2;
+    border-right-color:  #F8F8F8; 
+    border-left-color:  #F8F8F8; 
+}
+#followerHeaderfooter{
+    color:#F8F8F8; 
+    height:50px; 
+}
+#followerHeaderTitle{
+    position: relative; 
+    vertical-align:middle
+}
+#FollowerName{
+    font-family: 'Reenie Beanie', cursive;
+    font-size:20px; 
+    color:black;
+}
+#FollowerName1{
+    font-family: 'Reenie Beanie', cursive;
+    font-size:24px; 
+    color:black;
+    position:relative; 
+    vertical-align:middle; 
+    left:10px; 
+    top:6px; 
+
+}
+#smalltable2{
+    height:50px; 
+    border: 1px solid #f5e2e2;
+    border-right-color:  #F8F8F8; 
+    border-left-color:  #F8F8F8;
+    padding:7px;
 }

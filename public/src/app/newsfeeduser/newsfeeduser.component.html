@@ -9,23 +9,24 @@
 <body>
   <div class="row">
         <div class="col-8">
-          <div class="left_side">
-                    <div class="container" >
-                        <div class="blockContainer">
+          <div class="middle"> 
                         <img *ngIf="myUser" class="profileImage" src="{{myUser['profilePicture']}}"> 
                         <h1>{{userName}} </h1> <a href="/" onclick="return false;" (click)="profileRedirect([userName])">@{{userName}} </a> 
                         <p>Tweets: {{totalTweets}}</p>
 
-                        <div class="card">
+                        <div class="card" style="height:500px; overflow-y: scroll">
                             <table class="table table-hover shopping-cart-wrap">
-                                <tbody>
-                                    <tr>
+                                <thead class="text-muted">
+                                    Dashboard
+                                    </thead>  
+                                    <tbody>
+                                      <tr>
                                         <div class="post-container" *ngFor="let post of allPostsReversed">
                                             <div class="row">
-                                              <div class="col-2">
-                                                <img *ngIf="myUser" src="{{myUser['profilePicture']}}" alt="">
+                                              <div class="col-3">
+                                                <img id="dashboardProfilePic" *ngIf="myUser" src="{{myUser['profilePicture']}}" alt="">
                                               </div>
-                                              <div class="col-10">
+                                              <div class="col">
                                                 <p> 
                                                   <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
                                                   <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
@@ -51,10 +52,10 @@
                             </table>
                         </div>
                       </div>
-                  </div>
+                
             </div>
-          </div>
-          <div class="col-4">
+   
+          <div class="col-4" id ="rightCol">
               <div>
                   <form class="form-inline ml-auto">
                       <i class="fa fa-search" style="border:none; font-size:24px"></i>
@@ -73,20 +74,26 @@
                       </mat-form-field>
                 </form>
               </div>
-              <div>
-                  <h2>Who to Follow</h2>
-                  <div *ngIf="allUsers" >
-                    <p><img class="who-to-follow-profilePicture" src="{{allUsers[0]['profilePicture']}}"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
-                    <p><img class="who-to-follow-profilePicture" src="{{allUsers[1]['profilePicture']}}"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
-                  </div>
-              </div>
-              <div>
-                  <h2>Trends for you</h2>
-                  <div *ngIf="allHashTags" >
-                    <p><a href="#" onclick="return false;" (click)="trendredirect(allHashTags[0]['title'])" >#{{allHashTags[0]['title']}}</a></p>
-                    <p><a href="#" onclick="return false;" (click)="trendredirect(allHashTags[1]['title'])" >#{{allHashTags[1]['title']}}</a></p>
-                  </div>
-              </div>
+              <table class="table" id="table1" style="background-color:#F8F8F8; border-radius:20pt;border:none" >
+                  <tbody>
+                      <tr id="followerHeader"><h1 id="followerHeaderTitle">Who to Follow </h1></tr>
+                      <tr *ngIf="allUsers">
+                          <tr id="smalltable"><img class="who-to-follow-profilePicture" src="{{allUsers[0]['profilePicture']}}"><a href="#" id="FollowerName" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >  {{allUsers[0]['username']}}</a></tr>
+                            <tr id="smalltable"><img class="who-to-follow-profilePicture" src="{{allUsers[1]['profilePicture']}}"><a href="#"  id="FollowerName" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >  {{allUsers[1]['username']}}</a></tr>
+                            <tr id="followerHeaderfooter">Who to Follow</tr>
+                    </tbody>
+                  </table>
+        
+                  <table class="table" id="table1" style="background-color:#F8F8F8; border-radius:20pt;border:none" >
+        
+                      <tbody>
+                          <tr id="followerHeader"><h1 id="followerHeaderTitle">Trends for you</h1></tr>
+                          <tr *ngIf=allHashTags>
+                              <tr id="smalltable2"><a href="#"  id="FollowerName1"  style="position:relative; vertical-align:middle; left:10px" onclick="return false;" (click)="trendredirect(allHashTags[0]['title'])" >#{{allHashTags[0]['title']}}</a></tr>
+                                <tr id="smalltable2"><a href="#" id="FollowerName1"  onclick="return false;" (click)="trendredirect(allHashTags[1]['title'])" >#{{allHashTags[1]['title']}}</a></tr>
+                                <tr id="followerHeaderfooter">Who to Follow</tr>
+                        </tbody>
+                      </table>
         </div>
   </div>
 </body>
