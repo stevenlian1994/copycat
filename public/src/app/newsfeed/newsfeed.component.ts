@@ -149,8 +149,18 @@ export class NewsfeedComponent implements OnInit {
     let tempObservable2 = this._httpService.addLike(user1,posts_id); 
       tempObservable2.subscribe(data =>{
         console.log("in add Like:" + data)
+        this.getAllPosts()
       })
   }
+    deleteLike(posts_id){
+      let user1= localStorage.getItem("user"); 
+      let tempObservable2 = this._httpService.deleteLike(user1,posts_id); 
+      tempObservable2.subscribe(data =>{
+        console.log("in delete Like:" + data)
+        this.getAllPosts()
+      })
+
+    }
 
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 

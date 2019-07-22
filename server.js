@@ -27,8 +27,9 @@ app.post('/loginUser', function(req,res){
 })
 
 app.get('/getPosts', function(req,res){
-    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.id as userid, users.profilePicture FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
-    // connection.query("SELECT posts.id, posts.content, posts.created_at, posts.users_id, users.username,JSON_ARRAYAGG(tags.title) as tags, COUNT(likes.users_id) as 'userLikes' FROM posts LEFT JOIN posts_has_tags ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN likes ON  posts.id=likes.posts_id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
+    //connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.id as userid, users.profilePicture, COUNT(likes.users_id) as 'userLikes'  FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id LEFT JOIN likes ON  posts.id=likes.posts_id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
+     connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.id as userid, users.profilePicture, COUNT(likes.users_id) as 'userLikes'  FROM posts LEFT JOIN likes ON  posts.id=likes.posts_id LEFT JOIN users on posts.users_id = users.id group by posts.id; ;", function(err, results){
+
         res.json(results)
     })
 })
@@ -100,6 +101,12 @@ app.post('/createUser', function(req,res){
 
 app.get('/addLike/:posts_id/:users_id', function(req,res){
   connection.query(`INSERT INTO likes (posts_id, users_id) VALUES ('${req.params.posts_id}', '${req.params.users_id}')`,  function(err, rows, fields){
+    res.json({'hello':'there'})
+  })
+})
+
+app.delete('/deleteLike/:posts_id/:users_id', function(req,res){
+  connection.query(`DELETE FROM likes WHERE posts_id= '${req.params.posts_id}' AND users_id= '${req.params.users_id}' `,  function(err, rows, fields){
     res.json({'hello':'there'})
   })
 })

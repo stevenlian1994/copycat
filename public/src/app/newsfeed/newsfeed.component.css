@@ -110,6 +110,7 @@ span{
    
 }
 
+/* .todoapp input::-webkit-input-placeholder { */
 input, 
 input::-webkit-input-placeholder{
     font:24px;
@@ -131,7 +132,6 @@ input::-webkit-input-placeholder{
 #followerHeader{
     height:50px; 
     text-align:center;
-    
     font-family: 'Reenie Beanie', cursive;
     font-size:30px; 
     color:gray;
@@ -155,13 +155,13 @@ td{
     vertical-align:middle
 }
 #FollowerName{
-    font-family: 'Reenie Beanie', cursive;
-    font-size:20px; 
+    font-family: 'Jaldi', sans-serif;
+    font-size:16px; 
     color:black;
 }
 #FollowerName1{
-    font-family: 'Reenie Beanie', cursive;
-    font-size:24px; 
+    font-family: 'Jaldi', sans-serif;
+    font-size:16px; 
     color:black;
     position:relative; 
     vertical-align:middle; 
@@ -175,4 +175,8 @@ td{
     border-right-color:  #F8F8F8; 
     border-left-color:  #F8F8F8;
     padding:7px;
+}
+
+.aa{
+    margin: 3px;
 }

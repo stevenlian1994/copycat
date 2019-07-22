@@ -73,8 +73,12 @@ export class HttpService {
     addLike(users_id,posts_id){
         return this._http.get(`/addLike/${posts_id}/${users_id}`);
     }
-    
 
+    deleteLike(users_id,posts_id){
+        return this._http.get(`/deleteLike/${posts_id}/${users_id}`);
+    }
+    
+    
     postDelete(postId){
         return this._http.delete(`/postDelete/${postId}`);
     }

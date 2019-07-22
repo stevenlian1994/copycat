@@ -51,10 +51,12 @@
                                       </span>
                                     </span>
                                   </p>
-                                  <p style="float:right">
-                                    <span> {{post['userLikes']}}<a href="#" onclick="return false;" (click)="addLike([post['id']])"> <img style="width:25px; height:25px; " src="assets/img/heart1.png"></a></span>
-                                      <span> <a *ngIf="ownId==post['userid']" (click)="followUser(post['userid'])"><i class="fa fa-user-plus" style="font-size:22px"></i></a>    </span>
-                                      <span><a *ngIf="ownId==post['userid']" (click)="postDelete(post['id'])"><i class="fa fa-trash" style="font-size:22px" aria-hidden="true"></i></a></span>
+                                  <p style="float:right; margin: 1px">
+                                    <!-- <span> {{post['userLikes']}}<a href="#"   *ngIf="ownId==post['userid']" onclick="return false;" (click)="addLike([post['id']])"> <img style="width:25px; height:25px; " src="assets/img/heart1.png"></a></span> -->
+                                    <span class="aa"> {{post['userLikes']}}<a href="#"  (click)="addLike([post['id']])" onclick="return false;" > <img *ngIf="post['userLikes']==0 " style="width:25px; height:25px; " src="assets/img/heart1.png"></a></span>
+                                    <span  class="aa">  <i class="fa fa-heart" style= "font-size:20px; color:rgb(238, 162, 175)" *ngIf="post['userLikes']>=1"><a href="#"      onclick="return false;" (click)="deleteLike([post['id']])"></a> </i></span>
+                                      <span  class="aa"> <a *ngIf="ownId==post['userid']" (click)="followUser(post['userid'])"><i class="fa fa-user-plus" style="font-size:20px"></i></a>    </span>
+                                      <span  class="aa"><a *ngIf="ownId==post['userid']" (click)="postDelete(post['id'])"><i class="fa fa-trash" style="font-size:20px" aria-hidden="true"></i></a></span>
                                         <!-- <span *ngIf="word[0] == '#'">
                                           <img style="width:20px; height:20px; " src=" assets/img/heart1.png"></a>
                                       </span>
