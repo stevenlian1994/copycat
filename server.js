@@ -135,15 +135,31 @@ app.delete("/postDelete/:postId", function(req,res){
 app.post("/followUser", function(req,res){
   console.log(req.body, "U wanna build a snow man???");
 
-  // return ("hellow!");
-  connection.query(`INSERT INTO followees (followees_id, followers_id) VALUES ('${req.body.follower}', '${req.body.followee}');`, function(err, results){
+
+  connection.query(`INSERT INTO followees (followees_id, followers_id) VALUES ('${req.body.followee}', '${req.body.follower}');`, function(err, results){
     res.json(results);
   });
+})
+
+
+app.post("/unfollowUser", function(req,res){
+  connection.query(`DELETE FROM followees WHERE followees_id = '${req.body.follower}' AND followers_id = '${req.body.followee}';`, function(err, results){
+    // console.log(err, "This is da error,!");
+    console.log(`DELETE FROM followees WHERE followees_id = '${req.body.follower}' AND followers_id = '${req.body.followee}'; ` + "steve ooooooo")
+
+    res.json(results);
+
+  });
+})
 
 
 
 
-
+app.get("/getFolloweeId/:userId", function(req,res){
+  console.log(req.params.userId, "this just a test!!!");
+  connection.query(`SELECT * FROM followees WHERE followees_id = '${req.params.userId}';`, function(err, results){
+    res.json(results);
+  })
 })
 
 app.get('/getTotalTweets/:users_id', function(req,res){

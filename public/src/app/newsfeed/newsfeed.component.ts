@@ -7,15 +7,15 @@ import { map, startWith } from "rxjs/operators";
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { RouterInitializer } from '@angular/router/src/router_module';
-// import { userInfo } from 'os';
+import "../../assets/newsfeed.js";
 
+// import { userInfo } from 'os';
 
 @Component({
   selector: 'app-newsfeed',
   templateUrl: './newsfeed.component.html',
   styleUrls: ['./newsfeed.component.css']
 })
-
 
 export class NewsfeedComponent implements OnInit {
   allHashTags : any;
@@ -30,7 +30,7 @@ export class NewsfeedComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   postId : any;
   ownId = localStorage.getItem("user");
-
+  followeeId : any;
 
   constructor(private _httpService: HttpService, private route: ActivatedRoute,  private router: Router, private _authService: AuthService) { }
 
@@ -38,6 +38,9 @@ export class NewsfeedComponent implements OnInit {
     this.getAllPosts();
     this.getAllUsers();
     this.getAllTags();
+    // this.getFolloweeId();
+
+
   }
 
   private _filter(value: string): string[] {
@@ -73,11 +76,13 @@ export class NewsfeedComponent implements OnInit {
     let myObservable = this._httpService.getPosts();
     myObservable.subscribe(data=>{
       this.allPosts = data;
+      
       this.calculateAgeOfPosts(this.allPosts)
       // Method to reset AllPostsReversed 
       this.setAllPostsReversed();
-      console.log(this.allPostsReversed);
+
     })
+  
   }
 
   hashtagRedirect(hashtag){
@@ -163,7 +168,8 @@ export class NewsfeedComponent implements OnInit {
     this.allPostsReversed = []
     for(var j = this.allPosts.length-1; j>-1; j--){
       this.allPosts[j]['content'] = this.allPosts[j]['content'].split(' ')
-      this.allPostsReversed.push(this.allPosts[j])
+      this.allPostsReversed.push(this.allPosts[j]);
+      this.getFolloweeId();
     }
   }
   
@@ -172,6 +178,7 @@ export class NewsfeedComponent implements OnInit {
       posts[i]['age'] = this.timeConversion(new Date().getTime() - new Date(posts[i]['created_at']).getTime());
     }
   }
+
   
   timeConversion(millisec) {
     // var seconds = (millisec / 1000).toFixed(0);
@@ -203,15 +210,41 @@ export class NewsfeedComponent implements OnInit {
     let followUserArg = {follower : this.ownId, followee : userId}
     let myObservable = this._httpService.followUser(followUserArg);
     myObservable.subscribe(data => {
-      console.log(data);
-
+      this.getAllPosts();
     })
 
-      
-  //   })
-  
-
   }
+
+  unfollowUser(userId){
+    let unfollowUserArg = {follower : this.ownId, followee : userId};
+    let myObservable = this._httpService.unfollowUser(unfollowUserArg);
+    
+
+    myObservable.subscribe(data => {
+      this.getAllPosts();
+    })
+  }
+
+
+
+  getFolloweeId(){
+    this.followeeId = [];
+    let myObservable = this._httpService.getFolloweeId(this.ownId);
+    myObservable.subscribe((data : Array<any> ) => {
+      console.log(data, " Beyonce!!!!!!!");
+      for (let i=0; i < data.length; i++){
+        this.followeeId.push(data[i]["followers_id"])
+        // console.log(data[i]["followers_id"])
+      }
+    })
+  }
+
+
+
+
+
+
+
 }
 
 

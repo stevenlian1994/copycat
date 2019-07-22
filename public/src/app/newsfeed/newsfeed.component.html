@@ -8,9 +8,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Document</title>
+    <!-- <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                //your code right here;
+                console.log("yoyoyoyoyoyo ")
+                }
+            );
+    </script> -->
+
+
 </head>
 <body>
-  
+
+
   <div class="row">
     <div class="col-8">
       <div class="middle"> 
@@ -38,10 +48,13 @@
                                       
                                       <button *ngIf="ownId==post['userid']" (click)="postDelete(post['id'])">Delete</button>
 
-                                      <button *ngIf="ownId!=post['userid']" (click)="followUser(post['userid'])">Follow</button>
+                                      <button class="followbuttons" *ngIf="ownId!=post['userid'] && followeeId.indexOf(post['userid']) == -1" (click)="followUser(post['userid'])">Follow</button>
 
-                                      <!-- <button (click)="postDelete(post['id'])">Delete</button> -->
-                                  </p>
+                                      <button *ngIf="ownId!=post['userid'] && followeeId.indexOf(post['userid']) != -1" (click)="unfollowUser(post['userid'])">Unfollow</button>
+
+
+                                    
+                                  </p>  
                                   <p>
                                     <span *ngFor="let word of post['content']">
                                       <span *ngIf="word[0] == '#'">
@@ -88,7 +101,9 @@
       </form>
       </div>
 
-
+      <div class="redredred">
+          <p>Shining</p>
+      </div>
       <!-- <h3>Create a post</h3>
       <form (submit)="createPost()">
           <textarea id= "msgBox" class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
@@ -154,8 +169,13 @@
             <p><a href="#" onclick="return false;" (click)="trendredirect(allHashTags[0]['title'])" >#{{allHashTags[0]['title']}}</a></p>
             <p><a href="#" onclick="return false;" (click)="trendredirect(allHashTags[1]['title'])" >#{{allHashTags[1]['title']}}</a></p>
           </div>
+
       </div>
     </div>
   </div>
+  
+<script src="./assets/newsfeed.js">
+</script>
+
 </body>
 </html>

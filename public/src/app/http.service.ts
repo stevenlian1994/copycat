@@ -86,6 +86,19 @@ export class HttpService {
 
     }
 
+    unfollowUser(unfollowUserArg){
+
+
+        console.log("unfollowibg!!!!!!!!! " + unfollowUserArg);
+        return this._http.post("/unfollowUser", unfollowUserArg);
+    }
+
+    getFolloweeId(ownId){
+        console.log(ownId, "This is just a practice")
+        return this._http.get("/getFolloweeId/" + ownId);
+
+    }
+
 
 
 
