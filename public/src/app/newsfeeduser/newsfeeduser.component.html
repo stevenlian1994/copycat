@@ -7,102 +7,96 @@
   <title>Copycat Msg</title>
 </head>
 <body>
+
   <div class="row">
-    <div class="col-8">
+        <div class="col-8">
+          <div class="middle"> 
+                        <img *ngIf="myUser" class="profileImage" src="{{myUser['profilePicture']}}"> 
+                        <h1>{{userName}} </h1> <a href="/" onclick="return false;" (click)="profileRedirect([userName])">@{{userName}} </a> 
+                        <p>Tweets: {{totalTweets}}</p>
+                        <p>Followers: {{totalFollower.length}}</p>
 
-      <div class="left_side">
-        
-        
-          <div class="container" >
-              <div class="blockContainer">
-              <img *ngIf="myUser" class="profileImage" src="{{myUser['profilePicture']}}"> 
-            
-              <h1>{{userName}} </h1> <a href="/" onclick="return false;" (click)="profileRedirect([userName])">@{{userName}} </a> 
-              <p>Tweets: {{totalTweets}}</p>
-
-
-          <form>
-              <mat-form-field>
-                  <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
-                      {{option}}
-                  </mat-option>
-                  </mat-autocomplete>
-              </mat-form-field>
-          </form>
-  
-          <div class="card">
-              <table class="table table-hover shopping-cart-wrap">
-                  <tbody>
-                      <tr>
-                          <div class="post-container" *ngFor="let post of allPostsReversed">
-                              <div class="row">
-                                <div class="col-2">
-                                  <img *ngIf="myUser" src="{{myUser['profilePicture']}}" alt="">
-                                </div>
-                                <div class="col-10">
-                                  <p> 
-                                    <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
-                                    <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
-                                    - <span>{{post['age']}}</span>
-                                </p>
-                                <p>
-                                    <span *ngFor="let word of post['content']">
-                                
-                                    <span *ngIf="word[0] == '#'">
-                                        <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
-                                    </span>
-                                    <span *ngIf="word[0] != '#'">
-                                        <span>{{word}} </span>
-                                    </span>
-    
-                                    </span>
-                                </p>
-                                </div>
-                              </div>
-                          </div>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-      </div>
-    </div>
-
-          <!-- <form>
-              <mat-form-field>
-                  <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl" />
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
-                      {{option}}
-                  </mat-option>
-                  </mat-autocomplete>
+                        <div class="card" style="height:500px; overflow-y: scroll">
+                            <table class="table table-hover shopping-cart-wrap">
+                                <thead class="text-muted">
+                                    Dashboard
+                                    </thead>  
+                                    <tbody>
+                                      <tr>
+                                        <div class="post-container" *ngFor="let post of allPostsReversed">
+                                            <div class="row">
+                                              <div class="col-3">
+                                                <img id="dashboardProfilePic" *ngIf="myUser" src="{{myUser['profilePicture']}}" alt="">
+                                              </div>
+                                              <div class="col">
+                                                <p> 
+                                                  <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
+                                                  <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
+                                                  - <span>{{post['age']}}</span>
+                                              </p>
+                                              <p>
+                                                  <span *ngFor="let word of post['content']">
+                                              
+                                                  <span *ngIf="word[0] == '#'">
+                                                      <a href="/" onclick="return false;" (click)="hashtagRedirect([word])">{{word}} </a> 
+                                                  </span>
+                                                  <span *ngIf="word[0] != '#'">
+                                                      <span>{{word}} </span>
+                                                  </span>
                   
-              </mat-form-field>
-          </form> -->
-
-    <div class="col-4">
-        <div>
-            <h2>Who to Follow</h2>
-            <div *ngIf="allUsers" >
-              <p><img alt="image"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
-              <p><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >{{allUsers[1]['username']}}</a></p>
+                                                  </span>
+                                              </p>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                      </div>
+                
             </div>
+   
+          <div class="col-4" id ="rightCol">
+              <div>
+                  <form class="form-inline ml-auto">
+                      <i class="fa fa-search" style="border:none; font-size:24px"></i>
+                      <mat-form-field>
+                       <div class="md-form my-0" >
+                          <input id="searchBtn"   type="text" placeholder="{{hashtag}}" matInput [matAutocomplete]="auto" [formControl]="myControl" />
+                          <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayFn">
+                          <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
+                              {{option}}
+                          </mat-option>
+                          <mat-option *ngFor="let option2 of filteredOptionsTags | async" [value]="option2" (click)="goTag(option2)">
+                              #{{option2}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </div>
+                      </mat-form-field>
+                </form>
+              </div>
+              <table class="table" id="table1" style="background-color:#F8F8F8; border-radius:20pt;border:none" >
+                  <tbody>
+                      <tr id="followerHeader"><h1 id="followerHeaderTitle">Who to Follow </h1></tr>
+                      <tr *ngIf="allUsers">
+                          <tr id="smalltable"><img class="who-to-follow-profilePicture" src="{{allUsers[0]['profilePicture']}}"><a href="#" id="FollowerName" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >  {{allUsers[0]['username']}}</a></tr>
+                            <tr id="smalltable"><img class="who-to-follow-profilePicture" src="{{allUsers[1]['profilePicture']}}"><a href="#"  id="FollowerName" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >  {{allUsers[1]['username']}}</a></tr>
+                            <tr id="followerHeaderfooter">Who to Follow</tr>
+                    </tbody>
+                  </table>
+        
+                  <table class="table" id="table1" style="background-color:#F8F8F8; border-radius:20pt;border:none" >
+        
+                      <tbody>
+                          <tr id="followerHeader"><h1 id="followerHeaderTitle">Trends for you</h1></tr>
+                          <tr *ngIf=allHashTags>
+                              <tr id="smalltable2"><a href="#"  id="FollowerName1"  style="position:relative; vertical-align:middle; left:10px" onclick="return false;" (click)="trendredirect(allHashTags[0]['title'])" >#{{allHashTags[0]['title']}}</a></tr>
+                                <tr id="smalltable2"><a href="#" id="FollowerName1"  onclick="return false;" (click)="trendredirect(allHashTags[1]['title'])" >#{{allHashTags[1]['title']}}</a></tr>
+                                <tr id="followerHeaderfooter">Who to Follow</tr>
+                        </tbody>
+                      </table>
         </div>
-        <div>
-            <h2>Trends for you</h2>
-            <!-- <div *ngIf="allUsers" >
-                <p>{{allUsers[0]['username']}}</p>
-                <p>{{allUsers[1]['username']}}</p>
-            </div> -->
-            <!-- <div *ngIf="allTags!=null" >
-                <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[0]['title'])" >#{{allTags[0]['title']}}</a></p>
-                <p><a href="#" onclick="return false;" (click)="trendredirect(allTags[1]['title'])" >#{{allTags[1]['title']}}</a></p>
-            </div> -->
-        </div>
-  </div>
-  </div>
-  </div>
   </div>
 </body>
 </html>

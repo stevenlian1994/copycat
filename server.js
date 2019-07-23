@@ -21,14 +21,14 @@ connection.connect(function(err) {
 
 app.post('/loginUser', function(req,res){
     connection.query(`SELECT * FROM users WHERE username = '${req.body.username}'`, function(err, results){
-        console.log(results[0])
         res.json(results[0])
     })
 })
 
 app.get('/getPosts', function(req,res){
-    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.id as userid, users.profilePicture FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
-    // connection.query("SELECT posts.id, posts.content, posts.created_at, posts.users_id, users.username,JSON_ARRAYAGG(tags.title) as tags, COUNT(likes.users_id) as 'userLikes' FROM posts LEFT JOIN posts_has_tags ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN likes ON  posts.id=likes.posts_id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
+    //connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.id as userid, users.profilePicture, COUNT(likes.users_id) as 'userLikes'  FROM posts LEFT JOIN posts_has_tags  ON posts.id = posts_has_tags.posts_id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id LEFT JOIN users on posts.users_id = users.id group by posts.id LEFT JOIN likes ON  posts.id=likes.posts_id LEFT JOIN users on posts.users_id = users.id group by posts.id;", function(err, results){
+    connection.query("SELECT posts.id, posts.content, posts.created_at, users.username, users.id as userid, users.profilePicture, COUNT(likes.users_id) as 'userLikes'  FROM posts LEFT JOIN likes ON  posts.id=likes.posts_id LEFT JOIN users on posts.users_id = users.id group by posts.id; ;", function(err, results){
+
         res.json(results)
     })
 })
@@ -44,35 +44,29 @@ app.get("/getUserPosts/:userName", function(req,res){
 
 app.get('/getFilteredPosts/:title', function(req,res){
   connection.query(`SELECT posts.id, posts.content, posts.created_at, users.username, users.profilePicture FROM posts LEFT JOIN posts_has_tags ON posts.id = posts_has_tags.posts_id LEFT OUTER JOIN users ON posts.users_id = users.id LEFT JOIN tags ON posts_has_tags.tags_id = tags.id WHERE tags.title = '${req.params.title}';`, function(err, results){
-    console.log(results)
     res.json(results)
   })
 })
 
 app.get('/getUsers', function(req,res){
   connection.query(`SELECT * FROM users`, function(err, results){
-      console.log('this is our', results);
       res.json(results);
   })
 })
+
 app.get('/getUser/:id', function(req,res){
   connection.query(`SELECT * FROM users WHERE id=${req.params.id}`, function(err, results){
-      console.log('this is our', results);
       res.json(results);
   })
 })
-
-
 
 app.post('/createPost', function(req,res){
     connection.query(`INSERT INTO posts (content, users_id) VALUES ('${req.body.content}', '${req.body.users_id}');` , function(err, rows, fields) {
-      console.log('inside createPost', rows.insertId);
-        res.json({"id":rows.insertId, "body":req.body})
+      res.json({"id":rows.insertId, "body":req.body})
     });
 } )
 
 app.post('/createTag/:postId', function(req,res){
-  console.log('inside create Tag POST')
   // insert tags if not already in db; no cb required
   connection.query(`INSERT IGNORE INTO tags (title) VALUES ('${req.body.newTag}');`, function(err, rows){
     // use get tag based on title and get the id
@@ -96,24 +90,23 @@ app.post('/createUser', function(req,res){
     })
 })
 
-
-
 app.get('/addLike/:posts_id/:users_id', function(req,res){
   connection.query(`INSERT INTO likes (posts_id, users_id) VALUES ('${req.params.posts_id}', '${req.params.users_id}')`,  function(err, rows, fields){
     res.json({'hello':'there'})
   })
 })
 
-
-
-
-app.get("/getTags", function(req, res){
-  connection.query(`SELECT * FROM tags`, function(err, results){
-    console.log("get tags results:", results);
+app.post("/deleteLike", function(req,res){
+  connection.query(`DELETE FROM likes WHERE posts_id= '${req.body.likee}' AND users_id= '${req.body.liker}';`,  function(err, results){
     res.json(results);
   })
 })
 
+app.get("/getTags", function(req, res){
+  connection.query(`SELECT * FROM tags`, function(err, results){
+    res.json(results);
+  })
+})
 
 app.post('/getPostsTags', function(req,res){
   for(var i = 0; i < req.body.tag_ids.length; i++){
@@ -127,14 +120,13 @@ app.post('/getPostsTags', function(req,res){
 
 app.delete("/postDelete/:postId", function(req,res){
   connection.query(`DELETE FROM posts_has_tags WHERE posts_id = ${req.params.postId} ;`);
+  connection.query(`DELETE FROM likes WHERE posts_id = ${req.params.postId} ;`);
   connection.query(`DELETE FROM posts WHERE posts.id = ${req.params.postId} ;`, function(err, results){
     res.json(results);
   });
 })
 
 app.post("/followUser", function(req,res){
-  console.log(req.body, "U wanna build a snow man???");
-
 
   connection.query(`INSERT INTO followees (followees_id, followers_id) VALUES ('${req.body.followee}', '${req.body.follower}');`, function(err, results){
     res.json(results);
@@ -143,31 +135,40 @@ app.post("/followUser", function(req,res){
 
 
 app.post("/unfollowUser", function(req,res){
-  connection.query(`DELETE FROM followees WHERE followees_id = '${req.body.follower}' AND followers_id = '${req.body.followee}';`, function(err, results){
-    // console.log(err, "This is da error,!");
-    console.log(`DELETE FROM followees WHERE followees_id = '${req.body.follower}' AND followers_id = '${req.body.followee}'; ` + "steve ooooooo")
-
+  connection.query(`DELETE FROM followees WHERE followees_id = '${req.body.followee}' AND followers_id = '${req.body.follower}';`, function(err, results){
     res.json(results);
 
   });
 })
 
 
-
-
 app.get("/getFolloweeId/:userId", function(req,res){
-  console.log(req.params.userId, "this just a test!!!");
-  connection.query(`SELECT * FROM followees WHERE followees_id = '${req.params.userId}';`, function(err, results){
+  connection.query(`SELECT * FROM followees WHERE followers_id = '${req.params.userId}';`, function(err, results){
     res.json(results);
   })
 })
 
 app.get('/getTotalTweets/:users_id', function(req,res){
   connection.query(`SELECT COUNT(users_id) as 'userNumber' FROM posts WHERE users_id='${req.params.users_id}';`, function(err, results){
-    console.log("total tweets:"+(results[0].userNumber))
     res.json(results[0].userNumber)
   })
 })
+
+app.get("/findLikes/:posts_id", function(req,res){
+
+  connection.query(`SELECT * from likes WHERE posts_id='${req.params.posts_id}';`, function(err, results){
+     res.json(results)
+  })
+
+})
+
+app.get("/getFollowers/:userName", function(req,res){
+  console.log("끼리끼리");
+  connection.query(`SELECT * FROM followees JOIN users on followees.followees_id = users.id WHERE users.username = '${req.params.userName}';`, function(err, results){
+    res.json(results)
+  });
+})
+
 
 app.all("*", (req,res,next) => {
     res.sendFile(path.resolve("./public/dist/public/index.html"))
@@ -176,4 +177,5 @@ app.all("*", (req,res,next) => {
 var server = app.listen(8000, function(){
     console.log("listening on port 8000")
 })
+
 

@@ -31,13 +31,13 @@
         <div class="card" style="height:500px; overflow-y: scroll">
             <table class="table overflow-container">
                 <thead class="text-muted">
-                    <tr>Dashboard</tr>
+                    Dashboard
                 </thead>
                 <tbody>
                     <tr>
                         <div class="post-container" *ngFor="let post of allPostsReversed">
                               <div class="row">
-                                <div class="col-2">
+                                <div class="col-3">
                                   <img class="img-responsive post-image" src="{{post['profilePicture']}}">
                                 </div>
                                 <div class="col">
@@ -45,8 +45,7 @@
                                       <b> <a style="color:black" (click)="profileRedirect([post['username']])" > {{post['username']}}</a></b> 
                                       <a href="#" onclick="return false;" (click)="profileRedirect([post['username']])" > @{{post['username']}}</a> 
                                       - <span>{{post['age']}}</span>
-                                      
-                                      <button *ngIf="ownId==post['userid']" (click)="postDelete(post['id'])">Delete</button>
+
 
                                       <button class="followbuttons" *ngIf="ownId!=post['userid'] && followeeId.indexOf(post['userid']) == -1" (click)="followUser(post['userid'])">Follow</button>
 
@@ -65,8 +64,14 @@
                                       </span>
                                     </span>
                                   </p>
-                                  <p style="float:right">
-                                      <span> {{post['userLikes']}}<a href="#" onclick="return false;" (click)="addLike([post['id']])"> <img style="width:20px; height:20px; " src="assets/img/heart1.png"></a></span>
+                                  <p style="float:right; margin: 1px">
+                                    <!-- <span> {{post['userLikes']}}<a href="#"   *ngIf="ownId==post['userid']" onclick="return false;" (click)="addLike([post['id']])"> <img style="width:25px; height:25px; " src="assets/img/heart1.png"></a></span> -->
+                                    <span class="aa"> {{post['userLikes']}}<a href="#"  (click)="addLike([post['id']])" onclick="return false;" > <img *ngIf="post['userLikes']==0 " style="width:25px; height:25px; " src="assets/img/heart1.png"></a></span>
+
+                                    <span  class="aa"><i class="fa fa-heart" style= "font-size:20px; color:rgb(238, 162, 175)" *ngIf="post['userLikes']>=1" (click)="deleteLike(post['id'], post['userid'])"></i></span>
+                                    
+                                      <span  class="aa"> <a *ngIf="ownId==post['userid']" (click)="followUser(post['userid'])"><i class="fa fa-user-plus" style="font-size:20px"></i></a>    </span>
+                                      <span  class="aa"><i class="fa fa-trash" style="font-size:20px" aria-hidden="true" *ngIf="ownId==post['userid']" (click)="postDelete(post['id'])"></i></span>
                                         <!-- <span *ngIf="word[0] == '#'">
                                           <img style="width:20px; height:20px; " src=" assets/img/heart1.png"></a>
                                       </span>
@@ -84,7 +89,7 @@
         </div>
       </div>
     </div>
-    <div class="col-4">
+    <div class="col-4" id ="rightCol">
       <div>
         <form class="form-inline ml-auto">
             <i class="fa fa-search" style="border:none; font-size:24px"></i>
@@ -95,15 +100,16 @@
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="goUser(option)">
                     {{option}}
                 </mat-option>
-                </mat-autocomplete>
+                <mat-option *ngFor="let option2 of filteredOptionsTags | async" [value]="option2" (click)="goTag(option2)">
+                    #{{option2}}
+                </mat-option>
+              </mat-autocomplete>
             </div>
             </mat-form-field>
       </form>
       </div>
 
-      <div class="redredred">
-          <p>Shining</p>
-      </div>
+
       <!-- <h3>Create a post</h3>
       <form (submit)="createPost()">
           <textarea id= "msgBox" class="form-control counted" style="box-shadow: 0 2px 3px #ccc;"[(ngModel)]="newPost.content"  name="newPost.content" placeholder="Type in your message" rows="5"></textarea>
@@ -156,7 +162,8 @@
               </div>
       </div> -->
     
-      <div>
+      <!-- Ian's parts -->
+      <!-- <div>
           <h2>Who to Follow</h2>
           <div *ngIf="allUsers" >
             <p><img class="who-to-follow-profilePicture" src="{{allUsers[0]['profilePicture']}}"><a href="#" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >{{allUsers[0]['username']}}</a></p>
@@ -170,7 +177,30 @@
             <p><a href="#" onclick="return false;" (click)="trendredirect(allHashTags[1]['title'])" >#{{allHashTags[1]['title']}}</a></p>
           </div>
 
-      </div>
+      </div> -->
+
+
+      <!-- Connie's parts -->
+      <table class="table" id="table1" style="background-color:#F8F8F8; border-radius:20pt;border:none" >
+          <tbody>
+              <tr id="followerHeader"><h1 id="followerHeaderTitle">Who to Follow </h1></tr>
+              <tr *ngIf="allUsers">
+                  <tr id="smalltable"><img class="who-to-follow-profilePicture" src="{{allUsers[0]['profilePicture']}}"><a href="#" id="FollowerName" onclick="return false;" (click)="profileRedirect([allUsers[0]['username']])" >  {{allUsers[0]['username']}}</a></tr>
+                    <tr id="smalltable"><img class="who-to-follow-profilePicture" src="{{allUsers[1]['profilePicture']}}"><a href="#"  id="FollowerName" onclick="return false;" (click)="profileRedirect([allUsers[1]['username']])" >  {{allUsers[1]['username']}}</a></tr>
+                    <tr id="followerHeaderfooter">Who to Follow</tr>
+            </tbody>
+          </table>
+
+          <table class="table" id="table1" style="background-color:#F8F8F8; border-radius:20pt;border:none" >
+
+              <tbody>
+                  <tr id="followerHeader"><h1 id="followerHeaderTitle">Trends for you</h1></tr>
+                  <tr *ngIf=allHashTags>
+                      <tr id="smalltable2"><a href="#"  id="FollowerName1"  style="position:relative; vertical-align:middle; left:10px" onclick="return false;" (click)="trendredirect(allHashTags[0]['title'])" >#{{allHashTags[0]['title']}}</a></tr>
+                        <tr id="smalltable2"><a href="#" id="FollowerName1"  onclick="return false;" (click)="trendredirect(allHashTags[1]['title'])" >#{{allHashTags[1]['title']}}</a></tr>
+                        <tr id="followerHeaderfooter">Who to Follow</tr>
+                </tbody>
+              </table>
     </div>
   </div>
   

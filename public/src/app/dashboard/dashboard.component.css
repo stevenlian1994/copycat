@@ -24,11 +24,11 @@ body{
 }
 
 #navBar{
-    font-size:40px;
+    font-size:30px;
     border:none;
     position: relative; 
     display:inline-block;
-    font-family: 'Reenie Beanie', cursive;
+    font-family: 'Jaldi', sans-serif;
     color: black; 
     margin: 0px 10px; 
 }
@@ -172,4 +172,14 @@ span{
     color:#B0E0E6; 
     font-size:40px; 
 }
+.fa-door-open{
+    color:#B0E0E6; 
+    font-size:40px; 
+}
 
+.logouticon{
+    position:relative; 
+    display:inline-block; 
+    height:30px;
+    width:30px;
+}

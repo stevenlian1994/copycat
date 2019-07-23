@@ -19,6 +19,7 @@ import "../../assets/newsfeed.js";
 
 export class NewsfeedComponent implements OnInit {
   allHashTags : any;
+  allHashTags2: any;
   allTags : any;
   allPosts : any;
   allUsers : any;
@@ -26,8 +27,10 @@ export class NewsfeedComponent implements OnInit {
   newPost = {content: ''};
   newPostTag={'posts_id':''};
   options: string[] = [];
+  optionsTags: string[] = [];
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
+  filteredOptionsTags: Observable<string[]>;
   postId : any;
   ownId = localStorage.getItem("user");
   followeeId : any;
@@ -41,12 +44,19 @@ export class NewsfeedComponent implements OnInit {
     // this.getFolloweeId();
 
 
+    this.updateOptionTags();
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => 
       option.toLowerCase().includes(filterValue)
+    );
+  }
+  private _filter2(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.optionsTags.filter(optionTag => 
+      optionTag.toLowerCase().includes(filterValue)
     );
   }
 
@@ -64,6 +74,20 @@ export class NewsfeedComponent implements OnInit {
     })
   }
 
+  updateOptionTags(){
+    let myObservable2 = this._httpService.getAllTags();
+    myObservable2.subscribe(data=>{
+      this.allHashTags2= data
+      for (let i=0; i<this.allHashTags2.length; i++){
+        this.optionsTags.push(this.allHashTags2[i]["title"])
+      };
+      this.filteredOptionsTags = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map(value => this._filter2(value))
+      );
+    })
+
+  }
 
   getAllTags(){
     let myObservable = this._httpService.getAllTags();
@@ -125,17 +149,42 @@ export class NewsfeedComponent implements OnInit {
 
   addLike(posts_id){
     let user1= localStorage.getItem("user"); 
-    console.log("addlike user"+ user1)
-    console.log("addlike post"+ posts_id)
     let tempObservable2 = this._httpService.addLike(user1,posts_id); 
       tempObservable2.subscribe(data =>{
         console.log("in add Like:" + data)
+        this.getAllPosts()
       })
+  }
+
+  // This function is not really a delete. It is more "Delete or add a like", since if the user clicks on the white button that hasn't been liked yet by that user, we want to make it so that it actually LIKES the user.
+  deleteLike(posts_id, posts_userId){
+    let likeArray = [];    
+    let tempObservable = this._httpService.findLike(posts_id);
+    tempObservable.subscribe((data : Array<any>) => {
+      for (let i=0; i<data.length; i++) {
+        likeArray.push(data[i]["users_id"])
+      };
+
+      if (likeArray.indexOf(Number(this.ownId)) != -1){
+        console.log("사랑")
+        let likeUserArg = {liker : this.ownId, likee : posts_id}
+        let myObservable = this._httpService.deleteLike(likeUserArg);
+        console.log(likeUserArg + " time to say gfood byw!");
+        console.log(JSON.stringify(this.allPostsReversed) + " Pocahontas!!!!");
+        myObservable.subscribe(data => {
+        this.getAllPosts();
+        });
+      }
+
+      else {
+        this.addLike(posts_id);
+      }
+      
+    })
   }
 
   createTag(tag, postId, isLast){
     // STEP 1: call the server, sql query to check if tags already exists, return 
-    console.log('inside createTag')
       let tempObservable2 = this._httpService.createTag(tag, postId); 
       tempObservable2.subscribe(data =>{
         if(isLast){
@@ -199,6 +248,11 @@ export class NewsfeedComponent implements OnInit {
   goUser(option) {
     this.router.navigate(["dashboard/user", option]);
   }
+  goTag(tag){
+    this.router.navigate(["dashboard/hashtag/", tag])
+  }
+
+
   postDelete(postId){
     let tempObservable = this._httpService.postDelete(postId);
       tempObservable.subscribe(data =>{
@@ -212,38 +266,26 @@ export class NewsfeedComponent implements OnInit {
     myObservable.subscribe(data => {
       this.getAllPosts();
     })
-
   }
 
   unfollowUser(userId){
     let unfollowUserArg = {follower : this.ownId, followee : userId};
     let myObservable = this._httpService.unfollowUser(unfollowUserArg);
-    
-
     myObservable.subscribe(data => {
       this.getAllPosts();
     })
   }
 
-
-
   getFolloweeId(){
     this.followeeId = [];
     let myObservable = this._httpService.getFolloweeId(this.ownId);
     myObservable.subscribe((data : Array<any> ) => {
-      console.log(data, " Beyonce!!!!!!!");
       for (let i=0; i < data.length; i++){
-        this.followeeId.push(data[i]["followers_id"])
+        this.followeeId.push(data[i]["followees_id"])
         // console.log(data[i]["followers_id"])
       }
     })
   }
-
-
-
-
-
-
 
 }
 

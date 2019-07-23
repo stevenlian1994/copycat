@@ -17,7 +17,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 
 export class NewsfeeduserComponent implements OnInit {
+  allHashTags2: any;
+  optionsTags: string[] = [];
+  filteredOptionsTags: Observable<string[]>;
   allTags : any;
+  allHashTags : any;
   allUsers : any;
   options: string[] = [];
   allPosts : any;
@@ -30,6 +34,8 @@ export class NewsfeeduserComponent implements OnInit {
   totalTweets:any; 
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
+  totalFollower: any;
+  ownId = localStorage.getItem("user");
   
   constructor(private _httpService: HttpService, private _authService: AuthService, private sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe( params => this.userName=params.userName);
@@ -42,6 +48,8 @@ export class NewsfeeduserComponent implements OnInit {
               this.getUserPosts(this.userName);
               this.getUser(); 
               this.getTotalTweets(); 
+              this.updateOptionTags();
+    
              }
       });
 
@@ -50,6 +58,8 @@ export class NewsfeeduserComponent implements OnInit {
     this.getTotalTweets();
     this.getAllTags();
     this.getAllUsers();
+    this.updateOptionTags();
+    this.getFollowers();
   }
   getAllUsers(){
     let myObservable = this._httpService.getUsers();
@@ -65,10 +75,32 @@ export class NewsfeeduserComponent implements OnInit {
     })
   }
 
+
+  updateOptionTags(){
+    let myObservable2 = this._httpService.getAllTags();
+    myObservable2.subscribe(data=>{
+      this.allHashTags2= data
+      for (let i=0; i<this.allHashTags2.length; i++){
+        this.optionsTags.push(this.allHashTags2[i]["title"])
+      };
+      this.filteredOptionsTags = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map(value => this._filter2(value))
+      );
+    })
+  }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => 
       option.toLowerCase().includes(filterValue)
+    );
+  }
+
+  private _filter2(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.optionsTags.filter(optionTag => 
+      optionTag.toLowerCase().includes(filterValue)
     );
   }
 
@@ -119,6 +151,7 @@ export class NewsfeeduserComponent implements OnInit {
       this.allPostsReversed.push(this.allPosts[j])
     }
   }
+
   getUser(){
     let myObservable = this._httpService.getUser(localStorage.getItem('user'));
     myObservable.subscribe(data=>{
@@ -148,8 +181,24 @@ export class NewsfeeduserComponent implements OnInit {
   getAllTags(){
     let myObservable = this._httpService.getAllTags();
     myObservable.subscribe(data=>{
-      this.allTags = data;
-      console.log("this is all tags:", this.allTags);
+      this.allHashTags = data;
+      console.log("this is all tags:", this.allHashTags);
     })
   }
+
+  getFollowers(){
+    let myObservable = this._httpService.getFollowers(this.userName);
+    myObservable.subscribe(data => {
+      this.totalFollower = data;
+      console.log(data + " 이런얘기")
+    });
+    
+  }
+
+  goTag(tag){
+    this.router.navigate(["dashboard/hashtag/", tag])
+  }
+
+
+
 }

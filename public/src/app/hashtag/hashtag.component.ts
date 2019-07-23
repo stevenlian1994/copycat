@@ -12,14 +12,17 @@ import { map, startWith } from "rxjs/operators";
   styleUrls: ['./hashtag.component.css']
 })
 export class HashtagComponent implements OnInit {
+  allHashTags2: any;
   hashtag : String;
   allPostsReversed = [];
   filteredPosts : any;
   allUsers : any;
   allHashTags : any;
   options: string[] = [];
+  optionsTags: string[] = [];
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
+  filteredOptionsTags: Observable<string[]>;
 
 
   constructor(private _httpService: HttpService,   private router: Router, private route: ActivatedRoute) {
@@ -32,6 +35,12 @@ export class HashtagComponent implements OnInit {
       option.toLowerCase().includes(filterValue)
     );
   }
+  private _filter2(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.optionsTags.filter(optionTag => 
+      optionTag.toLowerCase().includes(filterValue)
+    );
+  }
 
   ngOnInit() {
     this.router.events.subscribe(
@@ -40,11 +49,13 @@ export class HashtagComponent implements OnInit {
                this.getFilteredPosts(this.hashtag);
                this.getAllTags()
                this.getAllUsers()
+               this.updateOptionTags();
              }
       });
       this.getFilteredPosts(this.hashtag);
       this.getAllTags()
       this.getAllUsers()
+      this.updateOptionTags();
   }
   getFilteredPosts(tag){
     let myObservable = this._httpService.getFilteredPosts(tag);
@@ -68,6 +79,20 @@ export class HashtagComponent implements OnInit {
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(""),
         map(value => this._filter(value))
+      );
+    })
+  }
+
+  updateOptionTags(){
+    let myObservable2 = this._httpService.getAllTags();
+    myObservable2.subscribe(data=>{
+      this.allHashTags2= data
+      for (let i=0; i<this.allHashTags2.length; i++){
+        this.optionsTags.push(this.allHashTags2[i]["title"])
+      };
+      this.filteredOptionsTags = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map(value => this._filter2(value))
       );
     })
   }
@@ -118,4 +143,8 @@ export class HashtagComponent implements OnInit {
   goUser(option) {
     this.router.navigate(["dashboard/user", option]);
   }
+  goTag(tag){
+    this.router.navigate(["dashboard/hashtag/", tag])
+  }
+
 }

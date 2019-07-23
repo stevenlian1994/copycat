@@ -13,16 +13,31 @@ Todo:
     -posts
     -profile
 
--delete button
+-delete button DONE
+-fix PROFILE PAGE
 
 TRENDS FOR YOU 
   -home DONE
   -profile DONE
   -hashtag DONE
 
+~~Steven
+-add searchbar to each Page
+  -home DONE
+  -profile
+    -add 
+    -add searchbar
+  -hashtag DONE
+    -add hashtag placeholder
+    -add searchbar
+
+~~Ian
+-accumulated followers
+
 ~~Connie
 -Icon for Logout
 -who to follow styling
+-accumulated likes
 
 ~Add Search Bar in HashTag Page
 

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+
 export class HttpService {
     isLoggedIn = false
     dict = {"isLoggedIn": 'string'}
@@ -56,15 +57,14 @@ export class HttpService {
         } else {
             this.isLoggedIn = false; 
         }
-        console.log("is user logged in?:", this.isLoggedIn);
         return this.isLoggedIn;
     }
-
+ 
     getPostsTags(newPostTag){
-        return this._http.post('/getPostsTags', newPostTag)
+        return this._http.post('/getPostsTags', newPostTag);
     }
     getTotalTweets(users_id){
-        return this._http.get(`/getTotalTweets/${users_id}`)
+        return this._http.get(`/getTotalTweets/${users_id}`);
     }
 
     getAllTags(){
@@ -73,32 +73,41 @@ export class HttpService {
     addLike(users_id,posts_id){
         return this._http.get(`/addLike/${posts_id}/${users_id}`);
     }
-    
 
+    deleteLike(likeUserArg){
+        console.log(likeUserArg, "Adriel is here!!!!")
+        return this._http.post("/deleteLike", likeUserArg);
+    }
+    
+    
     postDelete(postId){
         return this._http.delete(`/postDelete/${postId}`);
     }
 
     followUser(followUserArg) {
         // followUserArg = JSON.stringify(followUserArg);
-        console.log("MAmamamia!!!! " + followUserArg);
         return this._http.post("/followUser", followUserArg);
-
     }
 
+
     unfollowUser(unfollowUserArg){
-
-
-        console.log("unfollowibg!!!!!!!!! " + unfollowUserArg);
         return this._http.post("/unfollowUser", unfollowUserArg);
     }
 
     getFolloweeId(ownId){
-        console.log(ownId, "This is just a practice")
         return this._http.get("/getFolloweeId/" + ownId);
 
     }
 
+    findLike(posts_id){
+        return this._http.get("/findLikes/" + posts_id);
+    }
+
+    getFollowers(userName){
+        // console.log(ownId + " 니하오마마마");
+
+        return this._http.get("/getFollowers/" + userName);
+    }
 
 
 
