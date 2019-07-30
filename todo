@@ -1,17 +1,7 @@
 Todo:
 ~~Steven
--clean up code
-  -server.js
-  -service 
-  -components
-    -dashboard
-    -guards
-    -hashtag (NEEDS fix)
-    -home
-    -newsfeed
-    -newsfeeduser
-    -posts
-    -profile
+-host on AWS
+-install mysql on Ubuntu
 
 -delete button DONE
 -fix PROFILE PAGE
@@ -22,6 +12,7 @@ TRENDS FOR YOU
   -hashtag DONE
 
 ~~Steven
+-
 -add searchbar to each Page
   -home DONE
   -profile
@@ -38,6 +29,7 @@ TRENDS FOR YOU
 -Icon for Logout
 -who to follow styling
 -accumulated likes
+
 
 ~Add Search Bar in HashTag Page
 
